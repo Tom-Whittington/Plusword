@@ -68,9 +68,7 @@ def data_cleaning_and_prep(df):
 
     # Dropping columns and setting datatypes
 
-    df = df[['Timestamp', 'Time', 'User']]
-
-    df = df.rename(columns={'Timestamp': 'timestamp', 'Time': 'time', 'User': 'user'})
+    df = df[['timestamp', 'time', 'user']]
 
     df["timestamp"] = pd.to_datetime(df["timestamp"], format='%d/%m/%Y %H:%M')
 
