@@ -42,21 +42,19 @@ def y_axis_generator(max_y_value, unit):
 def data_import(connection_string, database_name, collection_name):
     """Connects to database and creates dataframe containing all columns"""
 
-    client = MongoClient()
-
     # point the client at mongo URI
 
     client = MongoClient(connection_string)
 
-# select database
+    # select database
 
     db = client[database_name]
 
-# select the collection within the database
+    # select the collection within the database
 
     test = db.collection_name
 
-# convert entire collection to Pandas dataframe
+    # convert entire collection to Pandas dataframe
 
     df = pd.DataFrame(list(test.find()))
 
@@ -72,7 +70,7 @@ def data_cleaning_and_prep(df):
 
     df = df[['Timestamp', 'Time', 'User']]
 
-    df = df.rename(columns={'Timestamp': 'timestamp', 'Time': 'time',  'User': 'user'})
+    df = df.rename(columns={'Timestamp': 'timestamp', 'Time': 'time', 'User': 'user'})
 
     df["timestamp"] = pd.to_datetime(df["timestamp"], format='%d/%m/%Y %H:%M')
 
@@ -213,10 +211,10 @@ def weekly_times(df):
     return df_weekly_mean_time, df_weekly_max_time, df_weekly_min_time
 
 
-def rolling_average(df, window_days=60):
+def rolling_average(df):
     """ Finds rolling average over window_days number of days for each user. Then joins all dataframes together"""
 
-    window_days = str(window_days) + 'd'
+    window_days_str = str(window_days) + 'd'
 
     df_ra_list = []
 
@@ -227,7 +225,7 @@ def rolling_average(df, window_days=60):
 
         df_ra = df_ra.set_index("timestamp")
 
-        df_ra["time_delta_as_num_RA"] = df_ra["time_delta_as_num"].rolling(window=window_days).mean()
+        df_ra["time_delta_as_num_RA"] = df_ra["time_delta_as_num"].rolling(window=window_days_str).mean()
 
         df_ra["time_delta_RA"] = mdates.num2timedelta(df_ra["time_delta_as_num_RA"])
 
@@ -239,21 +237,21 @@ def rolling_average(df, window_days=60):
 
     df_ra_finished = df_ra_finished.reset_index()
 
-    return df_ra_finished, window_days
+    return df_ra_finished
 
 
-def overall_max_time_barplot(df_overall_max_time, palette, figsize):
+def overall_max_time_barplot(df_overall_max_time):
     """Barplot showing the longest completion time for each person """
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    sns.barplot(data=df_overall_max_time,
-                x="user",
-                y="time_delta_as_num",
-                palette=palette).set(
-            title='Slowest Time',
-            ylabel='Time /mins',
-            xlabel=None)
+    plot = sns.barplot(data=df_overall_max_time,
+                       x="user",
+                       y="time_delta_as_num",
+                       palette=palette).set(
+                        title='Slowest Time',
+                        ylabel='Time /mins',
+                        xlabel=None)
 
     ax.yaxis_date()
 
@@ -261,19 +259,21 @@ def overall_max_time_barplot(df_overall_max_time, palette, figsize):
 
     plt.show()
 
+    return plot
 
-def overall_min_time_barplot(df_overall_min_time, palette, figsize):
+
+def overall_min_time_barplot(df_overall_min_time):
     """Barplot showing the shortest completion time for each person """
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    sns.barplot(data=df_overall_min_time,
-                x="user",
-                y="time_delta_as_num",
-                palette=palette).set(
-            title='Fastest Time',
-            ylabel='Time /mins',
-            xlabel=None)
+    plot = sns.barplot(data=df_overall_min_time,
+                       x="user",
+                       y="time_delta_as_num",
+                       palette=palette).set(
+                        title='Fastest Time',
+                        ylabel='Time /mins',
+                        xlabel=None)
 
     ax.yaxis_date()
 
@@ -281,19 +281,21 @@ def overall_min_time_barplot(df_overall_min_time, palette, figsize):
 
     plt.show()
 
+    return plot
 
-def overall_mean_time_barplot(df_overall_mean_time, palette, figsize):
+
+def overall_mean_time_barplot(df_overall_mean_time):
     """Barplot showing mean completion time for each person """
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    sns.barplot(data=df_overall_mean_time,
-                x="user",
-                y="time_delta_as_num",
-                palette=palette).set(
-            title='Mean Time',
-            ylabel='Time /mins',
-            xlabel=None)
+    plot = sns.barplot(data=df_overall_mean_time,
+                       x="user",
+                       y="time_delta_as_num",
+                       palette=palette).set(
+                        title='Mean Time',
+                        ylabel='Time /mins',
+                        xlabel=None)
 
     ax.yaxis_date()
 
@@ -301,50 +303,58 @@ def overall_mean_time_barplot(df_overall_mean_time, palette, figsize):
 
     plt.show()
 
+    return plot
 
-def number_of_sub_1_minnies_barplot(df_sub_minnies, palette, figsize):
+
+def number_of_sub_1_minnies_barplot(df_sub_minnies):
     """ Barplot of how many sub 1-minute completion times for each person"""
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    sns.barplot(data=df_sub_minnies,
-                y='count',
-                x='user',
-                palette=palette).set(
-            title='Number of sub 1-minutes',
-            ylabel=None,
-            xlabel=None)
+    plot = sns.barplot(data=df_sub_minnies,
+                       y='count',
+                       x='user',
+                       palette=palette).set(
+                        title='Number of sub 1-minutes',
+                        ylabel=None,
+                        xlabel=None)
 
     plt.xticks(rotation=0)
 
     plt.show()
 
+    return plot
 
-def number_of_submissions_barplot(df_overall_number_submissions, palette, figsize):
+
+def number_of_submissions_barplot(df_overall_number_submissions):
     """ Barplot of how many submissions total for each person"""
 
-    sns.barplot(data=df_overall_number_submissions,
-                y='Count',
-                x='User',
-                palette=palette)
+    fig, ax = plt.subplots(figsize=figsize)
+
+    plot = sns.barplot(data=df_overall_number_submissions,
+                       y='Count',
+                       x='User',
+                       palette=palette)
 
     plt.xticks(rotation=0)
 
     plt.show()
 
+    return plot
 
-def overall_sub_time_max_barplot(df_latest_sub_time, palette, figsize):
+
+def overall_sub_time_max_barplot(df_latest_sub_time):
     """ Barplot of the latest submission times for each person. Probably not worth plotting"""
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    sns.barplot(data=df_latest_sub_time,
-                x='user',
-                y='sub_time_delta_as_num',
-                palette=palette).set(
-              title='Latest Time of Submission',
-              ylabel='Time /mins',
-              label=None)
+    plot = sns.barplot(data=df_latest_sub_time,
+                       x='user',
+                       y='sub_time_delta_as_num',
+                       palette=palette).set(
+                        title='Latest Time of Submission',
+                        ylabel='Time /mins',
+                        label=None)
 
     ax.yaxis_date()
 
@@ -352,19 +362,21 @@ def overall_sub_time_max_barplot(df_latest_sub_time, palette, figsize):
 
     plt.show()
 
+    return plot
 
-def overall_sub_time_min_barplot(df_earliest_sub_time, palette, figsize):
+
+def overall_sub_time_min_barplot(df_earliest_sub_time):
     """ Barplot of the earliest submission times for each person. Probably not worth plotting"""
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    sns.barplot(data=df_earliest_sub_time,
-                x='user',
-                y='sub_time_delta_as_num',
-                palette=palette).set(
-              title='Earliest Time of Submission',
-              ylabel='Time /mins',
-              label=None)
+    plot = sns.barplot(data=df_earliest_sub_time,
+                       x='user',
+                       y='sub_time_delta_as_num',
+                       palette=palette).set(
+                        title='Earliest Time of Submission',
+                        ylabel='Time /mins',
+                        label=None)
 
     ax.yaxis_date()
 
@@ -372,19 +384,21 @@ def overall_sub_time_min_barplot(df_earliest_sub_time, palette, figsize):
 
     plt.show()
 
+    return plot
 
-def overall_sub_time_mean_barplot(df_mean_sub_time, palette, figsize):
+
+def overall_sub_time_mean_barplot(df_mean_sub_time):
     """ Barplot of mean submission times for each person """
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    sns.barplot(data=df_mean_sub_time,
-                x='user',
-                y='sub_time_delta_as_num',
-                palette=palette).set(
-              title='Mean Time of Submission',
-              ylabel='Time /mins',
-              label=None)
+    plot = sns.barplot(data=df_mean_sub_time,
+                       x='user',
+                       y='sub_time_delta_as_num',
+                       palette=palette).set(
+                        title='Mean Time of Submission',
+                        ylabel='Time /mins',
+                        label=None)
 
     ax.yaxis_date()
 
@@ -392,21 +406,23 @@ def overall_sub_time_mean_barplot(df_mean_sub_time, palette, figsize):
 
     plt.show()
 
+    return plot
 
-def individual_monthly_mean_lineplot(df_monthly_mean_time, user, palette, figsize):
+
+def individual_monthly_mean_lineplot(df_monthly_mean_time):
     """Filters out monthly mean time based on value of user. Then plots monthly mean times over time"""
 
     df_monthly_mean_time_user = df_monthly_mean_time[df_monthly_mean_time['user'] == user]
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    sns.lineplot(data=df_monthly_mean_time_user,
-                 x='timestamp',
-                 y='time_delta_as_num',
-                 color=palette[user]).set(
-        title=user + '\'s mean times by month',
-        ylabel='Mean time',
-        xlabel='Date')
+    plot = sns.lineplot(data=df_monthly_mean_time_user,
+                        x='timestamp',
+                        y='time_delta_as_num',
+                        color=palette[user]).set(
+                        title=user + '\'s mean times by month',
+                        ylabel='Mean time',
+                        xlabel='Date')
 
     ax.yaxis_date()
 
@@ -418,8 +434,10 @@ def individual_monthly_mean_lineplot(df_monthly_mean_time, user, palette, figsiz
 
     plt.show()
 
+    return plot
 
-def combined_monthly_mean_lineplot(df_monthly_mean_time, palette, figsize):
+
+def combined_monthly_mean_lineplot(df_monthly_mean_time):
     """Plots monthly mean times for every player over time on the same lineplot"""
 
     # Generates 15 minutes for y axis
@@ -434,13 +452,14 @@ def combined_monthly_mean_lineplot(df_monthly_mean_time, palette, figsize):
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    sns.lineplot(data=df_monthly_mean_time,
-                 x='timestamp',
-                 y='time_delta_as_num',
-                 hue='user',
-                 palette=palette).set(title='Combined Mean Times by month',
-                                      xlabel='Date',
-                                      ylabel='Mean time /min')
+    plot = sns.lineplot(data=df_monthly_mean_time,
+                        x='timestamp',
+                        y='time_delta_as_num',
+                        hue='user',
+                        palette=palette).set(
+                        title='Combined Mean Times by month',
+                        xlabel='Date',
+                        ylabel='Mean time /min')
 
     ax.yaxis_date()
 
@@ -454,20 +473,23 @@ def combined_monthly_mean_lineplot(df_monthly_mean_time, palette, figsize):
 
     plt.show()
 
+    return plot
 
-def individual_weekly_mean_lineplot(df_weekly_mean_time, user, palette, figsize):
+
+def individual_weekly_mean_lineplot(df_weekly_mean_time):
     """Filters out weekly mean time based on value of user. Then plots weekly mean times over time"""
 
     df_weekly_mean_time_user = df_weekly_mean_time[df_weekly_mean_time['user'] == user]
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    sns.lineplot(data=df_weekly_mean_time_user,
-                 x='timestamp',
-                 y='time_delta_as_num',
-                 palette=palette).set(title=user + '\'s Mean Times by week',
-                                      xlabel='Date',
-                                      ylabel='Mean time /min')
+    plot = sns.lineplot(data=df_weekly_mean_time_user,
+                        x='timestamp',
+                        y='time_delta_as_num',
+                        palette=palette).set(
+                        title=user + '\'s Mean Times by week',
+                        xlabel='Date',
+                        ylabel='Mean time /min')
 
     ax.yaxis_date()
 
@@ -479,8 +501,10 @@ def individual_weekly_mean_lineplot(df_weekly_mean_time, user, palette, figsize)
 
     plt.show()
 
+    return plot
 
-def combined_weekly_mean_lineplot(df_weekly_mean_time, palette, figsize):
+
+def combined_weekly_mean_lineplot(df_weekly_mean_time):
     """Plots weekly mean times for every player over time on the same lineplot"""
 
     # Generates 25 mins for y-axis
@@ -493,13 +517,14 @@ def combined_weekly_mean_lineplot(df_weekly_mean_time, palette, figsize):
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    sns.lineplot(data=df_weekly_mean_time,
-                 x='timestamp',
-                 y='time_delta_as_num',
-                 hue='user',
-                 palette=palette).set(title='Combined Mean Times by week',
-                                      xlabel='Date',
-                                      ylabel='Mean time /min')
+    plot = sns.lineplot(data=df_weekly_mean_time,
+                        x='timestamp',
+                        y='time_delta_as_num',
+                        hue='user',
+                        palette=palette).set(
+                        title='Combined Mean Times by week',
+                        xlabel='Date',
+                        ylabel='Mean time /min')
 
     ax.yaxis_date()
 
@@ -513,21 +538,23 @@ def combined_weekly_mean_lineplot(df_weekly_mean_time, palette, figsize):
 
     plt.show()
 
+    return plot
 
-def individual_rolling_average_lineplot(df_ra_finished, window_days, user, palette, figsize):
+
+def individual_rolling_average_lineplot(df_ra_finished):
     """Filters out rolling average completion times based on value of user. Plots rolling average over time"""
 
     df_ra_finished_user = df_ra_finished[df_ra_finished['user'] == user]
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    sns.lineplot(data=df_ra_finished_user,
-                 x='timestamp',
-                 y='time_delta_as_num_RA',
-                 color=palette[user]).set(
-        title=user + '\'s ' + window_days + ' Rolling Mean Times',
-        xlabel='Date',
-        ylabel='Rolling Mean Times /min')
+    plot = sns.lineplot(data=df_ra_finished_user,
+                        x='timestamp',
+                        y='time_delta_as_num_RA',
+                        color=palette[user]).set(
+                        title=user + '\'s ' + str(window_days) + 'd' + ' Rolling Mean Times',
+                        xlabel='Date',
+                        ylabel='Rolling Mean Times /min')
 
     ax.yaxis_date()
 
@@ -539,20 +566,22 @@ def individual_rolling_average_lineplot(df_ra_finished, window_days, user, palet
 
     plt.show()
 
+    return plot
 
-def combined_rolling_average_lineplot(df_ra_finished, window_days, palette, figsize):
+
+def combined_rolling_average_lineplot(df_ra_finished):
     """Plots rolling average over time for all players"""
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    sns.lineplot(data=df_ra_finished,
-                 x='timestamp',
-                 y='time_delta_as_num_RA',
-                 hue='user',
-                 palette=palette).set(
-        title='Combined ' + window_days + ' Rolling Mean Times',
-        xlabel='Date',
-        ylabel='Rolling Mean Times /min')
+    plot = sns.lineplot(data=df_ra_finished,
+                        x='timestamp',
+                        y='time_delta_as_num_RA',
+                        hue='user',
+                        palette=palette).set(
+                        title='Combined ' + str(window_days) + 'd' + ' Rolling Mean Times',
+                        xlabel='Date',
+                        ylabel='Rolling Mean Times /min')
 
     ax.yaxis_date()
 
@@ -564,18 +593,20 @@ def combined_rolling_average_lineplot(df_ra_finished, window_days, palette, figs
 
     plt.show()
 
+    return plot
 
-def sub_time_boxplot(df, palette, figsize):
+
+def sub_time_boxplot(df):
     """Plots boxplot of submission times"""
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    sns.boxplot(data=df,
-                x="user",
-                y=df["sub_time_delta_as_num"],
-                palette=palette).set(
-                ylabel='Time of Submission',
-                xlabel=None)
+    plot = sns.boxplot(data=df,
+                       x="user",
+                       y=df["sub_time_delta_as_num"],
+                       palette=palette).set(
+                        ylabel='Time of Submission',
+                        xlabel=None)
 
     ax.yaxis_date()
 
@@ -585,8 +616,10 @@ def sub_time_boxplot(df, palette, figsize):
 
     plt.show()
 
+    return plot
 
-def sub_time_violin_plot(df, palette, figsize):
+
+def sub_time_violin_plot(df):
     """Plots violin plot of submission times"""
 
     # Generates 24 hours for y axis
@@ -599,11 +632,11 @@ def sub_time_violin_plot(df, palette, figsize):
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    ax = sns.violinplot(data=df,
-                        x="user",
-                        y=df["sub_time_delta_as_num"],
-                        cut=0,
-                        palette=palette)
+    plot = sns.violinplot(data=df,
+                          x="user",
+                          y=df["sub_time_delta_as_num"],
+                          cut=0,
+                          palette=palette)
 
     ax.yaxis_date()
 
@@ -623,8 +656,10 @@ def sub_time_violin_plot(df, palette, figsize):
 
     plt.show()
 
+    return plot
 
-def sub_time_distplot(df, user, palette, figsize):
+
+def sub_time_distplot(df):
     """Plots dist plot for submission times based on user"""
 
     df_time_dist = df[df["user"] == user]
@@ -635,13 +670,13 @@ def sub_time_distplot(df, user, palette, figsize):
 
     plt.xlim(0, 1)
 
-    sns.distplot(df_time_dist,
-                 x=df_time_dist['sub_time_delta_as_num'],
-                 bins=30,
-                 kde=True,
-                 color=palette[user]).set(
-        title=user + '\'s Time of Submission distribution',
-        xlabel='Time of Submission')
+    plot = sns.distplot(df_time_dist,
+                        x=df_time_dist['sub_time_delta_as_num'],
+                        bins=30,
+                        kde=True,
+                        color=palette[user]).set(
+                        title=user + '\'s Time of Submission distribution',
+                        xlabel='Time of Submission')
 
     ax.xaxis_date()
 
@@ -649,19 +684,30 @@ def sub_time_distplot(df, user, palette, figsize):
 
     plt.show()
 
+    return plot
+
 
 # Sets plot style
 
 sns.set_theme()
 
 # Sets colour for each person
+global palette={"Sal": "tab:cyan",
+                "Joe": "tab:orange",
+                "Oli": "tab:purple",
+                "Tom": 'tab:pink',
+                "George": 'tab:olive',
+                "Harvey": "tab:red"}
 
-palette = {"Sal": "tab:cyan",
-           "Joe": "tab:orange",
-           "Oli": "tab:purple",
-           "Tom": 'tab:pink',
-           "George": 'tab:olive',
-           "Harvey": "tab:red"}
+
+# Default size of each plot
+global figsize=(20, 8)
+
+# Default user for each plot
+global user="Tom"
+
+# Default value for rolling average window duration
+global window_days = 60
 
 # Database details
 
@@ -669,35 +715,56 @@ connection_string = 'mongodb://localhost:27017'
 database_name = 'plusword'
 collection_name = 'historical_data'
 
-# Default size of each plot
-
-figsize = (20, 8)
-
 # Main script
 
-data_import(connection_string, database_name, collection_name)
-data_cleaning_and_prep(df)
-overall_times(df)
-number_of_submissions(df)
-number_of_sub_1_minnies(df)
-submission_times(df)
-monthly_times(df)
-weekly_times(df)
-rolling_average(df)
-overall_max_time_barplot(df_overall_max_time, palette, figsize)
-overall_min_time_barplot(df_overall_min_time, palette, figsize)
-overall_mean_time_barplot(df_overall_mean_time, palette, figsize)
-number_of_sub_1_minnies_barplot(df_sub_minnies, palette, figsize)
-number_of_submissions_barplot(df_overall_number_submissions, palette, figsize)
-overall_sub_time_max_barplot(df_latest_sub_time, palette, figsize)
-overall_sub_time_min_barplot(df_earliest_sub_time, palette, figsize)
-overall_sub_time_mean_barplot(df_mean_sub_time, palette, figsize)
-individual_monthly_mean_lineplot(df_monthly_mean_time, user, palette, figsize)
-combined_monthly_mean_lineplot(df_monthly_mean_time, palette, figsize)
-individual_weekly_mean_lineplot(df_weekly_mean_time, user, palette, figsize)
-combined_weekly_mean_lineplot(df_weekly_mean_time, palette, figsize)
-individual_rolling_average_lineplot(df_ra_finished, window_days, user, palette, figsize)
-combined_rolling_average_lineplot(df_ra_finished, window_days, palette, figsize)
-sub_time_boxplot(df, palette, figsize)
-sub_time_violin_plot(df, palette, figsize)
-sub_time_distplot(df, user, palette, figsize)
+df = data_import(connection_string, database_name, collection_name)
+
+df = data_cleaning_and_prep(df)
+
+df_overall_max_time, df_overall_min_time, df_overall_mean_time = overall_times(df)
+
+df_overall_number_submissions = number_of_submissions(df)
+
+df_sub_minnies = number_of_sub_1_minnies(df)
+
+df_latest_sub_time, df_earliest_sub_time, df_mean_sub_time = submission_times(df)
+
+df_monthly_mean_time, df_monthly_max_time, df_monthly_min_time = monthly_times(df)
+
+df_weekly_mean_time, df_weekly_max_time, df_weekly_min_time = weekly_times(df)
+
+df_ra_finished = rolling_average(df)
+
+overall_max_time_barplot = overall_max_time_barplot(df_overall_max_time)
+
+overall_min_time_barplot = overall_min_time_barplot(df_overall_min_time)
+
+overall_mean_time_barplot = overall_mean_time_barplot(df_overall_mean_time)
+
+number_of_sub_1_minnies_barplot = number_of_sub_1_minnies_barplot(df_sub_minnies)
+
+number_of_submissions_barplot = number_of_submissions_barplot(df_overall_number_submissions)
+
+overall_sub_time_max_barplot = overall_sub_time_max_barplot(df_latest_sub_time)
+
+overall_sub_time_min_barplot = overall_sub_time_min_barplot(df_earliest_sub_time)
+
+overall_sub_time_mean_barplot = overall_sub_time_mean_barplot(df_mean_sub_time)
+
+individual_monthly_mean_lineplot = individual_monthly_mean_lineplot(df_monthly_mean_time)
+
+combined_monthly_mean_lineplot = combined_monthly_mean_lineplot(df_monthly_mean_time)
+
+individual_weekly_mean_lineplot = individual_weekly_mean_lineplot(df_weekly_mean_time)
+
+combined_weekly_mean_lineplot = combined_weekly_mean_lineplot(df_weekly_mean_time)
+
+individual_rolling_average_lineplot = individual_rolling_average_lineplot(df_ra_finished)
+
+combined_rolling_average_lineplot = combined_rolling_average_lineplot(df_ra_finished)
+
+sub_time_boxplot = sub_time_boxplot(df)
+
+sub_time_violin_plot = sub_time_violin_plot(df)
+
+sub_time_distplot = sub_time_distplot(df)
