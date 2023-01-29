@@ -56,7 +56,7 @@ def spline_smooth(df):
     return plot
 
 def savgol_smooth(df):
-    
+    ''' Smooths lines using a Savitzky–Golay filter'''
     df_savgol = df[df['user'] == user]
 
     plt.plot(df_savgol['date_as_num'], df_savgol['time_delta_as_num'])
