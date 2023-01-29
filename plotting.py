@@ -41,19 +41,37 @@ def y_axis_generator(max_y_value, unit):
 def spline_smooth(df): 
     """Smooths lines via interpolation and splines. Purely cosmetic"""
 
-for user in df['user'].unique():
+    for user in df['user'].unique():
     
-    df_spline =df[df['user'] == user]
+        df_spline =df[df['user'] == user]
     
-    x_new = np.linspace(df_plot_spline['date_as_num'].min(), df_plot_spline_['date_as_num'].max(), 50)
+        x_new = np.linspace(df_plot_spline['date_as_num'].min(), df_plot_spline_['date_as_num'].max(), 50)
 
-    bspline = interpolate.make_interp_spline(df_spline['date_as_num'], df_spline['time_delta_as_num'])
+        bspline = interpolate.make_interp_spline(df_spline['date_as_num'], df_spline['time_delta_as_num'])
 
-    y_new =bspline(x_new)
+        y_new =bspline(x_new)
 
-    plot = plt.plot(x_new, y_new)
+        plot = plt.plot(x_new, y_new)
     
-return plot
+    return plot
+
+def savgol_smooth(df):
+    
+    df_savgol = df[df['user'] == user]
+
+    plt.plot(df_savgol['date_as_num'], df_savgol['time_delta_as_num'])
+
+    max_window = len(df_savgol)
+
+    polynomial_order = 10
+
+    x_new= signal.savgol_filter(df_savgol['date_as_num'], max_window, polynomial_order)
+
+    y_new= signal.savgol_filter(df_savgol['time_delta_as_num'], max_window, polynomial_order)
+
+    plt.plot(x_new, y_new)
+    
+    return plot
 
 
 def data_import(connection_string, database_name, collection_name):
