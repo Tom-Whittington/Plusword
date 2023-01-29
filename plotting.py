@@ -801,3 +801,11 @@ sub_time_boxplot = sub_time_boxplot(df)
 sub_time_violin_plot = sub_time_violin_plot(df)
 
 sub_time_distplot = sub_time_distplot(df)
+
+#df_hardest = df.copy()
+#df_hardest['date'] = df_hardest['timestamp'].dt.date
+#df_hardest = df_hardest.groupby(['date'])['time_delta_as_num'].mean()
+#df_hardest =df_hardest.reset_index()
+#df_hardest = df_hardest.sort_values(by='time_delta_as_num', ascending=False)
+#df_hardest = df_hardest[:20]
+#df_hardest['time'] = mdates.num2timedelta(df_hardest['time_delta_as_num'])
