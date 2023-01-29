@@ -38,6 +38,23 @@ def y_axis_generator(max_y_value, unit):
 
     return y_axis_time_num
 
+def spline_smooth(df): 
+    """Smooths lines via interpolation and splines. Purely cosmetic"""
+
+for user in df['user'].unique():
+    
+    df_spline =df[df['user'] == user]
+    
+    x_new = np.linspace(df_plot_spline['date_as_num'].min(), df_plot_spline_['date_as_num'].max(), 50)
+
+    bspline = interpolate.make_interp_spline(df_spline['date_as_num'], df_spline['time_delta_as_num'])
+
+    y_new =bspline(x_new)
+
+    plot = plt.plot(x_new, y_new)
+    
+return plot
+
 
 def data_import(connection_string, database_name, collection_name):
     """Connects to database and creates dataframe containing all columns"""
