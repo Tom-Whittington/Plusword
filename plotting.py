@@ -669,6 +669,7 @@ def sub_time_violin_plot(df):
                           x="user",
                           y=df["sub_time_delta_as_num"],
                           cut=0,
+                          bw = 0.25,
                           palette=palette)
 
     ax.yaxis_date()
