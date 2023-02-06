@@ -71,13 +71,13 @@ def spline_smooth(df):
     
         df_spline =df[df['user'] == user]
     
-        x_new = np.linspace(df_spline['date_as_num'].min(), df_spline_['date_as_num'].max(), 50)
+        x_smooth = np.linspace(df_spline['date_as_num'].min(), df_spline_['date_as_num'].max(), 50)
 
         bspline = interpolate.make_interp_spline(df_spline['date_as_num'], df_spline['time_delta_as_num'])
 
-        y_new =bspline(x_new)
+        y_smooth =bspline(x_smooth)
 
-    return plot
+        return x_smooth, y_smooth
 
 def savgol_smooth(df):
     ''' Smooths lines using a Savitzky–Golay filter'''
@@ -490,9 +490,12 @@ def individual_monthly_mean_lineplot(df_monthly_mean_time, figsize, palette, use
     """Filters out monthly mean time based on value of user. Then plots monthly mean times over time"""
 
     df_monthly_mean_time_user = df_monthly_mean_time[df_monthly_mean_time['user'] == user]
-    print(df_monthly_mean_time_user)
+
+    x_smooth, y_smooth = spline_smooth(df_monthly_mean_time_user)
 
     fig, ax = plt.subplots(figsize=figsize)
+
+    plt.plot(x_smooth, y_smooth)
 
     plot = sns.lineplot(data=df_monthly_mean_time_user,
                         x='timestamp',
