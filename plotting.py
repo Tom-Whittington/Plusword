@@ -550,6 +550,8 @@ def combined_monthly_mean_lineplot(df_monthly_mean_time, figsize, palette):
 
         x_smooth, y_smooth = spline_smooth(df_monthly_mean_time_rough)
 
+        # converts x_smooth, y_smooth into a dataframe with user value associated with them
+
         user_list = [user] * len(x_smooth)
 
         x_smooth = pd.Series(x_smooth, name='date_as_num_smooth')
@@ -559,6 +561,8 @@ def combined_monthly_mean_lineplot(df_monthly_mean_time, figsize, palette):
         users = pd.Series(user_list, name='user')
 
         df = pd.concat([users, x_smooth, y_smooth], axis=1)
+
+        # Joins dfs together to make one big one
 
         df_smooth = pd.concat([df_smooth, df])
 
