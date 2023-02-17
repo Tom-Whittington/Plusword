@@ -33,6 +33,20 @@ def settings():
     return palette, figsize, user, window_days
 
 
+def get_db_client():
+    """ Gets a client object for connection to the mongo db, uses credentials in local/pass.json"""
+    try:
+        with open("local/pass.json") as file:
+            file = json.loads(file.read)
+            connection_string = file.get("connection_string")
+            client = pymongo.MongoClient(
+                "mongodb+srv://dbadmin:4QyEAzNTtBm1jdpt@plusword.buifvua.mongodb.net/?retryWrites=true&w=majority",
+                server_api=ServerApi('1'))
+            return client
+    except Exception as e:
+        print(e)
+
+
 def time_delta_to_num(time_delta):
     """ Takes in time delta and converts it into a number for plotting"""
 
@@ -103,14 +117,9 @@ def savgol_smooth(df):
 def data_import():
     """Connects to database and creates dataframe containing all columns"""
 
-    # Database details
-    mongodb_host = 'localhost'
+    # Get database client
 
-    mongodb_port = 27017
-
-    # point the client at mongo URI
-
-    client = MongoClient(mongodb_host, mongodb_port)
+    client = get_db_client()
 
     # Connects to database and loads data
 
@@ -823,7 +832,6 @@ def sub_time_distplot(df, figsize, palette, user):
 
 
 def hardest_times_scatterplot(df, figsize):
-
     fig, ax = plt.subplots(figsize=figsize)
 
     plot = sns.scatterplot(data=df,
@@ -850,7 +858,6 @@ def hardest_times_scatterplot(df, figsize):
 
 
 def easiest_times_scatterplot(df, figsize):
-
     fig, ax = plt.subplots(figsize=figsize)
 
     plot = sns.scatterplot(data=df,
