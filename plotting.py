@@ -1,7 +1,9 @@
+import json
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from pymongo import MongoClient
+import pymongo
 import datetime
 import matplotlib.dates as mdates
 import numpy as np
@@ -37,11 +39,10 @@ def get_db_client():
     """ Gets a client object for connection to the mongo db, uses credentials in local/pass.json"""
     try:
         with open("local/pass.json") as file:
-            file = json.loads(file.read)
+            file = json.loads(file.read())
             connection_string = file.get("connection_string")
             client = pymongo.MongoClient(
-                "mongodb+srv://dbadmin:4QyEAzNTtBm1jdpt@plusword.buifvua.mongodb.net/?retryWrites=true&w=majority",
-                server_api=ServerApi('1'))
+                connection_string)
             return client
     except Exception as e:
         print(e)
@@ -85,7 +86,7 @@ def spline_smooth(df):
 
     df_spline = df.copy()
 
-    df_spline['date_as_num'] = mdates.date2num(df_spline['timestamp'])
+    df_spline['date_as_num'] = mdates.date2num(df_spline["load_ts"])
 
     x_smooth = np.linspace(df_spline['date_as_num'].min(), df_spline['date_as_num'].max(), 50)
 
@@ -101,7 +102,7 @@ def savgol_smooth(df):
 
     df_savgol = df.copy()
 
-    df_savgol['date_as_num'] = mdates.date2num(df_savgol['timestamp'])
+    df_savgol['date_as_num'] = mdates.date2num(df_savgol["load_ts"])
 
     max_window = len(df_savgol)
 
@@ -123,11 +124,15 @@ def data_import():
 
     # Connects to database and loads data
 
-    db = client.plusword
+    db = client["PlusWord"]
 
-    collection = db.historical_data
+    collection = db["Times"]
 
-    df = pd.DataFrame(list(collection.find()))
+    cursor = collection.find({})
+
+    times_list = list(cursor)
+
+    df = pd.DataFrame(times_list)
 
     return df
 
@@ -139,15 +144,17 @@ def data_cleaning_and_prep(df):
 
     # Dropping columns and setting datatypes
 
-    df = df[['timestamp', 'time', 'user']]
+    df = df[['load_ts', 'time', 'user']]
 
-    df["timestamp"] = pd.to_datetime(df["timestamp"], format='%d/%m/%Y %H:%M')
+    #df["load_ts"] = pd.to_datetime(df["load_ts"], format='%Y-%m-%dT:%d/%m/%Y %H:%M')
 
     # Converting time and submission time to timedelta
 
+    df["time"] = pd.to_datetime(df["time"])
+
     df["time_delta"] = pd.to_timedelta(df["time"])
 
-    df['sub_time_delta'] = df['timestamp'].dt.strftime('%H:%M:%S').astype('timedelta64')
+    df['sub_time_delta'] = df["load_ts"].dt.strftime('%H:%M:%S').astype('timedelta64')
 
     # Converting timedeltas to plottable numbers and dropping sub_time_delta
 
@@ -202,11 +209,11 @@ def number_of_sub_1_minnies(df):
 
     df_sub_minnies = df[df["time_delta"] < datetime.timedelta(minutes=1)]
 
-    df_sub_minnies = df_sub_minnies.groupby(df_sub_minnies["user"])["timestamp"].count()
+    df_sub_minnies = df_sub_minnies.groupby(df_sub_minnies["user"])["load_ts"].count()
 
     df_sub_minnies = df_sub_minnies.reset_index()
 
-    df_sub_minnies = df_sub_minnies.rename(columns={'timestamp': 'count'})
+    df_sub_minnies = df_sub_minnies.rename(columns={"load_ts": 'count'})
 
     return df_sub_minnies
 
@@ -235,23 +242,23 @@ def submission_times(df):
 def monthly_times(df):
     """Groups mean, max and min times for each user by month"""
 
-    df_monthly_mean_time = df.groupby(["user", df["timestamp"].dt.to_period('M')])["time_delta_as_num"].mean()
+    df_monthly_mean_time = df.groupby(["user", df["load_ts"].dt.to_period('M')])["time_delta_as_num"].mean()
 
     df_monthly_mean_time = df_monthly_mean_time.reset_index()
 
-    df_monthly_mean_time["timestamp"] = df_monthly_mean_time["timestamp"].astype('datetime64[M]')
+    df_monthly_mean_time["load_ts"] = df_monthly_mean_time["load_ts"].astype('datetime64[M]')
 
-    df_monthly_max_time = df.groupby(["user", df["timestamp"].dt.to_period('M')])["time_delta_as_num"].max()
+    df_monthly_max_time = df.groupby(["user", df["load_ts"].dt.to_period('M')])["time_delta_as_num"].max()
 
     df_monthly_max_time = df_monthly_max_time.reset_index()
 
-    df_monthly_max_time["timestamp"] = df_monthly_max_time["timestamp"].astype('datetime64[M]')
+    df_monthly_max_time["load_ts"] = df_monthly_max_time["load_ts"].astype('datetime64[M]')
 
-    df_monthly_min_time = df.groupby(["user", df["timestamp"].dt.to_period('M')])["time_delta_as_num"].min()
+    df_monthly_min_time = df.groupby(["user", df["load_ts"].dt.to_period('M')])["time_delta_as_num"].min()
 
     df_monthly_min_time = df_monthly_min_time.reset_index()
 
-    df_monthly_min_time["timestamp"] = df_monthly_min_time["timestamp"].astype('datetime64[M]')
+    df_monthly_min_time["load_ts"] = df_monthly_min_time["load_ts"].astype('datetime64[M]')
 
     return df_monthly_mean_time, df_monthly_max_time, df_monthly_min_time
 
@@ -259,23 +266,23 @@ def monthly_times(df):
 def weekly_times(df):
     """Groups mean, max and min times for each user by week"""
 
-    df_weekly_mean_time = df.groupby(["user", df["timestamp"].dt.to_period('W')])["time_delta_as_num"].mean()
+    df_weekly_mean_time = df.groupby(["user", df["load_ts"].dt.to_period('W')])["time_delta_as_num"].mean()
 
     df_weekly_mean_time = df_weekly_mean_time.reset_index()
 
-    df_weekly_mean_time["timestamp"] = df_weekly_mean_time["timestamp"].astype('datetime64[W]')
+    df_weekly_mean_time["load_ts"] = df_weekly_mean_time["load_ts"].astype('datetime64[W]')
 
-    df_weekly_max_time = df.groupby(["user", df["timestamp"].dt.to_period('W')])["time_delta_as_num"].max()
+    df_weekly_max_time = df.groupby(["user", df["load_ts"].dt.to_period('W')])["time_delta_as_num"].max()
 
     df_weekly_max_time = df_weekly_max_time.reset_index()
 
-    df_weekly_max_time["timestamp"] = df_weekly_max_time["timestamp"].astype('datetime64[W]')
+    df_weekly_max_time["load_ts"] = df_weekly_max_time["load_ts"].astype('datetime64[W]')
 
-    df_weekly_min_time = df.groupby(["user", df["timestamp"].dt.to_period('W')])["time_delta_as_num"].min()
+    df_weekly_min_time = df.groupby(["user", df["load_ts"].dt.to_period('W')])["time_delta_as_num"].min()
 
     df_weekly_min_time = df_weekly_min_time.reset_index()
 
-    df_weekly_min_time["timestamp"] = df_weekly_min_time["timestamp"].astype('datetime64[W]')
+    df_weekly_min_time["load_ts"] = df_weekly_min_time["load_ts"].astype('datetime64[W]')
 
     return df_weekly_mean_time, df_weekly_max_time, df_weekly_min_time
 
@@ -290,9 +297,9 @@ def rolling_average(df, window_days):
     for user in df["user"].unique():
         df_ra = df[df["user"] == user]
 
-        df_ra = df_ra.sort_values(by='timestamp')
+        df_ra = df_ra.sort_values(by="load_ts")
 
-        df_ra = df_ra.set_index("timestamp")
+        df_ra = df_ra.set_index("load_ts")
 
         df_ra["time_delta_as_num_RA"] = df_ra["time_delta_as_num"].rolling(window=window_days_str).mean()
 
@@ -314,7 +321,7 @@ def hardest_days(df):
 
     df_hardest = df.copy()
 
-    df_hardest['date'] = df_hardest['timestamp'].dt.date
+    df_hardest['date'] = df_hardest["load_ts"].dt.date
 
     df_hardest = df_hardest.groupby(['date'])['time_delta_as_num'].mean()
 
@@ -334,7 +341,7 @@ def easiest_days(df):
 
     df_easiest = df.copy()
 
-    df_easiest['date'] = df_easiest['timestamp'].dt.date
+    df_easiest['date'] = df_easiest["load_ts"].dt.date
 
     df_easiest = df_easiest.groupby(['date'])['time_delta_as_num'].mean()
 
@@ -609,7 +616,7 @@ def individual_weekly_mean_lineplot(df_weekly_mean_time, figsize, palette, user)
     plt.plot(x_smooth, y_smooth)
 
     plot = sns.lineplot(data=df_weekly_mean_time_user,
-                        x='timestamp',
+                        x="load_ts",
                         y='time_delta_as_num',
                         color=palette[user]).set(
         title=user + '\'s Mean Times by week',
@@ -701,7 +708,7 @@ def individual_rolling_average_lineplot(df_ra_finished, figsize, palette, user, 
     fig, ax = plt.subplots(figsize=figsize)
 
     plot = sns.lineplot(data=df_ra_finished_user,
-                        x='timestamp',
+                        x="load_ts",
                         y='time_delta_as_num_RA',
                         color=palette[user]).set(
         title=user + '\'s ' + str(window_days) + 'd' + ' Rolling Mean Times',
@@ -725,7 +732,7 @@ def combined_rolling_average_lineplot(df_ra_finished, figsize, palette, window_d
     fig, ax = plt.subplots(figsize=figsize)
 
     plot = sns.lineplot(data=df_ra_finished,
-                        x='timestamp',
+                        x="load_ts",
                         y='time_delta_as_num_RA',
                         hue='user',
                         palette=palette).set(
