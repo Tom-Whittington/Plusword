@@ -52,6 +52,18 @@ def time_delta_to_num(time_delta):
 
     return time_delta_as_num
 
+def time_delta_as_num_to_time(df):
+
+    df['Time'] = mdates.num2date(df['time_delta_as_num'])
+
+    df['Time'] = df['Time'].dt.time
+
+    df['Time'] = df['Time'].astype('string')
+
+    df['Time'] = df['Time'].str[:8]
+
+    return df
+
 
 def y_axis_generator(max_y_value, unit):
     """Creates range for y axis from 0 to max_y_value then passes it to time_delta_to_num. Returns y axis values as
@@ -151,101 +163,12 @@ def data_cleaning_and_prep(df):
 
     df = df.drop(columns="sub_time_delta")
 
+    df = df.rename(columns={'user' : 'User'})
+
     return df
 
 
-def overall_times(df):
-    """ Groups all data by user and then finds max, min and mean times for completion time"""
 
-    df_overall_max_time = df.groupby(df["user"])["time_delta_as_num"].max()
-
-    df_overall_max_time = df_overall_max_time.reset_index()
-
-    df_overall_max_time = df_overall_max_time.sort_values(by='time_delta_as_num', ascending=False)
-
-    df_overall_min_time = df.groupby(df["user"])["time_delta_as_num"].min()
-
-    df_overall_min_time = df_overall_min_time.reset_index()
-
-    df_overall_min_time = df_overall_min_time.sort_values(by='time_delta_as_num', ascending=False)
-
-    df_overall_mean_time = df.groupby(df["user"])["time_delta_as_num"].mean()
-
-    df_overall_mean_time = df_overall_mean_time.reset_index()
-
-    return df_overall_max_time, df_overall_min_time, df_overall_mean_time
-
-
-def number_of_submissions(df):
-    """ Counts number of submissions by user and renames columns"""
-
-    df_overall_number_submissions = df["user"].value_counts(sort=True, ascending=False)
-
-    df_overall_number_submissions = df_overall_number_submissions.reset_index()
-
-    df_overall_number_submissions = df_overall_number_submissions.rename(columns={'user': 'Number of Submissions',
-                                                                                  'index': 'User'})
-
-    return df_overall_number_submissions
-
-
-def number_of_sub_1_minnies(df):
-    """ Drops all rows that aren't <1 minute completion time and groups by user"""
-
-    df_sub_minnies = df[df["time_delta"] < datetime.timedelta(minutes=1)]
-
-    df_sub_minnies = df_sub_minnies.groupby(df_sub_minnies["user"])["timestamp"].count()
-
-    df_sub_minnies = df_sub_minnies.reset_index()
-
-    df_sub_minnies = df_sub_minnies.rename(columns={'timestamp': 'Number of Sub 1 Minutes', 'user' : 'User'})
-
-    return df_sub_minnies
-
-
-def submission_times(df):
-    """ Groups all data by user and then finds max, min and mean times for submission time. Mean is the only one worth
-    plotting really"""
-
-    df_latest_sub_time = df.groupby(df["user"])["sub_time_delta_as_num"].max()
-
-    df_latest_sub_time = df_latest_sub_time.reset_index()
-
-    df_earliest_sub_time = df.groupby(df["user"])["sub_time_delta_as_num"].min()
-
-    df_earliest_sub_time = df_earliest_sub_time.reset_index()
-
-    df_mean_sub_time = df.groupby(df["user"])["sub_time_delta_as_num"].mean()
-
-    df_mean_sub_time = df_mean_sub_time.reset_index()
-
-    df_mean_sub_time = df_mean_sub_time.sort_values(by='sub_time_delta_as_num', ascending=False)
-
-    return df_latest_sub_time, df_earliest_sub_time, df_mean_sub_time
-
-
-def monthly_times(df):
-    """Groups mean, max and min times for each user by month"""
-
-    df_monthly_mean_time = df.groupby(["user", df["timestamp"].dt.to_period('M')])["time_delta_as_num"].mean()
-
-    df_monthly_mean_time = df_monthly_mean_time.reset_index()
-
-    df_monthly_mean_time["timestamp"] = df_monthly_mean_time["timestamp"].astype('datetime64[M]')
-
-    df_monthly_max_time = df.groupby(["user", df["timestamp"].dt.to_period('M')])["time_delta_as_num"].max()
-
-    df_monthly_max_time = df_monthly_max_time.reset_index()
-
-    df_monthly_max_time["timestamp"] = df_monthly_max_time["timestamp"].astype('datetime64[M]')
-
-    df_monthly_min_time = df.groupby(["user", df["timestamp"].dt.to_period('M')])["time_delta_as_num"].min()
-
-    df_monthly_min_time = df_monthly_min_time.reset_index()
-
-    df_monthly_min_time["timestamp"] = df_monthly_min_time["timestamp"].astype('datetime64[M]')
-
-    return df_monthly_mean_time, df_monthly_max_time, df_monthly_min_time
 
 
 def weekly_times(df):
@@ -341,72 +264,107 @@ def easiest_days(df):
     return df_easiest
 
 
-def overall_max_time_barplot(df_overall_max_time, palette):
+def overall_max_time(df, palette):
     """Barplot showing the longest completion time for each person """
 
-    fig, ax =plt.subplots()
+    df_overall_max_time = df.groupby(df["User"])["time_delta_as_num"].max()
 
-    fig = sns.barplot(data=df_overall_max_time,
-                       x="user",
-                       y="time_delta_as_num",
-                       palette=palette).set(
-        title='Slowest Time',
-        ylabel='Time /mins',
-        xlabel=None)
+    df_overall_max_time = df_overall_max_time.reset_index()
 
-    ax.yaxis_date()
-
-    ax.yaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
-
-    return ax.figure
-
-
-def overall_min_time_barplot(df_overall_min_time, figsize, palette):
-    """Barplot showing the shortest completion time for each person """
-
-    fig, ax = plt.subplots(figsize=figsize)
-
-    ax = sns.barplot(data=df_overall_min_time,
-                       x="user",
-                       y="time_delta_as_num",
-                       palette=palette).set(
-        title='Fastest Time',
-        ylabel='Time /mins',
-        xlabel=None)
-
-    ax.yaxis_date()
-
-    ax.yaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
-
-    return fig
-
-
-def overall_mean_time_barplot(df_overall_mean_time, figsize, palette):
-    """Barplot showing mean completion time for each person """
-
-    fig, ax = plt.subplots(figsize=figsize)
-
-    ax = sns.barplot(data=df_overall_mean_time,
-                       x="user",
-                       y="time_delta_as_num",
-                       palette=palette).set(
-        title='Mean Time',
-        ylabel='Time /mins',
-        xlabel=None)
-
-    ax.yaxis_date()
-
-    ax.yaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
-
-    return fig
-
-
-def number_of_sub_1_minnies_barplot(df_sub_minnies, palette):
-    """ Barplot of how many sub 1-minute completion times for each person"""
+    df_overall_max_time = df_overall_max_time.sort_values(by='time_delta_as_num', ascending=False)
 
     fig, ax = plt.subplots()
 
-    ax = sns.barplot(data=df_sub_minnies,
+    fig = sns.barplot(data=df_overall_max_time,
+                       x="User",
+                       y="time_delta_as_num",
+                       palette=palette).set(
+        ylabel='Time /mins',
+        xlabel=None)
+
+    ax.yaxis_date()
+
+    ax.yaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
+
+    df_overall_max_time=time_delta_as_num_to_time(df_overall_max_time)
+
+    df_overall_max_time = df_overall_max_time[['User', 'Time']]
+
+    return df_overall_max_time, ax.figure
+
+
+def overall_min_time(df, palette):
+    """Barplot showing the shortest completion time for each person """
+
+    df_overall_min_time = df.groupby(df["User"])["time_delta_as_num"].min()
+
+    df_overall_min_time = df_overall_min_time.reset_index()
+
+    df_overall_min_time = df_overall_min_time.sort_values(by='time_delta_as_num', ascending=False)
+
+    fig, ax = plt.subplots()
+
+    fig = sns.barplot(data=df_overall_min_time,
+                       x="User",
+                       y="time_delta_as_num",
+                       palette=palette).set(
+        ylabel='Time /mins',
+        xlabel=None)
+
+    ax.yaxis_date()
+
+    ax.yaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
+
+    df_overall_min_time=time_delta_as_num_to_time(df_overall_min_time)
+
+    df_overall_min_time = df_overall_min_time[['User', 'Time']]
+
+    return df_overall_min_time, ax.figure
+
+
+def overall_mean_time(df, palette):
+    """Barplot showing mean completion time for each person """
+
+    df_overall_mean_time = df.groupby(df["User"])["time_delta_as_num"].mean()
+
+    df_overall_mean_time = df_overall_mean_time.reset_index()
+
+    df_overall_mean_time = df_overall_mean_time.sort_values(by='time_delta_as_num', ascending=False)
+
+    fig, ax = plt.subplots()
+
+    fig = sns.barplot(data=df_overall_mean_time,
+                       x="User",
+                       y="time_delta_as_num",
+                       palette=palette).set(
+        ylabel='Time /mins',
+        xlabel=None)
+
+    ax.yaxis_date()
+
+    ax.yaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
+
+    df_overall_mean_time = time_delta_as_num_to_time(df_overall_mean_time)
+
+    df_overall_mean_time = df_overall_mean_time[['User', 'Time']]
+
+    return df_overall_mean_time, ax.figure
+
+
+def number_of_sub_1_minnies(df, palette):
+    """ Barplot of how many sub 1-minute completion times for each person"""
+
+    df_sub_minnies = df[df["time_delta"] < datetime.timedelta(minutes=1)]
+
+    df_sub_minnies = df_sub_minnies.groupby(df_sub_minnies["User"])["timestamp"].count()
+
+    df_sub_minnies = df_sub_minnies.reset_index()
+
+    df_sub_minnies = df_sub_minnies.rename(columns={'timestamp': 'Number of Sub 1 Minutes'})
+
+    fig, ax = plt.subplots()
+
+    fig = sns.barplot(data=df_sub_minnies,
                        y='Number of Sub 1 Minutes',
                        x='User',
                        palette=palette).set(
@@ -415,115 +373,38 @@ def number_of_sub_1_minnies_barplot(df_sub_minnies, palette):
 
     plt.xticks(rotation=0)
 
-    return fig
+    return df_sub_minnies, ax.figure
 
 
-def number_of_submissions_barplot(df_overall_number_submissions, palette):
+def number_of_submissions(df, palette):
     """ Barplot of how many submissions total for each person"""
 
+    df_overall_number_submissions = df["User"].value_counts(sort=True, ascending=False)
+
+    df_overall_number_submissions = df_overall_number_submissions.reset_index()
+
+    df_overall_number_submissions = df_overall_number_submissions.rename(columns={'User': 'Number of Submissions',
+                                                                                  'index': 'User'})
     fig, ax = plt.subplots()
 
-    ax = sns.barplot(data=df_overall_number_submissions,
+    fig = sns.barplot(data=df_overall_number_submissions,
                        y='Number of Submissions',
                        x='User',
                        palette=palette)
 
     plt.xticks(rotation=0)
 
-    return fig
+    return df_overall_number_submissions, ax.figure
 
 
-def overall_sub_time_max_barplot(df_latest_sub_time, figsize, palette):
-    """ Barplot of the latest submission times for each person. Probably not worth plotting"""
-
-    fig, ax = plt.subplots(figsize=figsize)
-
-    ax = sns.barplot(data=df_latest_sub_time,
-                       x='user',
-                       y='sub_time_delta_as_num',
-                       palette=palette).set(
-        title='Latest Time of Submission',
-        ylabel='Time /mins',
-        label=None)
-
-    ax.yaxis_date()
-
-    ax.yaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
-
-    return fig
-
-
-def overall_sub_time_min_barplot(df_earliest_sub_time, figsize, palette):
-    """ Barplot of the earliest submission times for each person. Probably not worth plotting"""
-
-    fig, ax = plt.subplots(figsize=figsize)
-
-    ax = sns.barplot(data=df_earliest_sub_time,
-                       x='user',
-                       y='sub_time_delta_as_num',
-                       palette=palette).set(
-        title='Earliest Time of Submission',
-        ylabel='Time /mins',
-        label=None)
-
-    ax.yaxis_date()
-
-    ax.yaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
-
-    return fig
-
-
-def overall_sub_time_mean_barplot(df_mean_sub_time, figsize, palette):
-    """ Barplot of mean submission times for each person """
-
-    fig, ax = plt.subplots(figsize=figsize)
-
-    ax = sns.barplot(data=df_mean_sub_time,
-                       x='user',
-                       y='sub_time_delta_as_num',
-                       palette=palette).set(
-        title='Mean Time of Submission',
-        ylabel='Time /mins',
-        label=None)
-
-    ax.yaxis_date()
-
-    ax.yaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
-
-    return fig
-
-
-def individual_monthly_mean_lineplot(df_monthly_mean_time, figsize, palette, user):
-    """Filters out monthly mean time based on value of user. Then plots monthly mean times over time"""
-
-    df_monthly_mean_time_user = df_monthly_mean_time[df_monthly_mean_time['user'] == user]
-
-    fig, ax = plt.subplots(figsize=figsize)
-
-    x_smooth, y_smooth = spline_smooth(df_monthly_mean_time_user)
-
-    # plt.plot(x_smooth, y_smooth)
-
-    ax = sns.lineplot(x=x_smooth,
-                        y=y_smooth,
-                        color=palette[user]).set(
-        title=user + '\'s mean times by month',
-        ylabel='Mean time',
-        xlabel='Date')
-
-    ax.yaxis_date()
-
-    ax.yaxis.set_major_formatter(mdates.DateFormatter("%M:%S"))
-
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
-
-    ax.set_ylim(ymin=0)
-
-    return fig
-
-
-def combined_monthly_mean_lineplot(df_monthly_mean_time, figsize, palette):
+def combined_monthly_mean_lineplot(df, palette, selected_users):
     """Plots monthly mean times for every player over time on the same lineplot"""
+
+    df_monthly_mean_time = df.groupby(["User", df["timestamp"].dt.to_period('M')])["time_delta_as_num"].mean()
+
+    df_monthly_mean_time = df_monthly_mean_time.reset_index()
+
+    df_monthly_mean_time["timestamp"] = df_monthly_mean_time["timestamp"].astype('datetime64[M]')
 
     # Generates 15 minutes for y axis
 
@@ -535,43 +416,43 @@ def combined_monthly_mean_lineplot(df_monthly_mean_time, figsize, palette):
 
     # Plot
 
-    fig, ax = plt.subplots(figsize=figsize)
+    fig, ax = plt.subplots()
 
     # Smoothing function doesn't like that Sal only has a month of data so has to be removed
 
-    df_monthly_mean_time = df_monthly_mean_time[df_monthly_mean_time['user'] != 'Sal']
+    df_monthly_mean_time = df_monthly_mean_time[df_monthly_mean_time['User'] != 'Sal']
 
     # Smooths lines out for each user and plots them
 
     df_smooth = pd.DataFrame()
 
-    for user in df_monthly_mean_time['user'].unique():
-        df_monthly_mean_time_rough = df_monthly_mean_time[df_monthly_mean_time['user'] == user]
+    for User in selected_users:
+
+        df_monthly_mean_time_rough = df_monthly_mean_time[df_monthly_mean_time['User'] == User]
 
         x_smooth, y_smooth = spline_smooth(df_monthly_mean_time_rough)
 
         # converts x_smooth, y_smooth into a dataframe with user value associated with them
 
-        user_list = [user] * len(x_smooth)
+        User_list = [User] * len(x_smooth)
 
         x_smooth = pd.Series(x_smooth, name='date_as_num_smooth')
 
         y_smooth = pd.Series(y_smooth, name='time_as_num_smooth')
 
-        users = pd.Series(user_list, name='user')
+        Users = pd.Series(User_list, name='User')
 
-        df = pd.concat([users, x_smooth, y_smooth], axis=1)
+        df = pd.concat([Users, x_smooth, y_smooth], axis=1)
 
         # Joins dfs together to make one big one
 
         df_smooth = pd.concat([df_smooth, df])
 
-    ax = sns.lineplot(data=df_smooth,
+    fig = sns.lineplot(data=df_smooth,
                         x='date_as_num_smooth',
                         y='time_as_num_smooth',
-                        hue='user',
+                        hue='User',
                         palette=palette).set(
-        title='Combined Mean Times by month',
         xlabel='Date',
         ylabel='Mean time /min')
 
@@ -585,7 +466,15 @@ def combined_monthly_mean_lineplot(df_monthly_mean_time, figsize, palette):
 
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
 
-    return fig
+    df_monthly_mean_time = time_delta_as_num_to_time(df_monthly_mean_time)
+
+    df_monthly_mean_time['Date'] = df_monthly_mean_time['timestamp'].dt.strftime('%B %Y')
+
+    df_monthly_mean_time=df_monthly_mean_time[['User', 'Date', 'Time']]
+
+    df_monthly_mean_time = df_monthly_mean_time.rename(columns={'Time' : 'Monthly Mean Time'})
+
+    return df_monthly_mean_time, ax.figure
 
 
 def individual_weekly_mean_lineplot(df_weekly_mean_time, figsize, palette, user):
