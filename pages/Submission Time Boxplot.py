@@ -1,5 +1,5 @@
 import streamlit as st
-from plotting_streamlit import data_import, data_cleaning_and_prep, settings, sub_time_boxplot
+from plotting_streamlit import data_import, data_cleaning_and_prep, settings, sub_time_boxplot, add_bg_from_local
 
 palette, figsize, user, window_days = settings()
 
@@ -13,5 +13,6 @@ st.title('Submission Time Dist Plot')
 
 st.pyplot(fig)
 
+add_bg_from_local()
 
 

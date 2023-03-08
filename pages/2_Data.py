@@ -1,6 +1,7 @@
 import datetime
 import streamlit as st
-from plotting_streamlit import data_import, data_cleaning_and_prep, settings
+from plotting_streamlit import data_import, data_cleaning_and_prep, settings, add_bg_from_local
+
 
 palette, figsize, user, window_days = settings()
 
@@ -34,3 +35,5 @@ df_streamlit = df_streamlit.sort_index(ascending=False)
 st.write(str(df_streamlit.shape[0]) + ' rows')
 
 st.dataframe(df_streamlit[['Time', 'User']], width=800)
+
+add_bg_from_local()

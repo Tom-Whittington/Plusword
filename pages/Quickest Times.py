@@ -1,5 +1,5 @@
 import streamlit as st
-from plotting_streamlit import data_import, data_cleaning_and_prep, settings, overall_min_time
+from plotting_streamlit import data_import, data_cleaning_and_prep, settings, overall_min_time, add_bg_from_local
 
 palette, figsize, user, window_days = settings()
 
@@ -14,6 +14,8 @@ st.title('Quickest Times')
 st.pyplot(fig)
 
 st.dataframe(df_overall_min_time.set_index('User'), width=800)
+
+add_bg_from_local()
 
 
 
