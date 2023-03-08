@@ -224,44 +224,10 @@ def rolling_average(df, window_days):
     return df_ra_finished, window_days
 
 
-def hardest_days(df):
-    """Generates df of 20 longest times averaged across all players"""
-
-    df_hardest = df.copy()
-
-    df_hardest['date'] = df_hardest['timestamp'].dt.date
-
-    df_hardest = df_hardest.groupby(['date'])['time_delta_as_num'].mean()
-
-    df_hardest = df_hardest.reset_index()
-
-    df_hardest = df_hardest.sort_values(by='time_delta_as_num', ascending=False)
-
-    df_hardest = df_hardest[:20]
-
-    df_hardest['time'] = mdates.num2timedelta(df_hardest['time_delta_as_num'])
-
-    return df_hardest
-
 
 def easiest_days(df):
     """Generates df of 20 shortest times averaged across all players"""
 
-    df_easiest = df.copy()
-
-    df_easiest['date'] = df_easiest['timestamp'].dt.date
-
-    df_easiest = df_easiest.groupby(['date'])['time_delta_as_num'].mean()
-
-    df_easiest = df_easiest.reset_index()
-
-    df_easiest = df_easiest.sort_values(by='time_delta_as_num', ascending=True)
-
-    df_easiest = df_easiest[:20]
-
-    df_easiest['time'] = mdates.num2timedelta(df_easiest['time_delta_as_num'])
-
-    return df_easiest
 
 
 def overall_max_time(df, palette):
@@ -624,13 +590,13 @@ def combined_rolling_average_lineplot(df_ra_finished, figsize, palette, window_d
     return fig
 
 
-def sub_time_boxplot(df, figsize, palette):
+def sub_time_boxplot(df, palette):
     """Plots boxplot of submission times"""
 
-    fig, ax = plt.subplots(figsize=figsize)
+    fig, ax = plt.subplots()
 
-    ax = sns.boxplot(data=df,
-                       x="user",
+    fig = sns.boxplot(data=df,
+                       x="User",
                        y=df["sub_time_delta_as_num"],
                        palette=palette).set(
         ylabel='Time of Submission',
@@ -642,10 +608,10 @@ def sub_time_boxplot(df, figsize, palette):
 
     ax.set_ylim(ymin=0)
 
-    return fig
+    return ax.figure
 
 
-def sub_time_violin_plot(df, figsize, palette):
+def sub_time_violin_plot(df, palette):
     """Plots violin plot of submission times"""
 
     # Generates 24 hours for y axis
@@ -656,10 +622,10 @@ def sub_time_violin_plot(df, figsize, palette):
 
     y_axis_time_2_hourly = y_axis_time[::2]
 
-    fig, ax = plt.subplots(figsize=figsize)
+    fig, ax = plt.subplots()
 
-    ax = sns.violinplot(data=df,
-                          x="user",
+    fig = sns.violinplot(data=df,
+                          x="User",
                           y=df["sub_time_delta_as_num"],
                           cut=0,
                           bw=0.25,
@@ -671,8 +637,6 @@ def sub_time_violin_plot(df, figsize, palette):
 
     ax.set_yticklabels(y_axis_time_2_hourly)
 
-    ax.set_title('Time of Submission Violin Plot')
-
     ax.set_xlabel(None)
 
     ax.set_ylabel('Time of Submission')
@@ -681,41 +645,54 @@ def sub_time_violin_plot(df, figsize, palette):
 
     ax.set_ylim(ymin=0)
 
-    return fig
+    return ax.figure
 
 
-def sub_time_distplot(df, figsize, palette, user):
+def sub_time_distplot(df, palette, User):
     """Plots dist plot for submission times based on user"""
 
-    df_time_dist = df[df["user"] == user]
+    df_time_dist = df[df["User"] == User]
 
     df_time_dist = df_time_dist.sort_values(by='sub_time_delta_as_num')
 
-    fig, ax = plt.subplots(figsize=figsize)
+    fig, ax = plt.subplots()
 
     plt.xlim(0, 1)
 
-    ax = sns.displot(df_time_dist,
+    fig = sns.distplot(df_time_dist,
                        x=df_time_dist['sub_time_delta_as_num'],
                        bins=30,
-                       stat='density',
                        kde=True,
-                       color=palette[user]).set(
-        title=user + '\'s Time of Submission distribution',
+                       color=palette[User]).set(
+        title=User,
         xlabel='Time of Submission')
 
     ax.xaxis_date()
 
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
 
-    return fig
+    return ax.figure
 
 
-def hardest_times_scatterplot(df, figsize):
+def hardest_times_scatterplot(df):
 
-    fig, ax = plt.subplots(figsize=figsize)
+    df_hardest = df.copy()
 
-    ax = sns.scatterplot(data=df,
+    df_hardest['date'] = df_hardest['timestamp'].dt.date
+
+    df_hardest = df_hardest.groupby(['date'])['time_delta_as_num'].mean()
+
+    df_hardest = df_hardest.reset_index()
+
+    df_hardest = df_hardest.sort_values(by='time_delta_as_num', ascending=False)
+
+    df_hardest = df_hardest[:20]
+
+    df_hardest['time'] = mdates.num2timedelta(df_hardest['time_delta_as_num'])
+
+    fig, ax = plt.subplots()
+
+    fig = sns.scatterplot(data=df,
                            x='date',
                            y='time_delta_as_num')
 
@@ -733,16 +710,28 @@ def hardest_times_scatterplot(df, figsize):
 
     ax.set_ylim(ymin=0)
 
-    plt.savefig('test.svg')
-
-    return fig
+    return df_hardest, ax.figure
 
 
-def easiest_times_scatterplot(df, figsize):
+def easiest_times_scatterplot(df):
 
-    fig, ax = plt.subplots(figsize=figsize)
+    df_easiest = df.copy()
 
-    ax = sns.scatterplot(data=df,
+    df_easiest['date'] = df_easiest['timestamp'].dt.date
+
+    df_easiest = df_easiest.groupby(['date'])['time_delta_as_num'].mean()
+
+    df_easiest = df_easiest.reset_index()
+
+    df_easiest = df_easiest.sort_values(by='time_delta_as_num', ascending=True)
+
+    df_easiest = df_easiest[:20]
+
+    df_easiest['time'] = mdates.num2timedelta(df_easiest['time_delta_as_num'])
+
+    fig, ax = plt.subplots()
+
+    fig = sns.scatterplot(data=df,
                            x='date',
                            y='time_delta_as_num')
 
@@ -762,7 +751,7 @@ def easiest_times_scatterplot(df, figsize):
 
     plt.savefig('test.svg')
 
-    return fig
+    return df_easiest, ax.figure
 
 
 def main():
