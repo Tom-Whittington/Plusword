@@ -1,5 +1,5 @@
 import streamlit as st
-from plotting_streamlit import data_import, settings, user_multi_select, combined_monthly_mean_lineplot, combined_weekly_mean, add_bg_from_local
+from plotting_streamlit import data_import, settings, user_multi_select, combined_period_mean,  add_bg_from_local
 
 # Gets default settings
 palette, window_days = settings()
@@ -10,35 +10,50 @@ df = data_import()
 # Selects users to display
 df = user_multi_select(df)
 
-# Gets dataframe and plot
-df_monthly_mean_time, fig = combined_monthly_mean_lineplot(df, palette)
+smooth = st.sidebar.checkbox('Smooth Data')
 
 # Sets background
 add_bg_from_local()
 
+# Selects chart type
 chart_type = st.sidebar.radio(label = 'Select chart type',
                       options=["Monthly Mean", 'Weekly Mean', 'Rolling Average'])
 
-if chart_type == 'Monthly mean':
-    # df, fig = combined_monthly_mean_lineplot(df, palette)
-    pass
+# Selects monthly mean times
+if chart_type == 'Monthly Mean':
 
+    # Sets value for amount of smoothing
+    poly_value = st.sidebar.slider('Polynomial value',
+                                   min_value=2,
+                                   max_value=40,
+                                   value=40,
+                                   help='Higher values give smoother lines, lower values give rougher lines')
+    time_period = 'M'
+
+    df, fig = combined_period_mean(df, palette, poly_value, time_period, smooth)
+
+# Selects weekly mean times
 elif chart_type == 'Weekly Mean':
+
+    # Sets value for amount of smoothing
     poly_value = st.sidebar.slider('Polynomial value',
                            min_value=1,
                            max_value=10,
                            value=10,
                            help='Higher values give smoother lines, lower values give rougher lines')
+    time_period = 'W'
 
-    #df, fig = combined_weekly_mean(df, palette, poly_value)
+    df, fig = combined_period_mean(df, palette, poly_value, time_period, smooth)
 
-elif chart_type =='Rolling Average':
+else:
     window_days = st.sidebar.slider('Window Days',
                            min_value=1,
                            max_value=150,
                            value=60,
                            help='Number of days over which to average times')
-    # df, fig = df_rolling_average(df, palette, window_days)
+
+
+    #df, fig = df_rolling_average(df, palette, window_days)
 
 # Sets title
 st.title(chart_type)
@@ -47,4 +62,4 @@ st.title(chart_type)
 st.pyplot(fig)
 
 # Displays dataframe
-st.dataframe(df_monthly_mean_time.set_index('User'), width=800)
+st.dataframe(df.set_index('User'), width=800)

@@ -77,14 +77,14 @@ def y_axis_generator(max_y_value, unit):
     return y_axis_time_num
 
 
-def spline_smooth(df):
+def spline_smooth(df, poly_value):
     """Smooths lines via interpolation and splines. Purely cosmetic"""
 
     df_spline = df.copy()
 
     df_spline['date_as_num'] = mdates.date2num(df_spline['timestamp'])
 
-    x_smooth = np.linspace(df_spline['date_as_num'].min(), df_spline['date_as_num'].max(), 25)
+    x_smooth = np.linspace(df_spline['date_as_num'].min(), df_spline['date_as_num'].max(), poly_value)
 
     bspline = interpolate.make_interp_spline(df_spline['date_as_num'], df_spline['time_delta_as_num'])
 
@@ -93,7 +93,7 @@ def spline_smooth(df):
     return x_smooth, y_smooth
 
 
-def savgol_smooth(df):
+def savgol_smooth(df, poly_value):
     """Smooths lines using a Savitzky–Golay filter"""
 
     df_savgol = df.copy()
@@ -102,11 +102,9 @@ def savgol_smooth(df):
 
     max_window = len(df_savgol)
 
-    polynomial_order = 10
+    x_smooth = signal.savgol_filter(df_savgol['date_as_num'], max_window, poly_value)
 
-    x_smooth = signal.savgol_filter(df_savgol['date_as_num'], max_window, polynomial_order)
-
-    y_smooth = signal.savgol_filter(df_savgol['time_delta_as_num'], max_window, polynomial_order)
+    y_smooth = signal.savgol_filter(df_savgol['time_delta_as_num'], max_window, poly_value)
 
     return x_smooth, y_smooth
 
@@ -307,94 +305,14 @@ def number_of_submissions(df, palette):
 
     return df_overall_number_submissions, ax.figure
 
-
-def combined_monthly_mean_lineplot(df, palette):
-    """Plots monthly mean times for every player over time on the same lineplot"""
-
-    # Creates df
-
-    df_monthly_mean_time = df.groupby(["User", df["timestamp"].dt.to_period('M')])["time_delta_as_num"].mean()
-
-    df_monthly_mean_time = df_monthly_mean_time.reset_index()
-
-    df_monthly_mean_time["timestamp"] = df_monthly_mean_time["timestamp"].astype('datetime64[M]')
-
-    # Generates 15 minutes for y axis
-
-    y_axis_time = y_axis_generator(15, 'm')
-
-    # Selects every 2 minutes
-
-    y_axis_time_2_mins = y_axis_time[::2]
-
-    # Plot
-
-    fig, ax = plt.subplots(figsize=(15, 7))
-
-    # Smooths lines out for each user and plots them
-
-    df_smooth = pd.DataFrame()
-
-    for user in df_monthly_mean_time['User'].unique():
-        df_monthly_mean_time_rough = df_monthly_mean_time[df_monthly_mean_time['User'] == user]
-
-        x_smooth, y_smooth = spline_smooth(df_monthly_mean_time_rough)
-
-        # converts x_smooth, y_smooth into a dataframe with user value associated with them
-
-        user_list = [user] * len(x_smooth)
-
-        x_smooth = pd.Series(x_smooth, name='date_as_num_smooth')
-
-        y_smooth = pd.Series(y_smooth, name='time_as_num_smooth')
-
-        users = pd.Series(user_list, name='User')
-
-        df = pd.concat([users, x_smooth, y_smooth], axis=1)
-
-        # Joins dfs together to make one big one
-
-        df_smooth = pd.concat([df_smooth, df])
-
-    fig = sns.lineplot(data=df_smooth,
-                       x='date_as_num_smooth',
-                       y='time_as_num_smooth',
-                       hue='User',
-                       palette=palette).set(
-        xlabel='Date',
-        ylabel='Mean time /min')
-
-    ax.yaxis_date()
-
-    ax.set_yticks(y_axis_time_2_mins)
-
-    ax.set_yticklabels(y_axis_time_2_mins)
-
-    ax.yaxis.set_major_formatter(mdates.DateFormatter("%M:%S"))
-
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
-
-    # Formats df
-
-    df_monthly_mean_time = time_delta_as_num_to_time(df_monthly_mean_time)
-
-    df_monthly_mean_time['Date'] = df_monthly_mean_time['timestamp'].dt.strftime('%B %Y')
-
-    df_monthly_mean_time = df_monthly_mean_time[['User', 'Date', 'Time']]
-
-    df_monthly_mean_time = df_monthly_mean_time.rename(columns={'Time': 'Monthly Mean Time'})
-
-    return df_monthly_mean_time, ax.figure
-
-
-def combined_weekly_mean(df, palette, selected_users):
-    """Plots weekly mean times for every player over time on the same lineplot"""
+def combined_period_mean(df, palette, poly_value, time_period, smooth):
+    """Plots mean times for every player over time on the same lineplot"""
 
     # Creates df
 
-    df_weekly_mean_time = df.groupby(["User", df["timestamp"].dt.to_period('W')])["time_delta_as_num"].mean()
+    df_mean_time = df.groupby(["User", df["timestamp"].dt.to_period(time_period)])["time_delta_as_num"].mean()
 
-    df_weekly_mean_time = df_weekly_mean_time.reset_index()
+    df_mean_time = df_mean_time.reset_index()
 
     # Generates 25 mins for y-axis
 
@@ -406,40 +324,50 @@ def combined_weekly_mean(df, palette, selected_users):
 
     fig, ax = plt.subplots(figsize=(15, 7))
 
-    # Smoothing function doesn't like that Sal only has a month of data so has to be removed
-
-    df_weekly_mean_time = df_weekly_mean_time[df_weekly_mean_time['User'] != 'Sal']
-
     # Smooths lines out for each user and plots them
 
-    df_smooth = pd.DataFrame()
+    if smooth == True:
 
-    for User in selected_users:
-        df_weekly_mean_time_rough = df_weekly_mean_time[df_weekly_mean_time['User'] == User]
+        df_smooth = pd.DataFrame()
 
-        x_smooth, y_smooth = savgol_smooth(df_weekly_mean_time_rough)
+        for User in df_mean_time['User'].unique():
 
-        # converts x_smooth, y_smooth into a dataframe with user value associated with them
+            df_mean_time_rough = df_mean_time[df_mean_time['User'] == User]
 
-        user_list = [User] * len(x_smooth)
+            if time_period == 'M':
+                x_smooth, y_smooth = spline_smooth(df_mean_time_rough, poly_value)
 
-        x_smooth = pd.Series(x_smooth, name='date_as_num_smooth')
+            if time_period == 'W':
+                x_smooth, y_smooth = savgol_smooth(df_mean_time_rough, poly_value)
 
-        y_smooth = pd.Series(y_smooth, name='time_as_num_smooth')
+            # converts x_smooth, y_smooth into a dataframe with user value associated with them
 
-        users = pd.Series(user_list, name='User')
+            user_list = [User] * len(x_smooth)
 
-        df = pd.concat([users, x_smooth, y_smooth], axis=1)
+            x_smooth = pd.Series(x_smooth, name='date_as_num')
 
-        # Concats dfs together to make one big one
+            y_smooth = pd.Series(y_smooth, name='time_delta_as_num')
 
-        df_smooth = pd.concat([df_smooth, df])
+            users = pd.Series(user_list, name='User')
+
+            df = pd.concat([users, x_smooth, y_smooth], axis=1)
+
+            # Concats dfs together to make one big one
+
+            df_smooth = pd.concat([df_smooth, df])
+
+        df = df_smooth.copy()
+
+    else:
+        df = df_mean_time.copy()
+
+        df['date_as_num'] = df.index
 
     # Plotting
 
-    fig = sns.lineplot(data=df_smooth,
-                       x='date_as_num_smooth',
-                       y='time_as_num_smooth',
+    fig = sns.lineplot(data=df,
+                       x='date_as_num',
+                       y='time_delta_as_num',
                        hue='User',
                        palette=palette).set(
         xlabel='Date',
@@ -457,15 +385,15 @@ def combined_weekly_mean(df, palette, selected_users):
 
     # Formats df
 
-    df_weekly_mean_time = time_delta_as_num_to_time(df_weekly_mean_time)
+    df_mean_time = time_delta_as_num_to_time(df_mean_time)
 
-    df_weekly_mean_time['Date'] = df_weekly_mean_time['timestamp'].dt.strftime('%d %B %Y')
+    df_mean_time['Date'] = df_mean_time['timestamp'].dt.strftime('%d %B %Y')
 
-    df_weekly_mean_time = df_weekly_mean_time[['User', 'Date', 'Time']]
+    df_mean_time = df_mean_time[['User', 'Date', 'Time']]
 
-    df_weekly_mean_time = df_weekly_mean_time.rename(columns={'Time': 'Weekly Mean Time'})
+    df_mean_time = df_mean_time.rename(columns={'Time': 'Mean Time'})
 
-    return df_weekly_mean_time, ax.figure
+    return df_mean_time, ax.figure
 
 
 def sub_time_boxplot(df, palette):
