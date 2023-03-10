@@ -23,11 +23,7 @@ def settings():
                "George": 'tab:olive',
                "Harvey": "tab:red"}
 
-
-    # Default value for rolling average window duration
-    window_days = 60
-
-    return palette, window_days
+    return palette
 
 
 def time_delta_to_num(time_delta):
@@ -159,18 +155,25 @@ def data_import():
     return df
 
 
-def overall_max_time(df, palette):
+def overall_times(df, palette, agg):
     """Barplot showing the longest completion time for each person """
 
-    df_overall_max_time = df.groupby(df["User"])["time_delta_as_num"].max()
+    if agg == 'Mean':
+        df = df.groupby(df["User"])["time_delta_as_num"].mean()
 
-    df_overall_max_time = df_overall_max_time.reset_index()
+    if agg == 'Min':
+        df = df.groupby(df["User"])["time_delta_as_num"].min()
 
-    df_overall_max_time = df_overall_max_time.sort_values(by='time_delta_as_num', ascending=False)
+    if agg == 'Max':
+        df = df.groupby(df["User"])["time_delta_as_num"].max()
+
+    df = df.reset_index()
+
+    df = df.sort_values(by='time_delta_as_num', ascending=False)
 
     fig, ax = plt.subplots(figsize=(10, 5))
 
-    fig = sns.barplot(data=df_overall_max_time,
+    fig = sns.barplot(data=df,
                       x="User",
                       y="time_delta_as_num",
                       palette=palette).set(
@@ -181,75 +184,11 @@ def overall_max_time(df, palette):
 
     ax.yaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
 
-    df_overall_max_time = time_delta_as_num_to_time(df_overall_max_time)
+    df = time_delta_as_num_to_time(df)
 
-    df_overall_max_time = df_overall_max_time[['User', 'Time']]
+    df = df[['User', 'Time']]
 
-    return df_overall_max_time, ax.figure
-
-
-def overall_min_time(df, palette):
-    """Barplot showing the shortest completion time for each person """
-
-    df_overall_min_time = df.groupby(df["User"])["time_delta_as_num"].min()
-
-    df_overall_min_time = df_overall_min_time.reset_index()
-
-    df_overall_min_time = df_overall_min_time.sort_values(by='time_delta_as_num', ascending=False)
-
-    fig, ax = plt.subplots(figsize=(10, 5))
-
-    fig = sns.barplot(data=df_overall_min_time,
-                      x="User",
-                      y="time_delta_as_num",
-                      palette=palette).set(
-        ylabel='Time /mins',
-        xlabel=None)
-
-    ax.yaxis_date()
-
-    ax.yaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
-
-    df_overall_min_time = time_delta_as_num_to_time(df_overall_min_time)
-
-    df_overall_min_time = df_overall_min_time[['User', 'Time']]
-
-    return df_overall_min_time, ax.figure
-
-
-def overall_mean_time(df, palette):
-    """Barplot showing mean completion time for each person """
-
-    # Creates df
-
-    df_overall_mean_time = df.groupby(df["User"])["time_delta_as_num"].mean()
-
-    df_overall_mean_time = df_overall_mean_time.reset_index()
-
-    df_overall_mean_time = df_overall_mean_time.sort_values(by='time_delta_as_num', ascending=False)
-
-    # Plot
-
-    fig, ax = plt.subplots(figsize=(10, 5))
-
-    fig = sns.barplot(data=df_overall_mean_time,
-                      x="User",
-                      y="time_delta_as_num",
-                      palette=palette).set(
-        ylabel='Time /mins',
-        xlabel=None)
-
-    ax.yaxis_date()
-
-    ax.yaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
-
-    # Formats df for display
-
-    df_overall_mean_time = time_delta_as_num_to_time(df_overall_mean_time)
-
-    df_overall_mean_time = df_overall_mean_time[['User', 'Time']]
-
-    return df_overall_mean_time, ax.figure
+    return df, ax.figure
 
 
 def number_of_sub_1_minnies(df, palette):
@@ -305,7 +244,8 @@ def number_of_submissions(df, palette):
 
     return df_overall_number_submissions, ax.figure
 
-def combined_period_mean(df, palette, poly_value, time_period, smooth):
+
+def combined_period_mean(df, palette, time_period, smooth, poly_value):
     """Plots mean times for every player over time on the same lineplot"""
 
     # Creates df
@@ -326,7 +266,7 @@ def combined_period_mean(df, palette, poly_value, time_period, smooth):
 
     # Smooths lines out for each user and plots them
 
-    if smooth == True:
+    if smooth:
 
         df_smooth = pd.DataFrame()
 
@@ -361,7 +301,7 @@ def combined_period_mean(df, palette, poly_value, time_period, smooth):
     else:
         df = df_mean_time.copy()
 
-        df['date_as_num'] = df.index
+        df['date_as_num'] = mdates.date2num(df['timestamp'])
 
     # Plotting
 
@@ -396,6 +336,61 @@ def combined_period_mean(df, palette, poly_value, time_period, smooth):
     return df_mean_time, ax.figure
 
 
+def rolling_average(df, palette, window_days):
+    """ Finds rolling average over window_days number of days for each user. Then joins all dataframes together"""
+
+    window_days_str = str(window_days) + 'd'
+
+    df_ra_list = []
+
+    for user in df["User"].unique():
+        df_ra = df[df["User"] == user]
+
+        df_ra = df_ra.sort_values(by='timestamp')
+
+        df_ra = df_ra.set_index("timestamp")
+
+        df_ra["time_delta_as_num"] = df_ra["time_delta_as_num"].rolling(window=window_days_str).mean()
+
+        df_ra["time_delta"] = mdates.num2timedelta(df_ra["time_delta_as_num"])
+
+        df_ra = df_ra[['User', 'time_delta', "time_delta_as_num"]]
+
+        df_ra_list.append(df_ra)
+
+        df_ra_finished = pd.concat(df_ra_list)
+
+    df_ra_finished = df_ra_finished.reset_index()
+
+    fig, ax = plt.subplots(figsize=(15, 7))
+
+    fig = sns.lineplot(data=df_ra_finished,
+                       x='timestamp',
+                       y='time_delta_as_num',
+                       hue='User',
+                       palette=palette).set(
+        xlabel='Date',
+        ylabel='Rolling Mean Times /min')
+
+    ax.yaxis_date()
+
+    ax.yaxis.set_major_formatter(mdates.DateFormatter("%M:%S"))
+
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
+
+    ax.set_ylim(ymin=0)
+
+    df_ra_finished = time_delta_as_num_to_time(df_ra_finished)
+
+    df_ra_finished['Date'] = df_ra_finished['timestamp'].dt.strftime('%d %B %Y')
+
+    df_ra_finished = df_ra_finished[['User', 'Date', 'Time']]
+
+    df_ra_finished = df_ra_finished.rename(columns={'Time': 'Mean Time'})
+
+    return df_ra_finished, ax.figure
+
+
 def sub_time_boxplot(df, palette):
     """Plots boxplot of submission times"""
 
@@ -403,7 +398,7 @@ def sub_time_boxplot(df, palette):
 
     fig = sns.boxplot(data=df,
                       x="User",
-                      y=df["sub_time_delta_as_num"],
+                      y="sub_time_delta_as_num",
                       palette=palette).set(
         ylabel='Time of Submission',
         xlabel=None)
@@ -457,9 +452,7 @@ def sub_time_violin_plot(df, palette):
 def sub_time_distplot(df, palette, user):
     """Plots dist plot for submission times based on user"""
 
-    df_time_dist = df[df["User"] == user]
-
-    df_time_dist = df_time_dist.sort_values(by='sub_time_delta_as_num')
+    df_time_dist = df.sort_values(by='sub_time_delta_as_num')
 
     fig, ax = plt.subplots(figsize=(15, 7))
 
@@ -480,30 +473,30 @@ def sub_time_distplot(df, palette, user):
     return ax.figure
 
 
-def hardest_puzzles(df):
-    """Plots a scatterplot of 20 dates which have the highest mean time across all users"""
+def puzzle_difficulty(df, ascending, number_of_rows):
+    """Returns df and scatterplot of highest or lowest mean times across all users"""
 
     # Creates df
 
-    df_hardest = df.copy()
+    df_difficulty = df.copy()
 
-    df_hardest['date'] = df_hardest['timestamp'].dt.date
+    df_difficulty['date'] = df_difficulty['timestamp'].dt.date
 
-    df_hardest = df_hardest.groupby(['date'])['time_delta_as_num'].mean()
+    df_difficulty = df_difficulty.groupby(['date'])['time_delta_as_num'].mean()
 
-    df_hardest = df_hardest.reset_index()
+    df_difficulty = df_difficulty.reset_index()
 
-    df_hardest = df_hardest.sort_values(by='time_delta_as_num', ascending=False)
+    df_difficulty = df_difficulty.sort_values(by='time_delta_as_num', ascending=ascending)
 
     # Selects 20 hardest
 
-    df_hardest = df_hardest[:20]
+    df_difficulty = df_difficulty[:number_of_rows]
 
-    df_hardest['time'] = mdates.num2timedelta(df_hardest['time_delta_as_num'])
+    df_difficulty['time'] = mdates.num2timedelta(df_difficulty['time_delta_as_num'])
 
     fig, ax = plt.subplots(figsize=(10, 5))
 
-    fig = sns.scatterplot(data=df_hardest,
+    fig = sns.scatterplot(data=df_difficulty,
                           x='date',
                           y='time_delta_as_num')
 
@@ -513,8 +506,6 @@ def hardest_puzzles(df):
 
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
 
-    ax.set_title('20 Hardest Puzzles')
-
     ax.set_xlabel(None)
 
     ax.set_ylabel('Mean Time /mins')
@@ -523,67 +514,15 @@ def hardest_puzzles(df):
 
     # Formats df
 
-    df_hardest = time_delta_as_num_to_time(df_hardest)
+    df_difficulty = time_delta_as_num_to_time(df_difficulty)
 
-    df_hardest = df_hardest[['date', 'Time']]
+    df_difficulty = df_difficulty[['date', 'Time']]
 
-    df_hardest = df_hardest.sort_values(by='date')
+    df_difficulty = df_difficulty.rename(columns={'date': 'Date'})
 
-    df_hardest = df_hardest.rename(columns={'date': 'Date'})
+    df_difficulty = df_difficulty.set_index('Date')
 
-    return df_hardest, ax.figure
-
-
-def easiest_puzzles(df):
-    """Plots a scatterplot of 20 dates which have the lowest mean time across all users"""
-
-    df_easiest = df.copy()
-
-    df_easiest['date'] = df_easiest['timestamp'].dt.date
-
-    df_easiest = df_easiest.groupby(['date'])['time_delta_as_num'].mean()
-
-    df_easiest = df_easiest.reset_index()
-
-    df_easiest = df_easiest.sort_values(by='time_delta_as_num', ascending=True)
-
-    # Selects 20 easiest
-
-    df_easiest = df_easiest[:20]
-
-    df_easiest['time'] = mdates.num2timedelta(df_easiest['time_delta_as_num'])
-
-    fig, ax = plt.subplots(figsize=(10, 5))
-
-    fig = sns.scatterplot(data=df_easiest,
-                          x='date',
-                          y='time_delta_as_num')
-
-    ax.yaxis_date()
-
-    ax.yaxis.set_major_formatter(mdates.DateFormatter("%M:%S"))
-
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
-
-    ax.set_title('20 easiest Puzzles')
-
-    ax.set_xlabel(None)
-
-    ax.set_ylabel('Mean Time /mins')
-
-    ax.set_ylim(ymin=0)
-
-    # Formats df
-
-    df_easiest = time_delta_as_num_to_time(df_easiest)
-
-    df_easiest = df_easiest[['date', 'Time']]
-
-    df_easiest = df_easiest.sort_values(by='date')
-
-    df_easiest = df_easiest.rename(columns={'date': 'Date'})
-
-    return df_easiest, ax.figure
+    return df_difficulty, ax.figure
 
 
 def add_bg_from_local():
@@ -605,7 +544,10 @@ def add_bg_from_local():
         unsafe_allow_html=True
     )
 
+
 def welcome_gif():
+    """Displays welcome gif"""
+
     file_ = open(r'media/completion-animation.gif', 'rb')
     contents = file_.read()
     data_url = base64.b64encode(contents).decode('utf-8')
@@ -615,10 +557,12 @@ def welcome_gif():
         f'<img src="data:image/gif;base64,{data_url}" alt="cat gif">',
         unsafe_allow_html=True,
     )
+
+
 def user_multi_select(df):
     """Creates multiselect box containing unique users names. Filters df to only contain those users"""
 
-    sorted_unique_user= sorted(df['User'].unique())
+    sorted_unique_user = sorted(df['User'].unique())
 
     selected_users = st.sidebar.multiselect('User', sorted_unique_user, sorted_unique_user)
 
@@ -626,10 +570,23 @@ def user_multi_select(df):
 
     return df
 
+
+def user_single_select(df):
+    """Creates select box containing unique users names. Filters df to only contain that user"""
+
+    sorted_unique_user = df['User'].unique()
+
+    selected_user = st.sidebar.selectbox('User', sorted_unique_user)
+
+    df = df[df['User'] == selected_user]
+
+    return df, selected_user
+
+
 def date_select(df):
     """Creates date picker and returns df filtered to be between those dates"""
 
-    start_date=st.sidebar.date_input('Start date', datetime.datetime(2022, 6, 1))
+    start_date = st.sidebar.date_input('Start date', datetime.datetime(2022, 6, 1))
 
     end_date = st.sidebar.date_input('End date', datetime.date.today())
 

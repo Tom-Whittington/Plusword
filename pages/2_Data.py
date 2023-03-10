@@ -12,7 +12,7 @@ df = date_select(df)
 
 # Formats dataframe
 df.columns = df.columns.str.capitalize()
-df=df.set_index('Timestamp')
+df = df.set_index('Timestamp')
 df = df.sort_index(ascending=False)
 
 # Sets background
@@ -26,4 +26,3 @@ st.dataframe(df[['Time', 'User']], width=800)
 
 # Writes number of rows in database
 st.write(str(df.shape[0]) + ' rows found')
-
