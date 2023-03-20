@@ -1,7 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from pymongo import MongoClient
+import pymongo
+import json
 import datetime
 import matplotlib.dates as mdates
 import numpy as np
@@ -16,12 +17,13 @@ def settings():
     sns.set_theme()
 
     # Sets colour for each person
-    palette = {"Sal": "tab:cyan",
+    palette = {"Sazzle": "tab:cyan",
                "Joe": "tab:orange",
-               "Oli": "tab:purple",
+               "Oliver Folkard": "tab:purple",
                "Tom": 'tab:pink',
-               "George": 'tab:olive',
-               "Harvey": "tab:red"}
+               "George Sheen": 'tab:olive',
+               "Harvey Williams": "tab:red",
+               "Leah": "tab:blue"}
 
     return palette
 
@@ -44,6 +46,31 @@ def time_delta_to_num(time_delta):
     time_delta_as_num = [mins - zero_num for mins in mdates.date2num(time_delta_plus_date)]
 
     return time_delta_as_num
+
+
+def time_string_to_time_delta(time_string):
+    """ Reads in times from the database, corrects the formatting, and converts to a time delta"""
+    try:
+        # If count is one then we have 00:00 format
+        if time_string.count(":") == 1:
+            if len(time_string) != 5:
+                # We could do something clever to fix this but let's just assume the data is invalid and skip it
+                return None
+            time_string = f"00:{time_string}"
+        # If length is two then we have at least a 0:00:00 format, which is valid
+        if time_string.count(":") == 2:
+            return pd.to_timedelta(time_string)
+        else:
+            # Another invalid string, just skip it.
+            return None
+
+    except Exception as ex:
+        # Obviously the above is not perfect, so we wanna account for exceptions
+        # We don't have logging in the code, which we should, so I'm just throwing it in the terminal
+        # Unfortunately pandas throws a base exception so this could
+        # catch all sorts so best we can do is dump to terminal and return None
+        print(ex)
+        return None
 
 
 def time_delta_as_num_to_time(df):
@@ -105,51 +132,53 @@ def savgol_smooth(df, poly_value):
     return x_smooth, y_smooth
 
 
+def get_db_client():
+    try:
+        with open("local/pass.json") as file:
+            file = json.loads(file.read())
+            connection_string = file.get("connection_string")
+            client = pymongo.MongoClient(
+                connection_string)
+            return client
+    except Exception as e:
+        print(e)
+
+
 def data_import():
     """Connects to database and creates dataframe containing all columns. Drops unneeded columns and sets timestamp
      datatype. Creates submission time from timestamp and converts both submission time and completion time to time
      deltas represented as plottable numbers. Finally, drops submission time column as no longer needed"""
 
-    # Database details
-    mongodb_host = 'localhost'
+    # Connects to db and gets collection
+    client = get_db_client()
+    db = client["PlusWord"]
+    collection = db["Times"]
 
-    mongodb_port = 27017
-
-    # point the client at mongo URI
-
-    client = MongoClient(mongodb_host, mongodb_port)
-
-    # Connects to database and loads data
-
-    db = client.plusword
-
-    collection = db.historical_data
-
-    df = pd.DataFrame(list(collection.find()))
+    # Get all records in collection
+    df = pd.DataFrame(list(collection.find({})))
 
     # Dropping columns and setting datatypes
 
+    # Instead of rewriting the code I've just reassigned my load_ts to your timestamp
+    # 2023-01-24T23:06:03.558+00:00
+    df["timestamp"] = pd.to_datetime(df["load_ts"], format='%Y-%m-%dT%H:%M:%S.%f%z')
+
+    # Dropping columns and setting datatypes
     df = df[['timestamp', 'time', 'user']]
 
-    df["timestamp"] = pd.to_datetime(df["timestamp"], format='%d/%m/%Y %H:%M')
-
     # Converting time and submission time to timedelta
-
-    df["time_delta"] = pd.to_timedelta(df["time"])
-
+    # this throws a warning regarding overwriting data, @Tom pls fix
+    df["time_delta"] = df["time"].map(time_string_to_time_delta)
     df['sub_time_delta'] = df['timestamp'].dt.strftime('%H:%M:%S').astype('timedelta64')
 
     # Converting timedeltas to plottable numbers and dropping sub_time_delta
 
     for col in ['time_delta', 'sub_time_delta']:
         df['new'] = df[col].astype('timedelta64[ns]')
-
         df['new'] = time_delta_to_num(df['new'])
-
         df.rename(columns={'new': str(col) + '_as_num'}, inplace=True)
 
     df = df.drop(columns="sub_time_delta")
-
     df = df.rename(columns={'user': 'User'})
 
     return df
