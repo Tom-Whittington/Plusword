@@ -3,10 +3,10 @@ from plotting_streamlit import data_import, settings, user_multi_select, date_se
     rolling_average, add_bg_from_local
 
 # Gets default settings
-palette = settings()
+settings()
 
 # Imports data
-df = data_import()
+df, palette = data_import()
 
 # Selects users to display
 df = user_multi_select(df)

@@ -3,10 +3,10 @@ from plotting_streamlit import data_import, settings, add_bg_from_local, user_si
     sub_time_distplot, sub_time_boxplot
 
 # Gets default settings
-palette = settings()
+settings()
 
 # Imports data
-df = data_import()
+df, palette = data_import()
 
 # Sets background
 add_bg_from_local()

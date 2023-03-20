@@ -16,17 +16,6 @@ def settings():
 
     sns.set_theme()
 
-    # Sets colour for each person
-    palette = {"Sazzle": "tab:cyan",
-               "Joe": "tab:orange",
-               "Oliver Folkard": "tab:purple",
-               "Tom": 'tab:pink',
-               "George Sheen": 'tab:olive',
-               "Harvey Williams": "tab:red",
-               "Leah": "tab:blue"}
-
-    return palette
-
 
 def time_delta_to_num(time_delta):
     """ Takes in time delta and converts it into a number for plotting"""
@@ -153,9 +142,13 @@ def data_import():
     client = get_db_client()
     db = client["PlusWord"]
     collection = db["Times"]
-
-    # Get all records in collection
     df = pd.DataFrame(list(collection.find({})))
+
+    # Gets colours from db
+    collection = db["Colours"]
+    df_palette = pd.DataFrame(list(collection.find({})))
+    df_palette = df_palette[['user', 'colour']]
+    palette = dict(zip(df_palette['user'], df_palette['colour']))
 
     # Dropping columns and setting datatypes
 
@@ -168,6 +161,7 @@ def data_import():
 
     # Converting time and submission time to timedelta
     # this throws a warning regarding overwriting data, @Tom pls fix
+    # TODO:Fix this
     df["time_delta"] = df["time"].map(time_string_to_time_delta)
     df['sub_time_delta'] = df['timestamp'].dt.strftime('%H:%M:%S').astype('timedelta64')
 
@@ -181,7 +175,7 @@ def data_import():
     df = df.drop(columns="sub_time_delta")
     df = df.rename(columns={'user': 'User'})
 
-    return df
+    return df, palette
 
 
 def overall_times(df, palette, agg):

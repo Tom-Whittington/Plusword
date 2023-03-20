@@ -2,10 +2,10 @@ import streamlit as st
 from plotting_streamlit import data_import, settings, puzzle_difficulty, add_bg_from_local
 
 # Gets default settings
-palette = settings()
+settings()
 
 # Imports data
-df = data_import()
+df, palette = data_import()
 
 # Sets background
 add_bg_from_local()
