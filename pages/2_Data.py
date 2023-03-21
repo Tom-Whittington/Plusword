@@ -2,7 +2,7 @@ import streamlit as st
 from plotting_streamlit import data_import, add_bg_from_local, user_multi_select, date_select
 
 # Imports data
-df = data_import()
+df, palette = data_import()
 
 # Selects users to display
 df = user_multi_select(df)

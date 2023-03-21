@@ -227,6 +227,8 @@ def number_of_sub_1_minnies(df, palette):
 
     df_sub_minnies = df_sub_minnies.rename(columns={'timestamp': 'Number of Sub 1 Minutes'})
 
+    df_sub_minnies = df_sub_minnies.sort_values(by='Number of Sub 1 Minutes', ascending=False)
+
     # Plot
 
     fig, ax = plt.subplots(figsize=(10, 5))
@@ -291,35 +293,35 @@ def combined_period_mean(df, palette, time_period, smooth, poly_value):
 
     if smooth:
 
-        df_smooth = pd.DataFrame()
+            df_smooth = pd.DataFrame()
 
-        for User in df_mean_time['User'].unique():
+            for User in df_mean_time['User'].unique():
 
-            df_mean_time_rough = df_mean_time[df_mean_time['User'] == User]
+                df_mean_time_rough = df_mean_time[df_mean_time['User'] == User]
 
-            if time_period == 'M':
-                x_smooth, y_smooth = spline_smooth(df_mean_time_rough, poly_value)
+                if time_period == 'M':
+                    x_smooth, y_smooth = spline_smooth(df_mean_time_rough, poly_value)
 
-            if time_period == 'W':
-                x_smooth, y_smooth = savgol_smooth(df_mean_time_rough, poly_value)
+                if time_period == 'W':
+                    x_smooth, y_smooth = savgol_smooth(df_mean_time_rough, poly_value)
 
-            # converts x_smooth, y_smooth into a dataframe with user value associated with them
+                # converts x_smooth, y_smooth into a dataframe with user value associated with them
 
-            user_list = [User] * len(x_smooth)
+                user_list = [User] * len(x_smooth)
 
-            x_smooth = pd.Series(x_smooth, name='date_as_num')
+                x_smooth = pd.Series(x_smooth, name='date_as_num')
 
-            y_smooth = pd.Series(y_smooth, name='time_delta_as_num')
+                y_smooth = pd.Series(y_smooth, name='time_delta_as_num')
 
-            users = pd.Series(user_list, name='User')
+                users = pd.Series(user_list, name='User')
 
-            df = pd.concat([users, x_smooth, y_smooth], axis=1)
+                df = pd.concat([users, x_smooth, y_smooth], axis=1)
 
-            # Concats dfs together to make one big one
+                # Concats dfs together to make one big one
 
-            df_smooth = pd.concat([df_smooth, df])
+                df_smooth = pd.concat([df_smooth, df])
 
-        df = df_smooth.copy()
+            df = df_smooth.copy()
 
     else:
         df = df_mean_time.copy()
@@ -551,7 +553,7 @@ def puzzle_difficulty(df, ascending, number_of_rows):
 def add_bg_from_local():
     """Creates background for streamlit from image"""
 
-    image_file = r'media/plusword_background.jpg'
+    image_file = 'media/plusword_background.jpg'
 
     with open(image_file, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read())
