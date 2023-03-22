@@ -15,6 +15,7 @@ def settings():
     # Sets plot style
 
     sns.set_theme()
+    pd.options.mode.chained_assignment = None  # default='warn'
 
 
 def time_delta_to_num(time_delta):
@@ -153,15 +154,16 @@ def data_import():
     # Dropping columns and setting datatypes
 
     # Instead of rewriting the code I've just reassigned my load_ts to your timestamp
-    # 2023-01-24T23:06:03.558+00:00
+    # I have removed the timezone for legibility
     df["timestamp"] = pd.to_datetime(df["load_ts"], format='%Y-%m-%dT%H:%M:%S.%f%z')
+    df["timestamp"] = df["timestamp"].dt.tz_localize(None)
 
     # Dropping columns and setting datatypes
     df = df[['timestamp', 'time', 'user']]
 
     # Converting time and submission time to timedelta
     # this throws a warning regarding overwriting data, @Tom pls fix
-    # TODO:Fix this
+    # I've just suppressed the warning as the operation is correct
     df["time_delta"] = df["time"].map(time_string_to_time_delta)
     df['sub_time_delta'] = df['timestamp'].dt.strftime('%H:%M:%S').astype('timedelta64')
 
@@ -293,35 +295,43 @@ def combined_period_mean(df, palette, time_period, smooth, poly_value):
 
     if smooth:
 
-            df_smooth = pd.DataFrame()
+        df_smooth = pd.DataFrame()
 
-            for User in df_mean_time['User'].unique():
+        for User in df_mean_time['User'].unique():
 
-                df_mean_time_rough = df_mean_time[df_mean_time['User'] == User]
+            df_mean_time_rough = df_mean_time[df_mean_time['User'] == User]
 
+            try:
                 if time_period == 'M':
                     x_smooth, y_smooth = spline_smooth(df_mean_time_rough, poly_value)
 
                 if time_period == 'W':
                     x_smooth, y_smooth = savgol_smooth(df_mean_time_rough, poly_value)
 
-                # converts x_smooth, y_smooth into a dataframe with user value associated with them
+            except Exception:
 
-                user_list = [User] * len(x_smooth)
+                # If smoothing function errors just plot original values
+                x_smooth = mdates.date2num(df_mean_time_rough['timestamp']).tolist()
 
-                x_smooth = pd.Series(x_smooth, name='date_as_num')
+                y_smooth = df_mean_time_rough['time_delta_as_num'].tolist()
 
-                y_smooth = pd.Series(y_smooth, name='time_delta_as_num')
+            # converts x_smooth, y_smooth into a dataframe with user value associated with them
 
-                users = pd.Series(user_list, name='User')
+            user_list = [User] * len(x_smooth)
 
-                df = pd.concat([users, x_smooth, y_smooth], axis=1)
+            x_smooth = pd.Series(x_smooth, name='date_as_num')
 
-                # Concats dfs together to make one big one
+            y_smooth = pd.Series(y_smooth, name='time_delta_as_num')
 
-                df_smooth = pd.concat([df_smooth, df])
+            users = pd.Series(user_list, name='User')
 
-            df = df_smooth.copy()
+            df = pd.concat([users, x_smooth, y_smooth], axis=1)
+
+            # Concats dfs together to make one big one
+
+            df_smooth = pd.concat([df_smooth, df])
+
+        df = df_smooth.copy()
 
     else:
         df = df_mean_time.copy()

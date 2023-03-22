@@ -30,8 +30,8 @@ if chart_type == 'Monthly Mean':
 
     # Sets value for amount of smoothing
     if smooth:
-        poly_value = st.sidebar.slider('Polynomial value',
-                                       min_value=6,
+        poly_value = st.sidebar.slider('Smoothies',
+                                       min_value=0,
                                        max_value=40,
                                        value=40,
                                        help='Higher values give smoother lines, lower values give rougher lines')
@@ -50,7 +50,7 @@ elif chart_type == 'Weekly Mean':
 
     # Sets value for amount of smoothing
     if smooth:
-        poly_value = st.sidebar.slider('Polynomial value',
+        poly_value = st.sidebar.slider('Smoothies',
                                        min_value=1,
                                        max_value=10,
                                        value=10,
