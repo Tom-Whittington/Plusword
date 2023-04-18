@@ -1,14 +1,11 @@
 import streamlit as st
-from plotting_streamlit import data_import, palette_import, include_mums, settings, number_of_submissions,\
-    number_of_sub_1_minnies, add_bg_from_local
+from plotting_streamlit import data_import, settings, number_of_submissions, number_of_sub_1_minnies, add_bg_from_local
 
 # Imports default settings
 settings()
 
 # Imports data
-df = data_import()
-palette = palette_import()
-df = include_mums(df)
+df, palette = data_import()
 
 # Sets background
 add_bg_from_local()

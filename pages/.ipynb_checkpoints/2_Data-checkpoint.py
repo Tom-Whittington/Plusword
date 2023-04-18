@@ -1,11 +1,8 @@
 import streamlit as st
-from plotting_streamlit import data_import, palette_import, add_bg_from_local, user_multi_select, date_select, \
-    include_mums
+from plotting_streamlit import data_import, add_bg_from_local, user_multi_select, date_select
 
 # Imports data
-df = data_import()
-palette = palette_import()
-df = include_mums(df)
+df, palette = data_import()
 
 # Selects users to display
 df = user_multi_select(df)

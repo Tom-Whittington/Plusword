@@ -1,14 +1,12 @@
 import streamlit as st
-from plotting_streamlit import data_import, palette_import, include_mums, settings, user_multi_select, date_select,\
-    combined_period_mean, rolling_average, add_bg_from_local
+from plotting_streamlit import data_import, settings, user_multi_select, date_select, combined_period_mean, \
+    rolling_average, add_bg_from_local
 
 # Gets default settings
 settings()
 
 # Imports data
-df = data_import()
-palette = palette_import()
-df = include_mums(df)
+df, palette = data_import()
 
 # Selects users to display
 df = user_multi_select(df)
