@@ -1,5 +1,5 @@
 import streamlit as st
-from plotting_streamlit import data_import, palette_import, settings, include_mums, add_bg_from_local,\
+from plotting_streamlit import data_import, format_for_streamlit, palette_import, settings, include_mums, add_bg_from_local,\
     user_single_select, sub_time_violin_plot, sub_time_distplot, sub_time_boxplot
 
 # Gets default settings
@@ -7,6 +7,7 @@ settings()
 
 # Imports data
 df = data_import()
+df = format_for_streamlit(df)
 palette = palette_import()
 df = include_mums(df)
 

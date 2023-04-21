@@ -1,5 +1,5 @@
 import base64
-import datetime
+from datetime import datetime, timedelta
 import json
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
@@ -22,7 +22,7 @@ def time_delta_to_num(time_delta):
 
     # specify a date to use for the times
 
-    zero_date = datetime.datetime(2022, 6, 20)
+    zero_date = datetime(2022, 6, 20)
 
     zero_num = mdates.date2num(zero_date)
 
@@ -38,7 +38,7 @@ def time_delta_to_num(time_delta):
 
 
 def time_string_to_time_delta(time_string):
-    """ Reads in times from the database, corrects the formatting, and converts to a time delta"""
+    """ Reads in times from the database and corrects incorrect values"""
     try:
         # If count is one then we have 00:00 format
         if time_string.count(":") == 1:
@@ -150,23 +150,37 @@ def palette_import():
 
     return palette
 
-def mums_data_import(collection_name='Times'):
+def data_import(collection_name='Times'):
     """Connects to database and creates dataframe containing all columns. Drops unneeded columns and sets timestamp
-     datatype. Creates submission time from timestamp and converts both submission time and completion time to time
-     deltas represented as plottable numbers. Finally, drops submission time column as no longer needed"""
+     datatype. Correct any incorrect time values, sets data times and sorts"""
 
     # Connects to db and gets collection
     db = get_db()
     collection = db[collection_name]
     df = pd.DataFrame(list(collection.find({})))
     df = df[['load_ts', 'time', 'user']]
+    df['time'] = df['time'].str.replace(r'(^\d\d:\d\d$)', r'00:\1', regex=True)
     df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f')
+    df['user'] = df['user'].astype('category')
     df = df.sort_values(by=['load_ts'])
 
     return df
 
+def format_for_streamlit(df):
+    """Makes df more readable, converts times into plottable numbers and sets index"""
 
-def data_import(collection_name='Times'):
+    df = df.rename(columns={'load_ts': 'timestamp'})
+    df['time_delta_as_num'] = mdates.date2num(pd.to_timedelta(df['time'].astype('string')))
+    df['sub_time_delta_as_num'] = mdates.date2num(pd.to_timedelta(df['timestamp'].dt.time.astype('string')))
+    df.columns = df.columns.str.capitalize()
+    df = df.set_index('Timestamp')
+    df = df.sort_index(ascending=False)
+
+    return df
+
+
+
+def old_data_import(collection_name='Times'):
     """Connects to database and creates dataframe containing all columns. Drops unneeded columns and sets timestamp
      datatype. Creates submission time from timestamp and converts both submission time and completion time to time
      deltas represented as plottable numbers. Finally, drops submission time column as no longer needed"""
@@ -305,7 +319,7 @@ def combined_period_mean(df, palette, time_period, smooth, poly_value):
 
     # Creates df
 
-    df_mean_time = df.groupby(["User", df["timestamp"].dt.to_period(time_period)])["time_delta_as_num"].mean()
+    df_mean_time = df.groupby(["User", df["timestamp"].datetime.to_period(time_period)])["time_delta_as_num"].mean()
 
     df_mean_time = df_mean_time.reset_index()
 
@@ -390,7 +404,7 @@ def combined_period_mean(df, palette, time_period, smooth, poly_value):
 
     df_mean_time = time_delta_as_num_to_time(df_mean_time)
 
-    df_mean_time['Date'] = df_mean_time['timestamp'].dt.strftime('%d %B %Y')
+    df_mean_time['Date'] = df_mean_time['timestamp'].datetime.strftime('%d %B %Y')
 
     df_mean_time = df_mean_time[['User', 'Date', 'Time']]
 
@@ -445,7 +459,7 @@ def rolling_average(df, palette, window_days):
 
     df_ra_finished = time_delta_as_num_to_time(df_ra_finished)
 
-    df_ra_finished['Date'] = df_ra_finished['timestamp'].dt.strftime('%d %B %Y')
+    df_ra_finished['Date'] = df_ra_finished['timestamp'].datetime.strftime('%d %B %Y')
 
     df_ra_finished = df_ra_finished[['User', 'Date', 'Time']]
 
@@ -543,7 +557,7 @@ def puzzle_difficulty(df, ascending, number_of_rows):
 
     df_difficulty = df.copy()
 
-    df_difficulty['date'] = df_difficulty['timestamp'].dt.date
+    df_difficulty['date'] = df_difficulty['timestamp'].datetime.date
 
     df_difficulty = df_difficulty.groupby(['date'])['time_delta_as_num'].mean()
 
@@ -649,11 +663,11 @@ def user_single_select(df):
 def date_select(df):
     """Creates date picker and returns df filtered to be between those dates"""
 
-    start_date = st.sidebar.date_input('Start date', datetime.datetime(2022, 6, 1))
+    start_date = st.sidebar.date_input('Start date', datetime(2022, 6, 1))
 
-    end_date = st.sidebar.date_input('End date', datetime.date.today())
+    end_date = st.sidebar.date_input('End date', datetime.today())
 
-    df['date'] = df['timestamp'].dt.date
+    df['date'] = df.index.date
 
     df = df[(df['date'] >= start_date) & (df['date'] <= end_date)]
 

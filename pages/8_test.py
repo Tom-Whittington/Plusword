@@ -5,14 +5,6 @@ from plotting_streamlit import data_import, format_for_streamlit, palette_import
 # Imports data
 df = data_import()
 df = format_for_streamlit(df)
-palette = palette_import()
-df = include_mums(df)
-
-# Selects users to display
-df = user_multi_select(df)
-
-# Selects date range
-df = date_select(df)
 
 # Sets background
 add_bg_from_local()
@@ -22,6 +14,8 @@ st.title('Data display')
 
 # Displays dataframe
 st.dataframe(df[['Time', 'User']], width=800)
+st.dataframe(df, width=800)
+st.dataframe(df.dtypes)
 
 # Writes number of rows in database
 st.write(str(df.shape[0]) + ' rows found')
