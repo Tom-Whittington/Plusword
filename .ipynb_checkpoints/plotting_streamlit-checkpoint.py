@@ -1,21 +1,20 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import pymongo
-import json
-import datetime
-import matplotlib.dates as mdates
-import numpy as np
-from scipy import interpolate, signal
 import base64
+import datetime
+import json
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import pymongo
+import seaborn as sns
 import streamlit as st
+from scipy import interpolate, signal
 
 
 def settings():
     # Sets plot style
 
     sns.set_theme()
-    pd.options.mode.chained_assignment = None  # default='warn'
 
 
 def time_delta_to_num(time_delta):
@@ -122,63 +121,54 @@ def savgol_smooth(df, poly_value):
     return x_smooth, y_smooth
 
 
-def get_db_client():
+def get_db(write=False):
+    if write:
+        connection_string = "admin_connection_string"
+
+    else:
+        connection_string = "connection_string"
+
     try:
         with open("local/pass.json") as file:
             file = json.loads(file.read())
-            connection_string = file.get("connection_string")
+            connection_string = file.get(connection_string)
             client = pymongo.MongoClient(
                 connection_string)
-            return client
+            db = client["PlusWord"]
+            return db
     except Exception as e:
         print(e)
-        
+
+
 def palette_import():
-    
     # Gets colours from db
-    client = get_db_client()
-    db = client["PlusWord"]
+    db = get_db()
     collection = db["Colours"]
     df_palette = pd.DataFrame(list(collection.find({})))
     df_palette = df_palette[['user', 'colour']]
     palette = dict(zip(df_palette['user'], df_palette['colour']))
-    
+
     return palette
 
-def data_export(df):
-    try:
-        with open("local/pass.json") as file:
-            file = json.loads(file.read())
-            connection_string = file.get("admin_connection_string")
-            client = pymongo.MongoClient(connection_string)
-            db = client["PlusWord"]
-            collection = db['Mumsnet_Times']
-            collection.insert_many(df.to_dict('records'))
-    except Exception as e:
-        print(e)
-    
 
-def data_import(collection_name):
+def data_import(collection_name='Times'):
     """Connects to database and creates dataframe containing all columns. Drops unneeded columns and sets timestamp
      datatype. Creates submission time from timestamp and converts both submission time and completion time to time
      deltas represented as plottable numbers. Finally, drops submission time column as no longer needed"""
 
     # Connects to db and gets collection
-    client = get_db_client()
-    db = client["PlusWord"]
+    db = get_db()
     collection = db[collection_name]
     df = pd.DataFrame(list(collection.find({})))
     df = df[['load_ts', 'time', 'user']]
-    
-    return df
-
-def data_cleaning(df):
+    df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f')
+    df = df.sort_values(by=['load_ts'])
 
     # Dropping columns and setting datatypes
 
     # Instead of rewriting the code I've just reassigned my load_ts to your timestamp
     # I have removed the timezone for legibility
-    df["timestamp"] = pd.to_datetime(df["load_ts"], format='%Y-%m-%dT%H:%M:%S.%f')
+    df["timestamp"] = pd.to_datetime(df["load_ts"], format='%Y-%m-%d %H:%M:%S.%f')
     df["timestamp"] = df["timestamp"].dt.tz_localize(None)
 
     # Dropping columns and setting datatypes
@@ -650,63 +640,18 @@ def date_select(df):
 
     df['date'] = df['timestamp'].dt.date
 
-    df = df[(df['date'] > start_date) & (df['date'] <= end_date)]
+    df = df[(df['date'] >= start_date) & (df['date'] <= end_date)]
 
     return df
 
-def scraper(url, max_pages, whole_post_list):
-    
-    # Increments through every page on website until it runs out for hits max_pages
-    for page_number in range(max_pages):
-        
-        try:
-            
-            # gets request via bs4
-            r = requests.get(url + str(page_number))
-            soup = BeautifulSoup(r.content)
-            
-            # Finds original post on each page and splits it into metadata and post text
-            original_post = soup.find_all('div', class_= 'p-4 pb-1 pt-2.5 lg:py-2.5 mt-2.5 lg:mt-1.5 border-t border-b sm:border sm:rounded border-mumsnet-forest-border bg-mumsnet-forest dark:bg-mumsnet-forest-dark')
-            original_post_paragraphs=original_post[0].find_all('p')
-            
-            # converts to list
-            meta_data = original_post_paragraphs[0].getText().split()
-            
-            # removes fullstop in position 1
-            meta_data.pop(1)
-            
-            # converts text to list and then joins items together
-            post_text = original_post_paragraphs[1].getText().split()
-            post_text =' '.join(post_text)
-            
-            # Adds OP metadata and text together and adds together for OP on every page
-            meta_data.append(post_text)
-            whole_post = meta_data
-            whole_post_list.append(whole_post)
-            
-            # finds all non-OP post on page and gets data
-            posts= soup.find_all('div', class_=['lg:py-2.5 pt-2.5 pb-1 p-4 border-t border-b sm:border sm:rounded mt-1.5 overflow-x-hidden bg-white dark:bg-gray-800 border-gray-200',
-                                                'lg:py-2.5 pt-2.5 pb-1 p-4 border-t border-b sm:border sm:rounded mt-1.5 overflow-x-hidden bg-mumsnet-forest dark:bg-mumsnet-forest-dark border-mumsnet-forest-border'])
-            for post in posts:
-                post_info = post.getText().split()
-                
-                #first 4 items are meta data
-                meta_data = post_info[:4]
-                
-                #removes uneeded full stop
-                meta_data.pop(1)
-                
-               # joins post text together
-                post_text = post_info[4:]
-                post_text = ' '.join(post_text)
-                
-                
-                # appends metadata and text together and adds to list
-                meta_data.append(post_text)
-                whole_post = meta_data
-                whole_post_list.append(whole_post)
-            
-        except:
-            pass
 
-    return whole_post_list
+def include_mums(df):
+    """ Allows selection of mumsnet data"""
+
+    include_mums = st.sidebar.checkbox('Include Mums?', value=False)
+
+    if include_mums:
+        df_mums = data_import('Mumsnet_Times')
+        df = pd.concat([df, df_mums])
+
+    return df

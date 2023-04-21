@@ -1,7 +1,6 @@
 import base64
 import datetime
 import json
-
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import numpy as np
@@ -150,6 +149,21 @@ def palette_import():
     palette = dict(zip(df_palette['user'], df_palette['colour']))
 
     return palette
+
+def mums_data_import(collection_name='Times'):
+    """Connects to database and creates dataframe containing all columns. Drops unneeded columns and sets timestamp
+     datatype. Creates submission time from timestamp and converts both submission time and completion time to time
+     deltas represented as plottable numbers. Finally, drops submission time column as no longer needed"""
+
+    # Connects to db and gets collection
+    db = get_db()
+    collection = db[collection_name]
+    df = pd.DataFrame(list(collection.find({})))
+    df = df[['load_ts', 'time', 'user']]
+    df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f')
+    df = df.sort_values(by=['load_ts'])
+
+    return df
 
 
 def data_import(collection_name='Times'):
