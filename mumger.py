@@ -5,6 +5,8 @@ from concurrent.futures import ThreadPoolExecutor
 import datetime as dt
 from plotting_streamlit import get_db, mums_data_import
 
+# TODO: Add dynamic max page finder based on incrementing through pages until direct is triggered
+
 
 def url_generator():
     """ Generates list of urls to scrape from """
