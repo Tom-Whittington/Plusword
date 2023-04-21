@@ -9,7 +9,7 @@ palette = palette_import()
 df = include_mums(df)
 
 # Selects users to display
-df = user_multi_select(df)
+#df = user_multi_select(df)
 
 # Selects date range
 df = date_select(df)

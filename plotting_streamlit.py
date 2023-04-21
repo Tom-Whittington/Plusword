@@ -1,5 +1,5 @@
 import base64
-from datetime import datetime, timedelta
+from datetime import datetime
 import json
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
@@ -150,6 +150,7 @@ def palette_import():
 
     return palette
 
+
 def data_import(collection_name='Times'):
     """Connects to database and creates dataframe containing all columns. Drops unneeded columns and sets timestamp
      datatype. Correct any incorrect time values, sets data times and sorts"""
@@ -166,6 +167,7 @@ def data_import(collection_name='Times'):
 
     return df
 
+
 def format_for_streamlit(df):
     """Makes df more readable, converts times into plottable numbers and sets index"""
 
@@ -177,7 +179,6 @@ def format_for_streamlit(df):
     df = df.sort_index(ascending=False)
 
     return df
-
 
 
 def old_data_import(collection_name='Times'):
@@ -663,7 +664,7 @@ def user_single_select(df):
 def date_select(df):
     """Creates date picker and returns df filtered to be between those dates"""
 
-    start_date = st.sidebar.date_input('Start date', datetime(2022, 6, 1))
+    start_date = st.sidebar.date_input('Start date', df.index.date.min())
 
     end_date = st.sidebar.date_input('End date', datetime.today())
 
@@ -681,6 +682,8 @@ def include_mums(df):
 
     if include_mums:
         df_mums = data_import('Mumsnet_Times')
+        df_mums = format_for_streamlit(df_mums)
         df = pd.concat([df, df_mums])
+        df = df.sort_index(ascending=False)
 
     return df
