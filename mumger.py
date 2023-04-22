@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 from concurrent.futures import ThreadPoolExecutor
 import datetime as dt
-from plotting_streamlit import get_db, mums_data_import
+from plotting_streamlit import get_db, data_import
 
 # TODO: Add dynamic max page finder based on incrementing through pages until direct is triggered
 
@@ -151,23 +151,23 @@ def cleaning(df):
     return df
 
 
-def filter_out_old_rows(df):
+def filter_out_old_rows(df, collection_name, index_columns):
     """ Gets data from database and filters out rows that are already in the database"""
 
-    df_mums = mums_data_import()
-    df = df.set_index(['load_ts', 'user'])
-    df_mums = df_mums.set_index(['load_ts', 'user'])
-    df = df[~df.index.isin(df_mums.index)].reset_index()
+    df_db = data_import(collection_name)
+    df = df.set_index(index_columns)
+    df_db = df_db.set_index(index_columns)
+    df = df[~df.index.isin(df_db.index)].reset_index()
 
     return df
 
 
-def data_export(df):
+def data_export(df, collection_name):
     """ If dataframe isn't empty then rows are written to the database"""
     if not df.empty:
         try:
             db = get_db(write=True)
-            collection = db['Mumsnet_Times']
+            collection = db[collection_name]
             collection.insert_many(df.to_dict('records'))
         except Exception as e:
             print(e)
