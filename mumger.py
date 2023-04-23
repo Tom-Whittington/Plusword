@@ -1,14 +1,19 @@
-import pandas as pd
-from bs4 import BeautifulSoup
-import requests
-from concurrent.futures import ThreadPoolExecutor
 import datetime as dt
+import re
+from concurrent.futures import ThreadPoolExecutor
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
 from plotting_streamlit import get_db, data_import
+
 
 # TODO: Add dynamic max page finder based on incrementing through pages until direct is triggered
 
 
-def url_generator():
+def mumsnet_url_generator():
     """ Generates list of urls to scrape from """
 
     # Append new threads here
@@ -29,7 +34,7 @@ def url_generator():
     return url_list
 
 
-def post_to_text_converter(post):
+def mumsnet_post_to_text_converter(post):
     """ Converts each post from html to text, then formats and appends metadata to the post body"""
 
     # converts to list and removes whitespace
@@ -50,7 +55,7 @@ def post_to_text_converter(post):
     return whole_post
 
 
-def scraper(url):
+def mumsnet_scraper(url):
     # html class of original post from the thread
     original_post_class = 'p-4 pb-1 pt-2.5 lg:py-2.5 mt-2.5 lg:mt-1.5 border-t border-b sm:border sm:rounded ' \
                           'border-mumsnet-forest-border bg-mumsnet-forest dark:bg-mumsnet-forest-dark'
@@ -80,13 +85,13 @@ def scraper(url):
                 # Finds original post on first page and splits it into metadata and post text
                 original_post = soup.find_all('div', class_=original_post_class)
                 original_post = original_post[0].find_all('div', class_='')
-                original_post = post_to_text_converter(original_post[2])
+                original_post = mumsnet_post_to_text_converter(original_post[2])
                 all_posts_in_url.append(original_post)
 
             # selects post info and body and drops title and other stuff we don't need
             posts = soup.find_all('div', class_=[normal_post_class, original_poster_reply_class])
             for post in posts:
-                whole_post = post_to_text_converter(post)
+                whole_post = mumsnet_post_to_text_converter(post)
                 all_posts_in_url.append(whole_post)
 
         # returns None if redirected
@@ -96,7 +101,7 @@ def scraper(url):
     return all_posts_in_url
 
 
-def multithread_wrapper(url_list):
+def mumsnet_multithread_wrapper(url_list):
     """ Scrapes each page in url list for data and appends results together and creates df from data"""
 
     all_posts = []
@@ -104,7 +109,7 @@ def multithread_wrapper(url_list):
     # Runs scraping script over each item in url list with multithreading
     # Then appends
     with ThreadPoolExecutor() as executor:
-        all_posts_in_url = executor.map(scraper, url_list)
+        all_posts_in_url = executor.map(mumsnet_scraper, url_list)
         for page in all_posts_in_url:
             all_posts.append(page)
 
@@ -119,7 +124,7 @@ def multithread_wrapper(url_list):
     return df
 
 
-def cleaning(df):
+def mumsnet_cleaning(df):
     """ Cleans up data ready for adding to db"""
 
     # replace 'Today' and 'Yesterday with datetime values'
@@ -165,20 +170,82 @@ def filter_out_old_rows(df, collection_name, index_columns):
 def data_export(df, collection_name):
     """ If dataframe isn't empty then rows are written to the database"""
     if not df.empty:
+        print('something in df')
         try:
             db = get_db(write=True)
             collection = db[collection_name]
             collection.insert_many(df.to_dict('records'))
         except Exception as e:
             print(e)
+    print('empty_df')
+
+
+def get_plus_word():
+    url = 'https://puzzles-prod.telegraph.co.uk/plusword/data.json'
+    r_json = requests.get(url).json()
+
+    row = {'date': r_json['copy']['date-publish-analytics'][:10],
+           'puzzle_number': r_json['meta']['number'],
+           'plusword_solution': r_json['settings']['solution']}
+
+    for direction in ['across', 'down']:
+        clue_num = 0
+        for clue in r_json['cluedata'][direction]:
+            clue_num += 1
+            row.update({'clue_' + direction + '_' + str(clue_num): clue})
+
+    for answer_num in range(1, 6):
+        row.update({'answer_' + str(answer_num): r_json['celldata'][5 * (answer_num - 1):(5 * answer_num)]})
+
+    url = 'https://puzzles-prod.telegraph.co.uk/plusword/index.html'
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Firefox(options=options)
+    driver.get(url)
+    driver.find_element(By.XPATH, '/html/body/div[2]/div[5]/header/button').click()
+
+    yellow = []
+    green = []
+    match = 'C\d*'
+    for table_row in driver.find_elements(By.CLASS_NAME, "row"):
+        for cell in table_row.find_elements(By.TAG_NAME, 'td'):
+            cell_class = cell.get_attribute("class")
+
+            if 'right-letter-wrong-column' in cell_class:
+                yellow.append(int(re.search(match, cell_class).group(0).strip('C')) + 1)
+
+            if 'right-letter-right-column' in cell_class:
+                green.append(int(re.search(match, cell_class).group(0).strip('C')) + 1)
+
+    row.update({'yellow': yellow,
+                'green': green})
+
+    df = pd.DataFrame.from_dict([row])
+    df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
+    df = df.replace('"', '', regex=True)
+    df = df.replace("&#039", '', regex=True)
+    df = df.replace(';', '', regex=True)
+
+    return df
+
+
+def puzzle_export():
+    df = get_plus_word()
+    df = filter_out_old_rows(df, 'Puzzle_Data', 'date')
+    data_export(df, 'Puzzle_Data')
+
+
+def mumsnet_export():
+    url_list = mumsnet_url_generator()
+    df_raw = mumsnet_multithread_wrapper(url_list)
+    df_clean = mumsnet_cleaning(df_raw)
+    df = filter_out_old_rows(df_clean, 'Mumsnet_Times', ['load_ts', 'user'])
+    data_export(df, 'Mumsnet_Times')
 
 
 def main():
-    url_list = url_generator()
-    df_raw = multithread_wrapper(url_list)
-    df_clean = cleaning(df_raw)
-    df = filter_out_old_rows(df_clean)
-    data_export(df)
+    puzzle_export()
+    mumsnet_export()
 
 
 if __name__ == "__main__":

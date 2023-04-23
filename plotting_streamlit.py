@@ -159,11 +159,6 @@ def data_import(collection_name='Times'):
     db = get_db()
     collection = db[collection_name]
     df = pd.DataFrame(list(collection.find({})))
-    df = df[['load_ts', 'time', 'user']]
-    df['time'] = df['time'].str.replace(r'(^\d\d:\d\d$)', r'00:\1', regex=True)
-    df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f')
-    df['user'] = df['user'].astype('category')
-    df = df.sort_values(by=['load_ts'])
 
     return df
 
@@ -171,6 +166,11 @@ def data_import(collection_name='Times'):
 def format_for_streamlit(df):
     """Makes df more readable, converts times into plottable numbers and sets index"""
 
+    df = df[['load_ts', 'time', 'user']]
+    df['time'] = df['time'].str.replace(r'(^\d\d:\d\d$)', r'00:\1', regex=True)
+    df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f')
+    df['user'] = df['user'].astype('category')
+    df = df.sort_values(by=['load_ts'])
     df = df.rename(columns={'load_ts': 'timestamp'})
     df['time_delta_as_num'] = mdates.date2num(pd.to_timedelta(df['time'].astype('string')))
     df['sub_time_delta_as_num'] = mdates.date2num(pd.to_timedelta(df['timestamp'].dt.time.astype('string')))
