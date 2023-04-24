@@ -181,50 +181,71 @@ def data_export(df, collection_name):
 
 
 def get_plus_word():
+    """ Scrapes todays plusword and adds it into a dictionary before exporting it to the db"""
+
     url = 'https://puzzles-prod.telegraph.co.uk/plusword/data.json'
     r_json = requests.get(url).json()
 
     row = {'date': r_json['copy']['date-publish-analytics'][:10],
-           'puzzle_number': r_json['meta']['number'],
+           'puzzle_number': int(r_json['meta']['number']),
            'plusword_solution': r_json['settings']['solution']}
 
+    # loops over each clue (in each direction) and strips out information
     for direction in ['across', 'down']:
         clue_num = 0
         for clue in r_json['cluedata'][direction]:
             clue_num += 1
             row.update({'clue_' + direction + '_' + str(clue_num): clue})
 
+    # loops over each answer and strips out information
     for answer_num in range(1, 6):
+        # probably being too clever using answer_num and slicing, but I like the one-liner
         row.update({'answer_' + str(answer_num): r_json['celldata'][5 * (answer_num - 1):(5 * answer_num)]})
 
+    # json doesn't have colour information so I have to get it from the html page
     url = 'https://puzzles-prod.telegraph.co.uk/plusword/index.html'
     options = Options()
+
+    # starts driver as headless
     options.add_argument("--headless")
     driver = webdriver.Firefox(options=options)
     driver.get(url)
+
+    # gets rid of the popup telling you how to play
     driver.find_element(By.XPATH, '/html/body/div[2]/div[5]/header/button').click()
 
     yellow = []
     green = []
+
+    # makes sure we only return the C<number> part of the cell class name
     match = 'C\d*'
+
+    # loops over each cell in the grid and extracts
     for table_row in driver.find_elements(By.CLASS_NAME, "row"):
         for cell in table_row.find_elements(By.TAG_NAME, 'td'):
             cell_class = cell.get_attribute("class")
 
+            # yellow cell class, need to return the cell number, strip C and add one to convert from 0 based
             if 'right-letter-wrong-column' in cell_class:
                 yellow.append(int(re.search(match, cell_class).group(0).strip('C')) + 1)
 
+            # green cell class, need to return the cell number, strip C and add one to convert from 0 based
             if 'right-letter-right-column' in cell_class:
                 green.append(int(re.search(match, cell_class).group(0).strip('C')) + 1)
 
-    row.update({'yellow': yellow,
-                'green': green})
+    # adds yellow and green to dict as a string for storing in db
+    row.update({'yellow': str(yellow),
+                'green': str(green)})
 
     df = pd.DataFrame.from_dict([row])
     df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
+
+    # strips out any quotation marks and semicolons that might confuse the db
     df = df.replace('"', '', regex=True)
-    df = df.replace("&#039", '', regex=True)
     df = df.replace(';', '', regex=True)
+
+    # single apostrophes are escaped as &#039 so need to remove them before exporting
+    df = df.replace("&#039", '', regex=True)
 
     return df
 

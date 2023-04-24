@@ -9826,3 +9826,149 @@ console.error: ({})
 console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilePwylit/search.json.mozlz4", (void 0)))
 [ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
 DevTools listening on ws://127.0.0.1:48937/devtools/browser/63d2fe9b-1135-4ad3-93c5-56159629fa65
+1682279148343	Marionette	INFO	Stopped listening on port 38985
+1682279148345	Marionette	INFO	Stopped listening on port 42611
+1682329063676	geckodriver	INFO	Listening on 127.0.0.1:38103
+1682329064178	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... ss" "--remote-debugging-port" "34193" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilejunrbC"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682329064343	Marionette	INFO	Marionette enabled
+1682329064345	Marionette	INFO	Listening on port 42553
+Read port: 42553
+WebDriver BiDi listening on ws://127.0.0.1:34193
+1682329064408	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilejunrbC/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:34193/devtools/browser/06f148d9-5c38-403c-ad05-60c6b5baf017
+1682329209182	geckodriver	INFO	Listening on 127.0.0.1:48357
+1682329209688	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... ss" "--remote-debugging-port" "54883" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileKgsCv6"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682329209845	Marionette	INFO	Marionette enabled
+1682329209846	Marionette	INFO	Listening on port 41519
+WebDriver BiDi listening on ws://127.0.0.1:54883
+Read port: 41519
+1682329209917	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileKgsCv6/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:54883/devtools/browser/0629e15f-7bf3-4eec-8664-8c33825dd4dc
+1682329267938	geckodriver	INFO	Listening on 127.0.0.1:56517
+1682329268442	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... ss" "--remote-debugging-port" "36533" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilejktuRv"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682329268631	Marionette	INFO	Marionette enabled
+1682329268633	Marionette	INFO	Listening on port 45989
+Read port: 45989
+WebDriver BiDi listening on ws://127.0.0.1:36533
+1682329268695	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilejktuRv/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:36533/devtools/browser/f26a511c-fa4e-4846-873a-565d58d56dda
+1682329696354	geckodriver	INFO	Listening on 127.0.0.1:54637
+1682329696860	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... ss" "--remote-debugging-port" "40511" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileqzU4nZ"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682329697019	Marionette	INFO	Marionette enabled
+1682329697021	Marionette	INFO	Listening on port 41811
+Read port: 41811
+WebDriver BiDi listening on ws://127.0.0.1:40511
+1682329697091	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileqzU4nZ/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:40511/devtools/browser/94748ab5-bab5-492b-b288-aa5d5b13643d
+1682329782296	geckodriver	INFO	Listening on 127.0.0.1:42911
+1682329782799	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... ss" "--remote-debugging-port" "33443" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileQGblOC"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682329782962	Marionette	INFO	Marionette enabled
+1682329782964	Marionette	INFO	Listening on port 37463
+Read port: 37463
+WebDriver BiDi listening on ws://127.0.0.1:33443
+1682329783028	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileQGblOC/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:33443/devtools/browser/570d77a0-c583-44c8-a4df-d4652faf5284
+1682329874449	geckodriver	INFO	Listening on 127.0.0.1:57831
+1682329874954	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "43693" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileH80fjm"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682329875390	Marionette	INFO	Marionette enabled
+1682329875392	Marionette	INFO	Listening on port 44897
+Read port: 44897
+WebDriver BiDi listening on ws://127.0.0.1:43693
+1682329875490	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileH80fjm/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:43693/devtools/browser/5767695d-e423-43b9-b2ef-a3e5ddce8005
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15007 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15007 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15007 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15021 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15015 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15019 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+1682329978986	Marionette	INFO	Stopped listening on port 44897
+1682329979807	geckodriver::marionette	ERROR	Failed to close browser connection: Socket not connected (os error 107)
