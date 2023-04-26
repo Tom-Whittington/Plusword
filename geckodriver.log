@@ -9972,3 +9972,730 @@ JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0
 JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
 1682329978986	Marionette	INFO	Stopped listening on port 44897
 1682329979807	geckodriver::marionette	ERROR	Failed to close browser connection: Socket not connected (os error 107)
+1682331691010	Marionette	INFO	Stopped listening on port 45989
+1682331691011	Marionette	INFO	Stopped listening on port 37463
+1682331691013	Marionette	INFO	Stopped listening on port 41519
+1682331691016	Marionette	INFO	Stopped listening on port 41811
+1682331691021	Marionette	INFO	Stopped listening on port 42553
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+[GFX1-]: CompositorBridgeChild receives IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+[GFX1-]: CompositorBridgeChild receives IPC close with reason=AbnormalShutdown
+1682332657420	geckodriver	INFO	Listening on 127.0.0.1:51709
+1682332657922	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "41135" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileZgK29V"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682332658369	Marionette	INFO	Marionette enabled
+1682332658372	Marionette	INFO	Listening on port 40571
+Read port: 40571
+WebDriver BiDi listening on ws://127.0.0.1:41135
+1682332658497	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileZgK29V/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:41135/devtools/browser/a286f58f-f07b-4dd6-a81d-dbb65718b051
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15009 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15009 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15009 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+1682332695728	Marionette	INFO	Stopped listening on port 40571
+1682332698201	geckodriver::marionette	ERROR	Failed to close browser connection: Socket not connected (os error 107)
+1682333380725	geckodriver	INFO	Listening on 127.0.0.1:54619
+1682333381230	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "36205" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilehso99p"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682333381683	Marionette	INFO	Marionette enabled
+1682333381685	Marionette	INFO	Listening on port 35131
+Read port: 35131
+WebDriver BiDi listening on ws://127.0.0.1:36205
+1682333381798	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilehso99p/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:36205/devtools/browser/de122b52-3b4e-43b3-bf3d-a9c7c5b2755c
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15038 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15038 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15037 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15051 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 42: TypeError: data.status is undefined
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15047 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15032 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15054 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15011 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 42: TypeError: data.status is undefined
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15051 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15017 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1682333652774	geckodriver	INFO	Listening on 127.0.0.1:37455
+1682333653279	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "42005" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile1Adx3V"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682333653707	Marionette	INFO	Marionette enabled
+1682333653709	Marionette	INFO	Listening on port 34257
+Read port: 34257
+WebDriver BiDi listening on ws://127.0.0.1:42005
+1682333653824	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile1Adx3V/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:42005/devtools/browser/20846c04-fce8-4c02-a9b9-39d30e18505a
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1682333672541	geckodriver	INFO	Listening on 127.0.0.1:54617
+1682333673046	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "48313" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileCMM9jD"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682333673477	Marionette	INFO	Marionette enabled
+1682333673479	Marionette	INFO	Listening on port 44349
+Read port: 44349
+WebDriver BiDi listening on ws://127.0.0.1:48313
+1682333673588	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileCMM9jD/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:48313/devtools/browser/5519c8a3-dc8a-4ea7-b1b1-4af1aa65a121
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1682333838602	geckodriver	INFO	Listening on 127.0.0.1:44245
+1682333839107	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "35455" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilegbXI9j"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682333839554	Marionette	INFO	Marionette enabled
+1682333839556	Marionette	INFO	Listening on port 34513
+Read port: 34513
+WebDriver BiDi listening on ws://127.0.0.1:35455
+1682333839662	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilegbXI9j/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:35455/devtools/browser/16e24d41-e668-4c44-a3ee-0fe7786d4a96
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15028 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15028 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15028 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+1682333920029	Marionette	INFO	Stopped listening on port 34513
+1682333924026	geckodriver	INFO	Listening on 127.0.0.1:35007
+1682333924531	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "50823" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileVtPrNZ"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682333924956	Marionette	INFO	Marionette enabled
+1682333924958	Marionette	INFO	Listening on port 39945
+Read port: 39945
+WebDriver BiDi listening on ws://127.0.0.1:50823
+1682333925071	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileVtPrNZ/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:50823/devtools/browser/33f680d0-2235-4ab2-b003-482b8c978401
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15012 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15012 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15012 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15052 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript warning: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/vendor/vue.js, line 3: unreachable code after return statement
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15038 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15042 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+1682334027967	Marionette	INFO	Stopped listening on port 39945
+1682334034176	geckodriver	INFO	Listening on 127.0.0.1:54625
+1682334034682	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "42835" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilevkfqIJ"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682334035104	Marionette	INFO	Marionette enabled
+1682334035106	Marionette	INFO	Listening on port 37601
+Read port: 37601
+WebDriver BiDi listening on ws://127.0.0.1:42835
+1682334035222	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilevkfqIJ/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:42835/devtools/browser/17f8ea0c-dd12-4154-80b6-6ed3e698209c
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15056 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15056 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15056 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15014 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15014 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15041 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15041 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/gameplay/plusword/js/native-app.js, line 14: TypeError: data is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzleUser.6ca743f0.js, line 2644: TypeError: l is null
+1682334129114	Marionette	INFO	Stopped listening on port 37601
+1682334136296	geckodriver::marionette	ERROR	Failed to close browser connection: Socket not connected (os error 107)
+1682334211505	geckodriver	INFO	Listening on 127.0.0.1:36265
+1682334212010	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "42133" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileYwrX4Y"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682334212464	Marionette	INFO	Marionette enabled
+1682334212467	Marionette	INFO	Listening on port 46535
+Read port: 46535
+WebDriver BiDi listening on ws://127.0.0.1:42133
+1682334212567	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileYwrX4Y/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:42133/devtools/browser/1a1b3a3c-bf9c-44e5-93e2-0bade429cf49
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+1682334228737	geckodriver	INFO	Listening on 127.0.0.1:57743
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+1682334229243	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "58337" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileos447U"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+1682334229689	Marionette	INFO	Marionette enabled
+1682334229691	Marionette	INFO	Listening on port 40243
+Read port: 40243
+WebDriver BiDi listening on ws://127.0.0.1:58337
+1682334229796	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileos447U/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:58337/devtools/browser/8c431950-56f5-497b-a9c7-2b9079b6c626
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15023 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+1682334231820	Marionette	INFO	Stopped listening on port 40243
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+1682334232966	Marionette	INFO	Stopped listening on port 46535
+1682334233827	geckodriver::marionette	ERROR	Failed to close browser connection: Socket not connected (os error 107)
+1682334321767	geckodriver	INFO	Listening on 127.0.0.1:59595
+1682334322273	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "47391" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileTT4fpW"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682334322715	Marionette	INFO	Marionette enabled
+1682334322717	Marionette	INFO	Listening on port 34883
+Read port: 34883
+WebDriver BiDi listening on ws://127.0.0.1:47391
+1682334322823	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileTT4fpW/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:47391/devtools/browser/57e3cce6-c57f-4b47-9afb-3921188ab233
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1682334385442	geckodriver	INFO	Listening on 127.0.0.1:46669
+1682334385945	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "52259" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileuUzes1"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682334386411	Marionette	INFO	Marionette enabled
+1682334386413	Marionette	INFO	Listening on port 33523
+Read port: 33523
+WebDriver BiDi listening on ws://127.0.0.1:52259
+1682334386511	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileuUzes1/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:52259/devtools/browser/608d96c8-a205-41bb-966e-9b564e1c52f5
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+JavaScript error: https://secure.telegraph.co.uk/customer/lib/tmguser.js, line 9: TypeError: document.getElementsByTagName(...)[0] is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-19952 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+1682334402514	geckodriver	INFO	Listening on 127.0.0.1:56953
+1682334403018	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "40823" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilerI9OOn"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682334403447	Marionette	INFO	Marionette enabled
+1682334403449	Marionette	INFO	Listening on port 41759
+Read port: 41759
+WebDriver BiDi listening on ws://127.0.0.1:40823
+1682334403554	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilerI9OOn/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:40823/devtools/browser/cbe20372-329f-46b4-a3a0-bfb0410ec5b2
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: TypeError: Property 'handleEvent' is not callable.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15013 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+console.error: (new TypeError("lazy.AsyncShutdown.profileBeforeChange is undefined", "resource://services-settings/Database.sys.mjs", 599))
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/puzzles/?source=archive#plusword/plusword/plusword-15013 line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/assets/puzzles.46a27b72.js, line 1: TypeError: V is null
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://secure.telegraph.co.uk."
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 54: TypeError: window.tmg is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 529: TypeError: window.tmg is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 4: ReferenceError: tmg is not defined
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 136: TypeError: window.tmg is undefined
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript warning: https://assets.adobedtm.com/bb77750356fd/42bfe6bcc850/launch-b45e98f9da6f.min.js, line 4: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://www.telegraph.co.uk/puzzles/ line 9 > injectedScript, line 22: TypeError: tmg.user is undefined
+JavaScript error: https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js line 1 > Function, line 50: TypeError: window.tmgAds.plugins is undefined
+1682345741987	Marionette	INFO	Stopped listening on port 41759
+1682345742962	Marionette	INFO	Stopped listening on port 33523
+1682377796400	geckodriver	INFO	Listening on 127.0.0.1:42375
+1682377796899	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... ss" "--remote-debugging-port" "34893" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileS2em3s"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682377797065	Marionette	INFO	Marionette enabled
+1682377797067	Marionette	INFO	Listening on port 34613
+Read port: 34613
+WebDriver BiDi listening on ws://127.0.0.1:34893
+1682377797131	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileS2em3s/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:34893/devtools/browser/59eddcf3-97be-4610-b037-98eddf3b228d
+1682379974790	Marionette	INFO	Stopped listening on port 34613
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1682446156772	geckodriver	INFO	Listening on 127.0.0.1:47333
+1682446157274	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... ss" "--remote-debugging-port" "54007" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileNTrAwR"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682446157499	Marionette	INFO	Marionette enabled
+1682446157502	Marionette	INFO	Listening on port 33783
+WebDriver BiDi listening on ws://127.0.0.1:54007
+Read port: 33783
+1682446157675	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileNTrAwR/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:54007/devtools/browser/4b7dd16d-515e-499f-8731-ba9ffc21e8a3
+1682453996262	Marionette	INFO	Stopped listening on port 33783
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1682494875811	geckodriver	INFO	Listening on 127.0.0.1:55133
+1682494876312	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... ss" "--remote-debugging-port" "49101" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileEEiwdr"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682494876528	Marionette	INFO	Marionette enabled
+1682494876530	Marionette	INFO	Listening on port 45009
+WebDriver BiDi listening on ws://127.0.0.1:49101
+Read port: 45009
+1682494876702	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileEEiwdr/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:49101/devtools/browser/eaf1be5d-2cd0-4ed6-9abc-fa83e001921a
+1682495122424	Marionette	INFO	Stopped listening on port 45009
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1682541794980	geckodriver	INFO	Listening on 127.0.0.1:36707
+1682541808015	geckodriver	INFO	Listening on 127.0.0.1:34369
+1682541808522	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... ss" "--remote-debugging-port" "41177" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile9aBox9"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1682541808680	Marionette	INFO	Marionette enabled
+1682541808683	Marionette	INFO	Listening on port 38785
+Read port: 38785
+WebDriver BiDi listening on ws://127.0.0.1:41177
+1682541808754	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile9aBox9/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:41177/devtools/browser/e206d942-8d08-4c8a-8607-19636ea8de58

@@ -170,14 +170,14 @@ def filter_out_old_rows(df, collection_name, index_columns):
 def data_export(df, collection_name):
     """ If dataframe isn't empty then rows are written to the database"""
     if not df.empty:
-        print('something in df')
         try:
             db = get_db(write=True)
             collection = db[collection_name]
             collection.insert_many(df.to_dict('records'))
+            print(str(len(df)) + ' records exported to ' + str(collection_name) + ' database')
         except Exception as e:
             print(e)
-    print('empty_df')
+
 
 
 def get_plus_word():
@@ -192,22 +192,20 @@ def get_plus_word():
 
     # loops over each clue (in each direction) and strips out information
     for direction in ['across', 'down']:
-        clue_num = 0
-        for clue in r_json['cluedata'][direction]:
-            clue_num += 1
-            row.update({'clue_' + direction + '_' + str(clue_num): clue})
+        for clue_num, clue in enumerate(r_json['cluedata'][direction], 1):
+            row[f'clue_{direction}_{clue_num}'] = clue
 
     # loops over each answer and strips out information
     for answer_num in range(1, 6):
         # probably being too clever using answer_num and slicing, but I like the one-liner
-        row.update({'answer_' + str(answer_num): r_json['celldata'][5 * (answer_num - 1):(5 * answer_num)]})
+        row[f'answer_{answer_num}'] = r_json['celldata'][5 * (answer_num - 1):(5 * answer_num)]
 
     # json doesn't have colour information so I have to get it from the html page
     url = 'https://puzzles-prod.telegraph.co.uk/plusword/index.html'
     options = Options()
 
     # starts driver as headless
-    options.add_argument("--headless")
+    options.headless = True
     driver = webdriver.Firefox(options=options)
     driver.get(url)
 
@@ -234,15 +232,13 @@ def get_plus_word():
                 green.append(int(re.search(match, cell_class).group(0).strip('C')) + 1)
 
     # adds yellow and green to dict as a string for storing in db
-    row.update({'yellow': str(yellow),
-                'green': str(green)})
+    row.update({'yellow': str(yellow), 'green': str(green)})
 
     df = pd.DataFrame.from_dict([row])
     df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
 
     # strips out any quotation marks and semicolons that might confuse the db
-    df = df.replace('"', '', regex=True)
-    df = df.replace(';', '', regex=True)
+    df = df.replace(['"', ';'], '', regex=True)
 
     # single apostrophes are escaped as &#039 so need to remove them before exporting
     df = df.replace("&#039", '', regex=True)
