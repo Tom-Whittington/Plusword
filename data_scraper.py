@@ -76,7 +76,7 @@ def mumsnet_scraper(url):
         # happens if page number is higher than current page count
         if r.status_code != 302:
 
-            soup = BeautifulSoup(r.content, features="html5lib")
+            soup = BeautifulSoup(r.content, "html.parser")
 
             all_posts_in_url = []
 
@@ -238,7 +238,7 @@ def get_plus_word():
     df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
 
     # strips out any quotation marks and semicolons that might confuse the db
-    df = df.replace(['"', ';'], '', regex=True)
+    df = df.replace(['"', '<i>', '</i>'], '', regex=True)
 
     # single apostrophes are escaped as &#039 so need to remove them before exporting
     df = df.replace("&#039", '', regex=True)
