@@ -10801,3 +10801,56 @@ DevTools listening on ws://127.0.0.1:55245/devtools/browser/8e435ca9-ff0d-41f6-8
 console.error: "update.locale" " file doesn't exist in either the application or GRE directories"
 console.error: "update.locale" " file doesn't exist in either the application or GRE directories"
 console.error: "update.locale" " file doesn't exist in either the application or GRE directories"
+1682672398822	geckodriver	INFO	Listening on 127.0.0.1:33441
+1682672399330	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/sna ... ss" "--remote-debugging-port" "41971" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilec9sgcr"
+1682672772522	geckodriver	INFO	Listening on 127.0.0.1:41627
+1682672772577	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... ss" "--remote-debugging-port" "58483" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilecO12Li"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+1682672773018	Marionette	INFO	Marionette enabled
+1682672773023	Marionette	INFO	Listening on port 44801
+Read port: 44801
+WebDriver BiDi listening on ws://127.0.0.1:58483
+1682672773175	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilecO12Li/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:58483/devtools/browser/a78f45de-8bec-4bd7-a4a2-febce611baea
+1682672978762	geckodriver	INFO	Listening on 127.0.0.1:55399
+1682672978828	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... ss" "--remote-debugging-port" "40711" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileLysKTg"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+1682672979310	Marionette	INFO	Marionette enabled
+1682672979315	Marionette	INFO	Listening on port 37057
+Read port: 37057
+WebDriver BiDi listening on ws://127.0.0.1:40711
+1682672979467	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileLysKTg/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:40711/devtools/browser/b548fc1e-de27-4d4e-91f1-57aafa0839db
+console.error: "update.locale" " file doesn't exist in either the application or GRE directories"
+1682673096212	geckodriver	INFO	Listening on 127.0.0.1:50529
+1682673096272	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... ss" "--remote-debugging-port" "48255" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilepbMTd2"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+1682673096714	Marionette	INFO	Marionette enabled
+1682673096719	Marionette	INFO	Listening on port 33663
+Read port: 33663
+WebDriver BiDi listening on ws://127.0.0.1:48255
+1682673096863	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilepbMTd2/search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:48255/devtools/browser/36c8aa1f-9e2a-4abc-ad1b-fdcf7e9274d0
+console.error: "update.locale" " file doesn't exist in either the application or GRE directories"
+console.error: "update.locale" " file doesn't exist in either the application or GRE directories"

@@ -178,6 +178,8 @@ def data_export(df, collection_name):
         except Exception as e:
             print(e)
 
+    print('Nothing to export')
+
 
 
 def get_plus_word():
@@ -205,7 +207,7 @@ def get_plus_word():
     options = Options()
 
     # starts driver as headless
-    options.headless = True
+    options.add_argument("-headless")
     driver = webdriver.Firefox(options=options)
     driver.get(url)
 
