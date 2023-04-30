@@ -21,6 +21,8 @@ add_bg_from_local()
 st.title('Data display')
 
 # Displays dataframe
+df.columns = df.columns.str.capitalize()
+df.index.name = df.index.name.capitalize()
 st.dataframe(df[['Time', 'User']], width=800)
 
 # Writes number of rows in database

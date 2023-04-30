@@ -1,11 +1,12 @@
 import streamlit as st
-from plotting_streamlit import data_import, palette_import, settings, include_mums, overall_times, add_bg_from_local
+from plotting_streamlit import data_import, palette_import, settings, include_mums, overall_times, add_bg_from_local, format_for_streamlit
 
 # Gets default settings
 settings()
 
 # Imports data
 df = data_import()
+df = format_for_streamlit(df)
 palette = palette_import()
 df = include_mums(df)
 
@@ -35,4 +36,5 @@ st.title('Overall ' + chart_type + ' Times')
 st.pyplot(fig)
 
 # Displays dataframe
+df.columns = df.columns.str.capitalize()
 st.dataframe(df.set_index('User'), width=800)

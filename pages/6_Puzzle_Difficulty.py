@@ -1,11 +1,12 @@
 import streamlit as st
-from plotting_streamlit import data_import, palette_import, settings, include_mums, puzzle_difficulty, add_bg_from_local
+from plotting_streamlit import data_import, palette_import, settings, include_mums, puzzle_difficulty, add_bg_from_local, format_for_streamlit
 
 # Gets default settings
 settings()
 
 # Imports data
 df = data_import()
+df = format_for_streamlit(df)
 palette = palette_import()
 df = include_mums(df)
 

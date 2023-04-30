@@ -31,4 +31,5 @@ st.title(chart_type)
 st.pyplot(fig)
 
 # Displays dataframe
+df.columns = df.columns.str.capitalize()
 st.dataframe(df.set_index('User'), width=800)

@@ -1,5 +1,5 @@
 import base64
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
@@ -169,13 +169,15 @@ def format_for_streamlit(df):
     df = df[['load_ts', 'time', 'user']]
     df['time'] = df['time'].str.replace(r'(^\d\d:\d\d$)', r'00:\1', regex=True)
     df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f')
-    df['user'] = df['user'].astype('category')
+    # df['user'] = df['user'].astype('category')
     df = df.sort_values(by=['load_ts'])
     df = df.rename(columns={'load_ts': 'timestamp'})
-    df['time_delta_as_num'] = mdates.date2num(pd.to_timedelta(df['time'].astype('string')))
-    df['sub_time_delta_as_num'] = mdates.date2num(pd.to_timedelta(df['timestamp'].dt.time.astype('string')))
-    df.columns = df.columns.str.capitalize()
-    df = df.set_index('Timestamp')
+    df['time_delta'] = pd.to_timedelta(df['time'].astype('timedelta64[ns]'))
+    df['time_delta_as_num'] = time_delta_to_num(pd.to_timedelta(df['time'].astype('string')))
+    df['sub_time_delta_as_num'] = time_delta_to_num(pd.to_timedelta(df['timestamp'].dt.time.astype('string')))
+
+
+    df = df.set_index('timestamp')
     df = df.sort_index(ascending=False)
 
     return df
@@ -191,23 +193,28 @@ def old_data_import(collection_name='Times'):
     collection = db[collection_name]
     df = pd.DataFrame(list(collection.find({})))
     df = df[['load_ts', 'time', 'user']]
-    df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f')
-    df = df.sort_values(by=['load_ts'])
+    #df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f%z')
+    df = df.sort_values(by=['load_ts'], ascending=False)
+    df = df.rename(columns={'load_ts' : 'timestamp'})
 
     # Dropping columns and setting datatypes
 
     # Instead of rewriting the code I've just reassigned my load_ts to your timestamp
     # I have removed the timezone for legibility
-    df["timestamp"] = pd.to_datetime(df["load_ts"], format='%Y-%m-%d %H:%M:%S.%f')
+    df["timestamp"] = pd.to_datetime(df["load_ts"], format='%Y-%m-%d %H:%M:%S.%f%z')
     df["timestamp"] = df["timestamp"].dt.tz_localize(None)
-
+    #
     # Dropping columns and setting datatypes
     df = df[['timestamp', 'time', 'user']]
-
+    #
     # Converting time and submission time to timedelta
     # this throws a warning regarding overwriting data, @Tom pls fix
     # I've just suppressed the warning as the operation is correct
-    df["time_delta"] = df["time"].map(time_string_to_time_delta)
+    df["time_delta"] = df["time"].astype('string')
+    df["time_delta"] = df["time_delta"].map(time_string_to_time_delta)
+    df['time'] = df['time'].str.replace(r'(^\d\d:\d\d$)', r'00:\1', regex=True)
+    df['time_delta'] = df['time'].astype('timedelta64[ns]')
+
     df['sub_time_delta'] = df['timestamp'].dt.strftime('%H:%M:%S').astype('timedelta64')
 
     # Converting timedeltas to plottable numbers and dropping sub_time_delta
@@ -227,13 +234,13 @@ def overall_times(df, palette, agg):
     """Barplot showing the longest completion time for each person """
 
     if agg == 'Mean':
-        df = df.groupby(df["User"])["time_delta_as_num"].mean()
+        df = df.groupby(df["user"])["time_delta_as_num"].mean()
 
     if agg == 'Min':
-        df = df.groupby(df["User"])["time_delta_as_num"].min()
+        df = df.groupby(df["user"])["time_delta_as_num"].min()
 
     if agg == 'Max':
-        df = df.groupby(df["User"])["time_delta_as_num"].max()
+        df = df.groupby(df["user"])["time_delta_as_num"].max()
 
     df = df.reset_index()
 
@@ -242,7 +249,7 @@ def overall_times(df, palette, agg):
     fig, ax = plt.subplots(figsize=(10, 5))
 
     fig = sns.barplot(data=df,
-                      x="User",
+                      x="user",
                       y="time_delta_as_num",
                       palette=palette).set(
         ylabel='Time /mins',
@@ -254,7 +261,7 @@ def overall_times(df, palette, agg):
 
     df = time_delta_as_num_to_time(df)
 
-    df = df[['User', 'Time']]
+    df = df[['user', 'Time']]
 
     return df, ax.figure
 
@@ -264,9 +271,11 @@ def number_of_sub_1_minnies(df, palette):
 
     # Creates df
 
-    df_sub_minnies = df[df["time_delta"] < datetime.timedelta(minutes=1)]
+    df_sub_minnies = df[df["time_delta"] < timedelta(minutes=1)]
 
-    df_sub_minnies = df_sub_minnies.groupby(df_sub_minnies["User"])["timestamp"].count()
+    df_sub_minnies = df_sub_minnies.reset_index()
+
+    df_sub_minnies = df_sub_minnies.groupby(df_sub_minnies["user"])["timestamp"].count()
 
     df_sub_minnies = df_sub_minnies.reset_index()
 
@@ -280,7 +289,7 @@ def number_of_sub_1_minnies(df, palette):
 
     fig = sns.barplot(data=df_sub_minnies,
                       y='Number of Sub 1 Minutes',
-                      x='User',
+                      x='user',
                       palette=palette).set(
         ylabel=None,
         xlabel=None)
@@ -295,11 +304,11 @@ def number_of_submissions(df, palette):
 
     # Creates df
 
-    df_overall_number_submissions = df["User"].value_counts(sort=True, ascending=False)
+    df_overall_number_submissions = df["user"].value_counts(sort=True, ascending=False)
 
     df_overall_number_submissions = df_overall_number_submissions.reset_index()
 
-    df_overall_number_submissions = df_overall_number_submissions.rename(columns={'User': 'Number of Submissions',
+    df_overall_number_submissions = df_overall_number_submissions.rename(columns={'user': 'Number of Submissions',
                                                                                   'index': 'User'})
     # Plot
 
@@ -308,7 +317,9 @@ def number_of_submissions(df, palette):
     fig = sns.barplot(data=df_overall_number_submissions,
                       y='Number of Submissions',
                       x='User',
-                      palette=palette)
+                      palette=palette).set(
+        ylabel = None,
+        xlabel = None)
 
     plt.xticks(rotation=0)
 
@@ -475,7 +486,7 @@ def sub_time_boxplot(df, palette):
     fig, ax = plt.subplots(figsize=(15, 7))
 
     fig = sns.boxplot(data=df,
-                      x="User",
+                      x="user",
                       y="sub_time_delta_as_num",
                       palette=palette).set(
         ylabel='Time of Submission',
@@ -504,7 +515,7 @@ def sub_time_violin_plot(df, palette):
     fig, ax = plt.subplots(figsize=(15, 7))
 
     fig = sns.violinplot(data=df,
-                         x="User",
+                         x="user",
                          y=df["sub_time_delta_as_num"],
                          cut=0,
                          bw=0.25,
@@ -558,7 +569,7 @@ def puzzle_difficulty(df, ascending, number_of_rows):
 
     df_difficulty = df.copy()
 
-    df_difficulty['date'] = df_difficulty['timestamp'].datetime.date
+    df_difficulty['date'] = df_difficulty.index.date
 
     df_difficulty = df_difficulty.groupby(['date'])['time_delta_as_num'].mean()
 
@@ -594,11 +605,13 @@ def puzzle_difficulty(df, ascending, number_of_rows):
 
     df_difficulty = time_delta_as_num_to_time(df_difficulty)
 
-    df_difficulty = df_difficulty[['date', 'Time']]
+    df_difficulty = df_difficulty[['date', 'time']]
 
-    df_difficulty = df_difficulty.rename(columns={'date': 'Date'})
+    df_difficulty['time'] = df_difficulty['time'].stftime('%H:%M:%S')
 
-    df_difficulty = df_difficulty.set_index('Date')
+    #df_difficulty = df_difficulty.rename(columns={'date': 'Date'})
+
+    df_difficulty = df_difficulty.set_index('date')
 
     return df_difficulty, ax.figure
 
@@ -640,11 +653,11 @@ def welcome_gif():
 def user_multi_select(df):
     """Creates multiselect box containing unique users names. Filters df to only contain those users"""
 
-    sorted_unique_user = sorted(df['User'].unique())
+    sorted_unique_user = sorted(df['user'].unique())
 
     selected_users = st.sidebar.multiselect('User', sorted_unique_user, sorted_unique_user)
 
-    df = df[df['User'].isin(selected_users)]
+    df = df[df['user'].isin(selected_users)]
 
     return df
 
@@ -652,11 +665,11 @@ def user_multi_select(df):
 def user_single_select(df):
     """Creates select box containing unique users names. Filters df to only contain that user"""
 
-    sorted_unique_user = df['User'].unique()
+    sorted_unique_user = df['user'].unique()
 
     selected_user = st.sidebar.selectbox('User', sorted_unique_user)
 
-    df = df[df['User'] == selected_user]
+    df = df[df['user'] == selected_user]
 
     return df, selected_user
 
