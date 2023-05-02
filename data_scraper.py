@@ -178,7 +178,8 @@ def data_export(df, collection_name):
         except Exception as e:
             print(e)
 
-    print('Nothing to export')
+    else:
+        print('Nothing to export')
 
 
 
