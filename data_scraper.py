@@ -179,7 +179,7 @@ def data_export(df, collection_name):
             print(e)
 
     else:
-        print('Nothing to export')
+        print('Nothing to export to ' + str(collection_name) + ' database')
 
 
 
