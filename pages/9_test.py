@@ -1,25 +1,19 @@
 import streamlit as st
-from plotting_streamlit import data_import, format_for_streamlit, palette_import, add_bg_from_local, user_multi_select, date_select, \
-    include_mums, old_data_import
+from datetime import date
+from plotting_streamlit import data_import, format_for_streamlit, palette_import, include_mums, settings, number_of_submissions,\
+    number_of_sub_1_minnies, add_bg_from_local
+
+# Imports default settings
+settings()
 
 # Imports data
-df_new = data_import()
-df_new = format_for_streamlit(df_new)
+df = data_import()
+df = format_for_streamlit(df)
+palette = palette_import()
+df = include_mums(df)
 
-df_old = old_data_import()
+#df = df.loc[(df['Timestamp'].date == date.today())]
 
-# Sets background
-add_bg_from_local()
+df.columns = df.columns.str.capitalize()
 
-# Sets title
-st.title('Data display')
-
-# Displays dataframe
-st.dataframe(df_new[['Time', 'User']], width=800)
-st.dataframe(df_new.dtypes)
-st.dataframe(df_old, width=800)
-st.dataframe(df_old.dtypes)
-
-
-# # Writes number of rows in database
-# st.write(str(df.shape[0]) + ' rows found')
+#st.dataframe(df.set_index('User'), width=800)

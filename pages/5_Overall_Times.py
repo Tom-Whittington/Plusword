@@ -1,14 +1,15 @@
 import streamlit as st
-from plotting_streamlit import data_import, palette_import, settings, include_mums, overall_times, add_bg_from_local, format_for_streamlit
+from plotting_streamlit import data_import, palette_import, settings, mum_selector, overall_times, add_bg_from_local, format_for_streamlit, user_multi_select
 
-# Gets default settings
+# Imports default settings
 settings()
 
+include_mums = mum_selector()
+
 # Imports data
-df = data_import()
+df = data_import(include_mums)
 df = format_for_streamlit(df)
 palette = palette_import()
-df = include_mums(df)
 
 # Sets background
 add_bg_from_local()
@@ -28,6 +29,9 @@ elif chart_type == 'Quickest':
 else:
     agg = 'Max'
     df, fig = overall_times(df, palette, agg)
+
+# Selects users to display
+df = user_multi_select(df)
 
 # Sets title
 st.title('Overall ' + chart_type + ' Times')

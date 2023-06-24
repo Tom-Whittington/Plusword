@@ -1,5 +1,5 @@
 import base64
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import json
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
@@ -8,7 +8,13 @@ import pandas as pd
 import pymongo
 import seaborn as sns
 import streamlit as st
+import random
 from scipy import interpolate, signal
+
+
+## TODO: Add streak
+## TODO: Add sub minute/submissions ratio
+## TODO: Add outline to mums
 
 
 def settings():
@@ -141,6 +147,7 @@ def get_db(write=False):
 
 
 def palette_import():
+    ##TODO: remove
     # Gets colours from db
     db = get_db()
     collection = db["Colours"]
@@ -151,14 +158,42 @@ def palette_import():
     return palette
 
 
-def data_import(collection_name='Times'):
+# def data_import(collection_name='Times'):
+#     """Connects to database and creates dataframe containing all columns. Drops unneeded columns and sets timestamp
+#      datatype. Correct any incorrect time values, sets data times and sorts"""
+#
+#     # Connects to db and gets collection
+#     db = get_db()
+#     collection = db[collection_name]
+#     df = pd.DataFrame(list(collection.find({})))
+#
+#     return df
+
+def data_import(include_mums=False):
     """Connects to database and creates dataframe containing all columns. Drops unneeded columns and sets timestamp
      datatype. Correct any incorrect time values, sets data times and sorts"""
 
+    collection_list = ['Times']
+
+    if include_mums:
+        collection_list.append('Mumsnet_Times')
+    all_records = []
+
     # Connects to db and gets collection
     db = get_db()
-    collection = db[collection_name]
-    df = pd.DataFrame(list(collection.find({})))
+
+    for collection in collection_list:
+        records = list(db[collection].find())
+        all_records.append(records)
+
+    # Flattens list
+    all_records = [val for sublist in all_records for val in sublist]
+
+    df = pd.DataFrame(all_records)
+
+    # Makes column to indicate which database times are from
+    non_mums = ['Harvey Williams', 'Sazzle', 'Leah', 'Tom', 'Joe', 'George Sheen', 'Oliver Folkard']
+    df['mum'] = np.where(df['user'].isin(non_mums), False, True)
 
     return df
 
@@ -169,13 +204,12 @@ def format_for_streamlit(df):
     df = df[['load_ts', 'time', 'user']]
     df['time'] = df['time'].str.replace(r'(^\d\d:\d\d$)', r'00:\1', regex=True)
     df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f')
-    # df['user'] = df['user'].astype('category')
+    df['user'] = df['user'].str.split(' ', 1).str[0]
     df = df.sort_values(by=['load_ts'])
     df = df.rename(columns={'load_ts': 'timestamp'})
     df['time_delta'] = pd.to_timedelta(df['time'].astype('timedelta64[ns]'))
     df['time_delta_as_num'] = time_delta_to_num(pd.to_timedelta(df['time'].astype('string')))
     df['sub_time_delta_as_num'] = time_delta_to_num(pd.to_timedelta(df['timestamp'].dt.time.astype('string')))
-
 
     df = df.set_index('timestamp')
     df = df.sort_index(ascending=False)
@@ -193,9 +227,9 @@ def old_data_import(collection_name='Times'):
     collection = db[collection_name]
     df = pd.DataFrame(list(collection.find({})))
     df = df[['load_ts', 'time', 'user']]
-    #df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f%z')
+    # df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f%z')
     df = df.sort_values(by=['load_ts'], ascending=False)
-    df = df.rename(columns={'load_ts' : 'timestamp'})
+    df = df.rename(columns={'load_ts': 'timestamp'})
 
     # Dropping columns and setting datatypes
 
@@ -233,6 +267,11 @@ def old_data_import(collection_name='Times'):
 def overall_times(df, palette, agg):
     """Barplot showing the longest completion time for each person """
 
+    ## TODO: Bring date through with max and min
+    ## TODO: Make default number of mums come through
+
+    more_than_3_entries = df['user'].value_counts() > 3
+
     if agg == 'Mean':
         df = df.groupby(df["user"])["time_delta_as_num"].mean()
 
@@ -241,6 +280,8 @@ def overall_times(df, palette, agg):
 
     if agg == 'Max':
         df = df.groupby(df["user"])["time_delta_as_num"].max()
+
+    df = df[more_than_3_entries]
 
     df = df.reset_index()
 
@@ -251,7 +292,7 @@ def overall_times(df, palette, agg):
     fig = sns.barplot(data=df,
                       x="user",
                       y="time_delta_as_num",
-                      palette=palette).set(
+                      ).set(
         ylabel='Time /mins',
         xlabel=None)
 
@@ -289,8 +330,8 @@ def number_of_sub_1_minnies(df, palette):
 
     fig = sns.barplot(data=df_sub_minnies,
                       y='Number of Sub 1 Minutes',
-                      x='user',
-                      palette=palette).set(
+                      x='user'
+                      ).set(
         ylabel=None,
         xlabel=None)
 
@@ -316,10 +357,10 @@ def number_of_submissions(df, palette):
 
     fig = sns.barplot(data=df_overall_number_submissions,
                       y='Number of Submissions',
-                      x='User',
-                      palette=palette).set(
-        ylabel = None,
-        xlabel = None)
+                      x='User'
+                      ).set(
+        ylabel=None,
+        xlabel=None)
 
     plt.xticks(rotation=0)
 
@@ -397,8 +438,8 @@ def combined_period_mean(df, palette, time_period, smooth, poly_value):
     fig = sns.lineplot(data=df,
                        x='date_as_num',
                        y='time_delta_as_num',
-                       hue='User',
-                       palette=palette).set(
+                       hue='User'
+                       ).set(
         xlabel='Date',
         ylabel='Mean time /min')
 
@@ -457,7 +498,7 @@ def rolling_average(df, palette, window_days):
                        x='timestamp',
                        y='time_delta_as_num',
                        hue='User',
-                       palette=palette).set(
+                       ).set(
         xlabel='Date',
         ylabel='Rolling Mean Times /min')
 
@@ -483,12 +524,15 @@ def rolling_average(df, palette, window_days):
 def sub_time_boxplot(df, palette):
     """Plots boxplot of submission times"""
 
+    ## TODO: Remove users with less than three entries
+    ## TODO: Make default number of mums come through
+
     fig, ax = plt.subplots(figsize=(15, 7))
 
     fig = sns.boxplot(data=df,
                       x="user",
                       y="sub_time_delta_as_num",
-                      palette=palette).set(
+                      ).set(
         ylabel='Time of Submission',
         xlabel=None)
 
@@ -504,6 +548,9 @@ def sub_time_boxplot(df, palette):
 def sub_time_violin_plot(df, palette):
     """Plots violin plot of submission times"""
 
+    ## TODO: Remove users with less than three entries
+    ## TODO: Make default number of mums come through
+
     # Generates 24 hours for y axis
 
     y_axis_time = y_axis_generator(24, 'h')
@@ -518,8 +565,7 @@ def sub_time_violin_plot(df, palette):
                          x="user",
                          y=df["sub_time_delta_as_num"],
                          cut=0,
-                         bw=0.25,
-                         palette=palette)
+                         bw=0.25)
 
     ax.yaxis_date()
 
@@ -541,9 +587,15 @@ def sub_time_violin_plot(df, palette):
 def sub_time_distplot(df, palette, user):
     """Plots dist plot for submission times based on user"""
 
+    # more_than_3_entries = df['user'].value_counts() > 3
+    ## TODO: Remove users with less than three entries
+
     df_time_dist = df.sort_values(by='sub_time_delta_as_num')
 
+    df_time_dist = df[more_than_3_entries]
+
     fig, ax = plt.subplots(figsize=(15, 7))
+    palette = sns.color_palette("hls", 20)
 
     plt.xlim(0, 1)
 
@@ -551,7 +603,7 @@ def sub_time_distplot(df, palette, user):
                        x=df_time_dist['sub_time_delta_as_num'],
                        bins=30,
                        kde=True,
-                       color=palette[user]).set(
+                       color=palette[random.randint(0, 20)]).set(
         title=user,
         xlabel='Time of Submission')
 
@@ -565,13 +617,20 @@ def sub_time_distplot(df, palette, user):
 def puzzle_difficulty(df, ascending, number_of_rows):
     """Returns df and scatterplot of highest or lowest mean times across all users"""
 
+    ## TODO: Change Hue based on mum
+    ## TODO: Add tool tip
+
     # Creates df
 
     df_difficulty = df.copy()
 
     df_difficulty['date'] = df_difficulty.index.date
 
+    more_than_3_entries = df_difficulty['date'].value_counts() > 3
+
     df_difficulty = df_difficulty.groupby(['date'])['time_delta_as_num'].mean()
+
+    # df_difficulty[more_than_3_entries]
 
     df_difficulty = df_difficulty.reset_index()
 
@@ -587,7 +646,8 @@ def puzzle_difficulty(df, ascending, number_of_rows):
 
     fig = sns.scatterplot(data=df_difficulty,
                           x='date',
-                          y='time_delta_as_num')
+                          y='time_delta_as_num',
+                          hue='mum')
 
     ax.yaxis_date()
 
@@ -605,12 +665,7 @@ def puzzle_difficulty(df, ascending, number_of_rows):
 
     df_difficulty = time_delta_as_num_to_time(df_difficulty)
 
-    df_difficulty = df_difficulty[['date', 'time']]
-
-    df_difficulty['time'] = df_difficulty['time'].stftime('%H:%M:%S')
-
-    #df_difficulty = df_difficulty.rename(columns={'date': 'Date'})
-
+    df_difficulty = df_difficulty[['date', 'Time']]
     df_difficulty = df_difficulty.set_index('date')
 
     return df_difficulty, ax.figure
@@ -688,15 +743,37 @@ def date_select(df):
     return df
 
 
-def include_mums(df):
+def mum_selector(include_mums=False):
     """ Allows selection of mumsnet data"""
 
     include_mums = st.sidebar.checkbox('Include Mums?', value=False)
 
-    if include_mums:
-        df_mums = data_import('Mumsnet_Times')
-        df_mums = format_for_streamlit(df_mums)
-        df = pd.concat([df, df_mums])
-        df = df.sort_index(ascending=False)
+    return include_mums
 
-    return df
+
+def today_times(df, include_mums):
+    df_today = df.loc[(df.index.date == date.today())]
+    df_today = df_today.reset_index()
+    df_today = df_today.sort_values(by='time_delta_as_num', ascending=False)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+
+    fig = sns.barplot(data=df_today,
+                      y='time_delta_as_num',
+                      x='user',
+                      ).set(
+        ylabel='Time /mins',
+        xlabel=None)
+
+    if include_mums:
+        plt.xticks(rotation=90)
+
+    ax.yaxis_date()
+
+    ax.yaxis.set_major_formatter(mdates.DateFormatter("%M:%S"))
+
+    df_today = time_delta_as_num_to_time(df_today)
+
+    df_today = df_today[['user', 'time']]
+
+    return df_today, ax.figure
