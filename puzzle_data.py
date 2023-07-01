@@ -18,23 +18,23 @@ try:
     clue_data_down = data.get("cluedata").get("down")
 
     colouring = [["" for x in range(5)] for x in range(5)]
-    index = 0
     yellow = []
     green = []
     for word_index in range(0, 5):
         # We'll use a temporary copy of the solution so that we can manipulate it.
         temp_solution = list(solution)
         for letter_index in range(0, 5):
-            index = index + 1
             # If the letters match then we are correct
             current_letter = words[word_index][letter_index]
             if solution[letter_index] == current_letter:
-                green.append(index)
-                continue
+                temp_solution.remove(current_letter)
+                green.append((word_index*5)+letter_index+1)
+        for letter_index in range(0, 5):
+            current_letter = words[word_index][letter_index]
             # Otherwise, we need to scan through the word to see if the letter exists.
             if current_letter in temp_solution:
                 temp_solution.remove(current_letter)
-                yellow.append(index)
+                yellow.append((word_index*5)+letter_index+1)
 
     db_data = {
         "date": datetime.date.today(),
