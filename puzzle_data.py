@@ -13,11 +13,12 @@ try:
     cell_data = data.get("celldata")
     words = wrap(cell_data, 5)
     solution = data.get("settings").get("solution")
-    puzzle_number = data.get("meta").get("number")
+    meta = data.get("meta")
+    puzzle_number = meta.get("number")
+    author = meta.get("author")
     clue_data_across = data.get("cluedata").get("across")
     clue_data_down = data.get("cluedata").get("down")
 
-    colouring = [["" for x in range(5)] for x in range(5)]
     yellow = []
     green = []
     for word_index in range(0, 5):
@@ -39,6 +40,7 @@ try:
     db_data = {
         "date": datetime.date.today(),
         "puzzle_number": puzzle_number,
+        "author": author,
         "plusword_solution": solution,
         "answer_1": words[0],
         "answer_2": words[1],
