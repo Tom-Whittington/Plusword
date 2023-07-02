@@ -3,11 +3,10 @@ import json
 from textwrap import wrap
 import datetime
 import pymongo
+import logging
 
 
-# This is the laziest least production ready code ever but w/e yolo it works
-# Cue the world's longest try statement...
-try:
+def get_puzzle_data():
     data = requests.get("https://puzzles-prod.telegraph.co.uk/plusword/data.json")
     data = json.loads(data.content)
     cell_data = data.get("celldata")
@@ -22,7 +21,7 @@ try:
     yellow = []
     green = []
     for word_index in range(0, 5):
-        # We'll use a temporary copy of the solution so that we can manipulate it.
+        # A temporary copy of the solution so that we can manipulate it
         temp_solution = list(solution)
         for letter_index in range(0, 5):
             # If the letters match then we are correct
@@ -32,12 +31,12 @@ try:
                 green.append((word_index*5)+letter_index+1)
         for letter_index in range(0, 5):
             current_letter = words[word_index][letter_index]
-            # Otherwise, we need to scan through the word to see if the letter exists.
+            # Otherwise, we need to scan through the word to see if the letter exists
             if current_letter in temp_solution:
                 temp_solution.remove(current_letter)
                 yellow.append((word_index*5)+letter_index+1)
 
-    db_data = {
+    return {
         "date": datetime.date.today(),
         "puzzle_number": puzzle_number,
         "author": author,
@@ -61,6 +60,8 @@ try:
         "green": green
     }
 
+
+def insert_puzzle_data(data):
     with open("local/pass.json") as file:
         file = json.loads(file.read())
         connection_string = file.get("admin_connection_string")
@@ -68,8 +69,17 @@ try:
             connection_string)
         db = client["PlusWord"]
         collection = db["Puzzle_Data"]  # btw I hate our naming convention, wish we were lower case gamers
-        collection.insert_one(data)
-except Exception as e:
-    print(e)
+
+        # Check to see if we already have this puzzle in the DB, if we do then we skip uploading it
+        # Allows us to run this multiple times a day potentially to cover for fails
+        if not collection.find_one({"puzzle_number": data.get("puzzle_number")}):
+            collection.insert_one(data)
 
 
+# In case you want to import this into your main script instead of just scheduling this script
+if __name__ == "__main__":
+    try:
+        puzzle_data = get_puzzle_data()
+        insert_puzzle_data(puzzle_data)
+    except Exception as e:
+        logging.error(e)
