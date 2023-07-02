@@ -30,6 +30,9 @@ def get_puzzle_data():
                 temp_solution.remove(current_letter)
                 green.append((word_index*5)+letter_index+1)
         for letter_index in range(0, 5):
+            # Skip if this is already a green square
+            if (word_index*5)+letter_index+1 in green:
+                continue
             current_letter = words[word_index][letter_index]
             # Otherwise, we need to scan through the word to see if the letter exists
             if current_letter in temp_solution:
