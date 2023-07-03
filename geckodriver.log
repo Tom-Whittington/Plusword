@@ -11111,3 +11111,36 @@ WebDriver BiDi listening on ws://127.0.0.1:57869
 [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
 console.error: ({})
 DevTools listening on ws://127.0.0.1:57869/devtools/browser/65da9fa9-4d4e-49a1-adea-4ef793f6d8f1
+1687659065802	Marionette	INFO	Stopped listening on port 41541
+[GFX1-]: CompositorBridgeChild receives IPC close with reason=AbnormalShutdown
+[GFX1-]: CompositorBridgeChild receives IPC close with reason=AbnormalShutdown
+[GFX1-]: CompositorBridgeChild receives IPC close with reason=AbnormalShutdown
+1687708216432	geckodriver	INFO	Listening on 127.0.0.1:34687
+1687708216933	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... ss" "--remote-debugging-port" "54543" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilecVMQ61"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1687708217096	Marionette	INFO	Marionette enabled
+1687708217099	Marionette	INFO	Listening on port 39963
+Read port: 39963
+WebDriver BiDi listening on ws://127.0.0.1:54543
+1687708217201	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+DevTools listening on ws://127.0.0.1:54543/devtools/browser/b0d5ece5-f2fd-4de8-bf37-b9bedb928bd1
+1687708256687	geckodriver	INFO	Listening on 127.0.0.1:56699
+1687708257189	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... ss" "--remote-debugging-port" "60951" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilelTfquL"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1687708257353	Marionette	INFO	Marionette enabled
+1687708257355	Marionette	INFO	Listening on port 41667
+Read port: 41667
+WebDriver BiDi listening on ws://127.0.0.1:60951
+1687708257418	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+DevTools listening on ws://127.0.0.1:60951/devtools/browser/b2b12205-0a20-4e53-8a71-89d439a5ec85
+1687712315184	Marionette	INFO	Stopped listening on port 39963
+1687712315184	Marionette	INFO	Stopped listening on port 41667
+Sandbox: Unexpected EOF, op 0 flags 00 path /proc/cpuinfo

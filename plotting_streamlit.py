@@ -592,8 +592,6 @@ def sub_time_distplot(df, palette, user):
 
     df_time_dist = df.sort_values(by='sub_time_delta_as_num')
 
-    df_time_dist = df[more_than_3_entries]
-
     fig, ax = plt.subplots(figsize=(15, 7))
     palette = sns.color_palette("hls", 20)
 
@@ -634,7 +632,7 @@ def puzzle_difficulty(df, ascending, number_of_rows):
 
     df_difficulty = df_difficulty.reset_index()
 
-    df_difficulty = df_difficulty.sort_values(by='time_delta_as_num', ascending=ascending)
+    df_difficulty = df_difficulty.sort_values(by='time_delta_as_num', ascending=True)
 
     # Selects 20 hardest
 

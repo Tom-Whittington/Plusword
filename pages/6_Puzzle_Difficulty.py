@@ -4,7 +4,7 @@ from plotting_streamlit import data_import, palette_import, settings, mum_select
 # Imports default settings
 settings()
 
-#include_mums = mum_selector()
+include_mums = mum_selector()
 
 # Imports data
 df = data_import(include_mums=True)
