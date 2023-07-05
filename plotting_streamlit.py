@@ -201,7 +201,7 @@ def data_import(include_mums=False):
 def format_for_streamlit(df):
     """Makes df more readable, converts times into plottable numbers and sets index"""
 
-    df = df[['load_ts', 'time', 'user']]
+    df = df[['load_ts', 'time', 'user', 'mum']]
     df['time'] = df['time'].str.replace(r'(^\d\d:\d\d$)', r'00:\1', regex=True)
     df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f')
     df['user'] = df['user'].str.split(' ', 1).str[0]
@@ -615,7 +615,6 @@ def sub_time_distplot(df, palette, user):
 def puzzle_difficulty(df, ascending, number_of_rows):
     """Returns df and scatterplot of highest or lowest mean times across all users"""
 
-    ## TODO: Change Hue based on mum
     ## TODO: Add tool tip
 
     # Creates df
@@ -624,19 +623,11 @@ def puzzle_difficulty(df, ascending, number_of_rows):
 
     df_difficulty['date'] = df_difficulty.index.date
 
-    more_than_3_entries = df_difficulty['date'].value_counts() > 3
-
-    df_difficulty = df_difficulty.groupby(['date'])['time_delta_as_num'].mean()
-
-    # df_difficulty[more_than_3_entries]
+    df_difficulty = df_difficulty.groupby([df_difficulty['date'], 'mum'])['time_delta_as_num'].mean()
 
     df_difficulty = df_difficulty.reset_index()
 
-    df_difficulty = df_difficulty.sort_values(by='time_delta_as_num', ascending=True)
-
-    # Selects 20 hardest
-
-    df_difficulty = df_difficulty[:number_of_rows]
+    df_difficulty = df_difficulty.sort_values("time_delta_as_num", ascending=ascending).groupby("mum").head(number_of_rows)
 
     df_difficulty['time'] = mdates.num2timedelta(df_difficulty['time_delta_as_num'])
 
@@ -659,11 +650,14 @@ def puzzle_difficulty(df, ascending, number_of_rows):
 
     ax.set_ylim(ymin=0)
 
+    plt.legend(labels=['Mum', 'Non Mum'])
+
     # Formats df
 
     df_difficulty = time_delta_as_num_to_time(df_difficulty)
 
     df_difficulty = df_difficulty[['date', 'Time']]
+
     df_difficulty = df_difficulty.set_index('date')
 
     return df_difficulty, ax.figure
