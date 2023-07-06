@@ -372,7 +372,9 @@ def combined_period_mean(df, palette, time_period, smooth, poly_value):
 
     # Creates df
 
-    df_mean_time = df.groupby(["User", df["timestamp"].datetime.to_period(time_period)])["time_delta_as_num"].mean()
+    df_mean_time = df.reset_index()
+
+    df_mean_time = df_mean_time.groupby(["user", df_mean_time['timestamp'].dt.to_period(time_period)])["time_delta_as_num"].mean()
 
     df_mean_time = df_mean_time.reset_index()
 
@@ -392,9 +394,9 @@ def combined_period_mean(df, palette, time_period, smooth, poly_value):
 
         df_smooth = pd.DataFrame()
 
-        for User in df_mean_time['User'].unique():
+        for User in df_mean_time['user'].unique():
 
-            df_mean_time_rough = df_mean_time[df_mean_time['User'] == User]
+            df_mean_time_rough = df_mean_time[df_mean_time['user'] == User]
 
             try:
                 if time_period == 'M':
@@ -418,7 +420,7 @@ def combined_period_mean(df, palette, time_period, smooth, poly_value):
 
             y_smooth = pd.Series(y_smooth, name='time_delta_as_num')
 
-            users = pd.Series(user_list, name='User')
+            users = pd.Series(user_list, name='user')
 
             df = pd.concat([users, x_smooth, y_smooth], axis=1)
 
@@ -438,7 +440,7 @@ def combined_period_mean(df, palette, time_period, smooth, poly_value):
     fig = sns.lineplot(data=df,
                        x='date_as_num',
                        y='time_delta_as_num',
-                       hue='User'
+                       hue='user'
                        ).set(
         xlabel='Date',
         ylabel='Mean time /min')
@@ -457,9 +459,9 @@ def combined_period_mean(df, palette, time_period, smooth, poly_value):
 
     df_mean_time = time_delta_as_num_to_time(df_mean_time)
 
-    df_mean_time['Date'] = df_mean_time['timestamp'].datetime.strftime('%d %B %Y')
+    df_mean_time['Date'] = df_mean_time['timestamp'].dt.strftime('%d %B %Y')
 
-    df_mean_time = df_mean_time[['User', 'Date', 'Time']]
+    df_mean_time = df_mean_time[['user', 'Date', 'Time']]
 
     df_mean_time = df_mean_time.rename(columns={'Time': 'Mean Time'})
 
@@ -473,10 +475,10 @@ def rolling_average(df, palette, window_days):
 
     df_ra_list = []
 
-    for user in df["User"].unique():
-        df_ra = df[df["User"] == user]
+    for user in df["user"].unique():
+        df_ra = df[df["user"] == user]
 
-        df_ra = df_ra.sort_values(by='timestamp')
+        df_ra = df_ra.sort_values(by=df_ra.index)
 
         df_ra = df_ra.set_index("timestamp")
 
@@ -484,7 +486,7 @@ def rolling_average(df, palette, window_days):
 
         df_ra["time_delta"] = mdates.num2timedelta(df_ra["time_delta_as_num"])
 
-        df_ra = df_ra[['User', 'time_delta', "time_delta_as_num"]]
+        df_ra = df_ra[['user', 'time_delta', "time_delta_as_num"]]
 
         df_ra_list.append(df_ra)
 
@@ -497,7 +499,7 @@ def rolling_average(df, palette, window_days):
     fig = sns.lineplot(data=df_ra_finished,
                        x='timestamp',
                        y='time_delta_as_num',
-                       hue='User',
+                       hue='user',
                        ).set(
         xlabel='Date',
         ylabel='Rolling Mean Times /min')
@@ -514,7 +516,7 @@ def rolling_average(df, palette, window_days):
 
     df_ra_finished['Date'] = df_ra_finished['timestamp'].datetime.strftime('%d %B %Y')
 
-    df_ra_finished = df_ra_finished[['User', 'Date', 'Time']]
+    df_ra_finished = df_ra_finished[['user', 'Date', 'Time']]
 
     df_ra_finished = df_ra_finished.rename(columns={'Time': 'Mean Time'})
 
@@ -756,9 +758,6 @@ def today_times(df, include_mums):
                       ).set(
         ylabel='Time /mins',
         xlabel=None)
-
-    if include_mums:
-        plt.xticks(rotation=90)
 
     ax.yaxis_date()
 

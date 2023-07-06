@@ -87,4 +87,4 @@ st.title(chart_type)
 st.pyplot(fig)
 
 # Displays dataframe
-st.dataframe(df.set_index('User'), width=800)
+st.dataframe(df.set_index('user'), width=800)
