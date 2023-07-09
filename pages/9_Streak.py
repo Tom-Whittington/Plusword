@@ -1,5 +1,6 @@
 import streamlit as st
-from plotting_streamlit import data_import, settings, overall_times, add_bg_from_local, format_for_streamlit, user_multi_select_non_mums
+from plotting_streamlit import data_import, format_for_streamlit, palette_import, settings, longest_streak, current_streak,\
+    add_bg_from_local, user_multi_select_non_mums
 
 # Imports default settings
 settings()
@@ -13,25 +14,19 @@ add_bg_from_local()
 
 # Selects chart type
 chart_type = st.sidebar.radio(label='Select chart type',
-                              options=["Mean", 'Quickest', 'Slowest'])
+                              options= ['Longest Streak', 'Current Streak'])
 
 # Selects users to display
 df = user_multi_select_non_mums(df)
 
-if chart_type == 'Mean':
-    agg = 'Mean'
-    df, fig = overall_times(df, agg)
-
-elif chart_type == 'Quickest':
-    agg = 'Min'
-    df, fig = overall_times(df, agg)
+if chart_type == 'Longest Streak':
+    df, fig = longest_streak(df)
 
 else:
-    agg = 'Max'
-    df, fig = overall_times(df, agg)
+    df, fig = current_streak(df)
 
 # Sets title
-st.title('Overall ' + chart_type + ' Times')
+st.title(chart_type)
 
 # Display plot
 st.pyplot(fig)

@@ -1,12 +1,8 @@
 import streamlit as st
-from plotting_streamlit import data_import, format_for_streamlit, palette_import, add_bg_from_local, user_multi_select, date_select, \
-    mum_selector
-
-
-include_mums = mum_selector()
+from plotting_streamlit import data_import, format_for_streamlit, palette_import, add_bg_from_local, user_multi_select_non_mums, date_select
 
 # Imports data
-df = data_import(include_mums)
+df = data_import()
 df = format_for_streamlit(df)
 palette = palette_import()
 
@@ -14,7 +10,7 @@ palette = palette_import()
 add_bg_from_local()
 
 # Selects users to display
-df = user_multi_select(df)
+df = user_multi_select_non_mums(df)
 
 # Selects date range
 df = date_select(df)

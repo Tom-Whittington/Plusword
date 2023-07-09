@@ -1,16 +1,13 @@
 import streamlit as st
-from plotting_streamlit import data_import, format_for_streamlit, palette_import, mum_selector, settings, number_of_submissions,\
-    number_of_sub_1_minnies, add_bg_from_local
+from plotting_streamlit import data_import, format_for_streamlit, settings, number_of_submissions,\
+    number_of_sub_1_minnies, add_bg_from_local, user_multi_select_non_mums
 
 # Imports default settings
 settings()
 
-include_mums = mum_selector()
-
 # Imports data
-df = data_import(include_mums)
+df = data_import()
 df = format_for_streamlit(df)
-palette = palette_import()
 
 # Sets background
 add_bg_from_local()
@@ -19,13 +16,16 @@ add_bg_from_local()
 chart_type = st.sidebar.radio(label='Select chart type',
                               options=["Sub Minnies", 'Total Submissions'])
 
+# Selects users to display
+df = user_multi_select_non_mums(df)
 
 
 if chart_type == 'Sub Minnies':
-    df, fig = number_of_sub_1_minnies(df, palette)
+    df, fig = number_of_sub_1_minnies(df)
 
 else:
-    df, fig = number_of_submissions(df, palette)
+    df, fig = number_of_submissions(df)
+
 
 # Sets title
 st.title(chart_type)

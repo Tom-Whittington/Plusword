@@ -1,19 +1,13 @@
 import streamlit as st
-from plotting_streamlit import data_import, palette_import, mum_selector, settings, user_multi_select, date_select,\
+from plotting_streamlit import data_import, settings, user_multi_select_non_mums, date_select,\
     combined_period_mean, rolling_average, add_bg_from_local, format_for_streamlit
 
 # Imports default settings
 settings()
 
-include_mums = mum_selector()
-
 # Imports data
-df = data_import(include_mums)
+df = data_import()
 df = format_for_streamlit(df)
-palette = palette_import()
-
-# Selects users to display
-df = user_multi_select(df)
 
 # Selects date range
 df = date_select(df)
@@ -28,6 +22,8 @@ chart_type = st.sidebar.radio(label='Select chart type',
 # Hides smoothing option if rolling average selected
 if chart_type != 'Rolling Average':
     smooth = st.sidebar.checkbox('Smooth Data')
+
+df = user_multi_select_non_mums(df)
 
 # Selects monthly mean times
 if chart_type == 'Monthly Mean':
@@ -47,7 +43,7 @@ if chart_type == 'Monthly Mean':
     # M = month
     time_period = 'M'
 
-    df, fig = combined_period_mean(df, palette, time_period, smooth, poly_value)
+    df, fig = combined_period_mean(df, time_period, smooth, poly_value)
 
 # Selects weekly mean times
 elif chart_type == 'Weekly Mean':
@@ -57,7 +53,7 @@ elif chart_type == 'Weekly Mean':
         poly_value = st.sidebar.slider('Smoothies',
                                        min_value=1,
                                        max_value=10,
-                                       value=10,
+                                       value=5,
                                        help='Higher values give smoother lines, lower values give rougher lines')
 
     # Default value if smoothing isn't selected
@@ -67,7 +63,7 @@ elif chart_type == 'Weekly Mean':
     # 'W' = week
     time_period = 'W'
 
-    df, fig = combined_period_mean(df, palette, time_period, smooth, poly_value)
+    df, fig = combined_period_mean(df, time_period, smooth, poly_value)
 
 # Selects rolling average
 else:
@@ -77,7 +73,7 @@ else:
                                     value=60,
                                     help='Number of days over which to average times')
 
-    df, fig = rolling_average(df, palette, window_days)
+    df, fig = rolling_average(df, window_days)
     chart_type = str(window_days) + ' Day ' + chart_type
 
 # Sets title

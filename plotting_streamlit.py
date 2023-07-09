@@ -11,10 +11,9 @@ import streamlit as st
 import random
 from scipy import interpolate, signal
 
-
-## TODO: Add streak
 ## TODO: Add sub minute/submissions ratio
 ## TODO: Add outline to mums
+## TODO: Add doc strings
 
 
 def settings():
@@ -146,16 +145,16 @@ def get_db(write=False):
         print(e)
 
 
-def palette_import():
-    ##TODO: remove
-    # Gets colours from db
-    db = get_db()
-    collection = db["Colours"]
-    df_palette = pd.DataFrame(list(collection.find({})))
-    df_palette = df_palette[['user', 'colour']]
-    palette = dict(zip(df_palette['user'], df_palette['colour']))
-
-    return palette
+# def palette_import():
+#
+#     # Gets colours from db
+#     db = get_db()
+#     collection = db["Colours"]
+#     df_palette = pd.DataFrame(list(collection.find({})))
+#     df_palette = df_palette[['user', 'colour']]
+#     palette = dict(zip(df_palette['user'], df_palette['colour']))
+#
+#     return palette
 
 
 # def data_import(collection_name='Times'):
@@ -169,14 +168,12 @@ def palette_import():
 #
 #     return df
 
-def data_import(include_mums=False):
+def data_import():
     """Connects to database and creates dataframe containing all columns. Drops unneeded columns and sets timestamp
      datatype. Correct any incorrect time values, sets data times and sorts"""
 
-    collection_list = ['Times']
+    collection_list = ['Times', 'Mumsnet_Times']
 
-    if include_mums:
-        collection_list.append('Mumsnet_Times')
     all_records = []
 
     # Connects to db and gets collection
@@ -192,8 +189,8 @@ def data_import(include_mums=False):
     df = pd.DataFrame(all_records)
 
     # Makes column to indicate which database times are from
-    non_mums = ['Harvey Williams', 'Sazzle', 'Leah', 'Tom', 'Joe', 'George Sheen', 'Oliver Folkard']
-    df['mum'] = np.where(df['user'].isin(non_mums), False, True)
+
+    df['mum'] = np.where(df['user'].isin(['Harvey Williams', 'Sazzle', 'Leah', 'Tom', 'Joe', 'George Sheen', 'Oliver Folkard']), False, True)
 
     return df
 
@@ -264,11 +261,10 @@ def old_data_import(collection_name='Times'):
     return df
 
 
-def overall_times(df, palette, agg):
+def overall_times(df, agg):
     """Barplot showing the longest completion time for each person """
 
     ## TODO: Bring date through with max and min
-    ## TODO: Make default number of mums come through
 
     more_than_3_entries = df['user'].value_counts() > 3
 
@@ -307,10 +303,10 @@ def overall_times(df, palette, agg):
     return df, ax.figure
 
 
-def number_of_sub_1_minnies(df, palette):
+def number_of_sub_1_minnies(df):
     """ Barplot of how many sub 1-minute completion times for each person"""
 
-    # Creates df
+    #Creates df
 
     df_sub_minnies = df[df["time_delta"] < timedelta(minutes=1)]
 
@@ -340,7 +336,7 @@ def number_of_sub_1_minnies(df, palette):
     return df_sub_minnies, ax.figure
 
 
-def number_of_submissions(df, palette):
+def number_of_submissions(df):
     """ Barplot of how many submissions total for each person"""
 
     # Creates df
@@ -367,7 +363,7 @@ def number_of_submissions(df, palette):
     return df_overall_number_submissions, ax.figure
 
 
-def combined_period_mean(df, palette, time_period, smooth, poly_value):
+def combined_period_mean(df, time_period, smooth, poly_value):
     """Plots mean times for every player over time on the same lineplot"""
 
     # Creates df
@@ -468,7 +464,7 @@ def combined_period_mean(df, palette, time_period, smooth, poly_value):
     return df_mean_time, ax.figure
 
 
-def rolling_average(df, palette, window_days):
+def rolling_average(df, window_days):
     """ Finds rolling average over window_days number of days for each user. Then joins all dataframes together"""
 
     window_days_str = str(window_days) + 'd'
@@ -478,9 +474,7 @@ def rolling_average(df, palette, window_days):
     for user in df["user"].unique():
         df_ra = df[df["user"] == user]
 
-        df_ra = df_ra.sort_values(by=df_ra.index)
-
-        df_ra = df_ra.set_index("timestamp")
+        df_ra = df_ra.sort_index()
 
         df_ra["time_delta_as_num"] = df_ra["time_delta_as_num"].rolling(window=window_days_str).mean()
 
@@ -514,7 +508,7 @@ def rolling_average(df, palette, window_days):
 
     df_ra_finished = time_delta_as_num_to_time(df_ra_finished)
 
-    df_ra_finished['Date'] = df_ra_finished['timestamp'].datetime.strftime('%d %B %Y')
+    df_ra_finished['Date'] = df_ra_finished['timestamp'].dt.date
 
     df_ra_finished = df_ra_finished[['user', 'Date', 'Time']]
 
@@ -523,11 +517,8 @@ def rolling_average(df, palette, window_days):
     return df_ra_finished, ax.figure
 
 
-def sub_time_boxplot(df, palette):
+def sub_time_boxplot(df):
     """Plots boxplot of submission times"""
-
-    ## TODO: Remove users with less than three entries
-    ## TODO: Make default number of mums come through
 
     fig, ax = plt.subplots(figsize=(15, 7))
 
@@ -547,11 +538,8 @@ def sub_time_boxplot(df, palette):
     return ax.figure
 
 
-def sub_time_violin_plot(df, palette):
+def sub_time_violin_plot(df):
     """Plots violin plot of submission times"""
-
-    ## TODO: Remove users with less than three entries
-    ## TODO: Make default number of mums come through
 
     # Generates 24 hours for y axis
 
@@ -586,11 +574,8 @@ def sub_time_violin_plot(df, palette):
     return ax.figure
 
 
-def sub_time_distplot(df, palette, user):
+def sub_time_distplot(df, user):
     """Plots dist plot for submission times based on user"""
-
-    # more_than_3_entries = df['user'].value_counts() > 3
-    ## TODO: Remove users with less than three entries
 
     df_time_dist = df.sort_values(by='sub_time_delta_as_num')
 
@@ -652,7 +637,7 @@ def puzzle_difficulty(df, ascending, number_of_rows):
 
     ax.set_ylim(ymin=0)
 
-    plt.legend(labels=['Mum', 'Non Mum'])
+    #plt.legend(labels=['Mum', 'Non Mum'])
 
     # Formats df
 
@@ -694,13 +679,24 @@ def welcome_gif():
     file_.close()
 
     st.markdown(
-        f'<img src="data:image/gif;base64,{data_url}" alt="cat gif">',
+        f'<img src="data:image/gif;base64,{data_url}" alt="Welcome gif">',
         unsafe_allow_html=True,
     )
 
 
-def user_multi_select(df):
-    """Creates multiselect box containing unique users names. Filters df to only contain those users"""
+def user_multi_select_non_mums(df):
+    """Creates multiselect box containing unique users names of non mums. Filters df to only contain those users"""
+
+    sorted_unique_user = sorted(df['user'].unique())
+
+    selected_users = st.sidebar.multiselect('User', sorted_unique_user, ['Harvey', 'Sazzle', 'Leah', 'Tom', 'Joe', 'George', 'Oliver'])
+
+    df = df[df['user'].isin(selected_users)]
+
+    return df
+
+def user_multi_select_all_users(df):
+    """Creates multiselect box containing unique users names of all users. Filters df to only contain those users"""
 
     sorted_unique_user = sorted(df['user'].unique())
 
@@ -737,15 +733,16 @@ def date_select(df):
     return df
 
 
-def mum_selector(include_mums=False):
-    """ Allows selection of mumsnet data"""
+# def mum_selector():
+#     """ Allows selection of mumsnet data"""
+#
+#     include_mums = st.sidebar.checkbox('Include Mums?', value=False)
+#
+#     return include_mums
 
-    include_mums = st.sidebar.checkbox('Include Mums?', value=False)
 
-    return include_mums
+def today_times(df):
 
-
-def today_times(df, include_mums):
     df_today = df.loc[(df.index.date == date.today())]
     df_today = df_today.reset_index()
     df_today = df_today.sort_values(by='time_delta_as_num', ascending=False)
@@ -753,18 +750,108 @@ def today_times(df, include_mums):
     fig, ax = plt.subplots(figsize=(10, 5))
 
     fig = sns.barplot(data=df_today,
-                      y='time_delta_as_num',
-                      x='user',
+                      x='time_delta_as_num',
+                      y='user',
+                      orient='h'
                       ).set(
-        ylabel='Time /mins',
-        xlabel=None)
+        xlabel='Time /mins',
+        ylabel=None)
 
-    ax.yaxis_date()
+    ax.xaxis_date()
 
-    ax.yaxis.set_major_formatter(mdates.DateFormatter("%M:%S"))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%M:%S"))
+
+    #ax.xaxis.set_tick_params(rotation=90)
 
     df_today = time_delta_as_num_to_time(df_today)
 
     df_today = df_today[['user', 'time']]
 
     return df_today, ax.figure
+
+def calculate_streak(df):
+
+    df_streak = df.copy()
+
+    df_streak['date'] = pd.to_datetime(df_streak.index.date)
+
+    df_streak = df_streak[['user', 'date']]
+
+    users = df_streak['user'].unique()
+
+    df_whole = pd.DataFrame()
+
+    for user in users:
+        df_each_user = df_streak[df_streak['user'] == user]
+
+        df_each_user = df_each_user.sort_values('date').drop_duplicates(subset='date')
+        df_each_user['diff'] = df_each_user["date"].diff().dt.days
+        df_each_user['diff'] = df_each_user['diff'].fillna(0)
+
+        df_each_user['streak'] = np.where(df_each_user['diff'] > 1, 0, df_each_user['diff'])
+        streak_break = df_each_user[df_each_user['streak'] == 0]
+        streak_break['streak_start'] = streak_break.index.date
+
+        df_each_user = pd.merge_asof(df_each_user, streak_break['streak_start'],
+                                     left_index=True, right_index=True,
+                                     direction='backward')
+
+        df_each_user['streak'] = (df_each_user['date'].dt.date - df_each_user['streak_start']).dt.days
+        df_each_user['streak'] = df_each_user['streak'] + 1
+        df_each_user = df_each_user.drop(columns=['streak_start', 'date', 'diff'])
+        df_whole = pd.concat([df_whole, df_each_user])
+
+    df_whole = df_whole.sort_values(by=['user'])
+
+    return df_whole
+
+
+def longest_streak(df):
+
+    df_longest_streak = calculate_streak(df)
+
+    df_longest_streak = df_longest_streak.groupby(df_longest_streak['user'])['streak'].max()
+
+    df_longest_streak = df_longest_streak.reset_index()
+
+    df_longest_streak = df_longest_streak.sort_values(by='streak', ascending=False)
+
+    # Plot
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+
+    fig = sns.barplot(data=df_longest_streak,
+                      y='streak',
+                      x='user'
+                      ).set(
+        ylabel='Highest streak /days',
+        xlabel=None)
+
+    plt.xticks(rotation=0)
+
+    return df_longest_streak, ax.figure
+
+def current_streak(df):
+
+
+    df_current_streak = calculate_streak(df)
+
+    df_current_streak = df_current_streak.loc[df_current_streak.index.date >= date.today() - timedelta(days=1)]
+    df_current_streak = df_current_streak.groupby(df_current_streak['user'])['streak'].max().reset_index()
+    df_current_streak = df_current_streak.sort_values(by='streak', ascending=False)
+
+    # Plot
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+
+    fig = sns.barplot(data=df_current_streak,
+                      y='streak',
+                      x='user'
+                      ).set(
+        ylabel='Current streak /days',
+        xlabel=None)
+
+    plt.xticks(rotation=0)
+
+    return df_current_streak, ax.figure
+
