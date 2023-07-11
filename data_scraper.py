@@ -222,7 +222,7 @@ def get_plus_word():
     match = 'C\d*'
 
     # loops over each cell in the grid and extracts
-    for table_row in driver.find_elements(By.CLASS_NAME, "row"):
+    for table_row in driver.find_elements(By.CLASS_NAME, "rimport datetime as dtow"):
         for cell in table_row.find_elements(By.TAG_NAME, 'td'):
             cell_class = cell.get_attribute("class")
 
@@ -264,7 +264,8 @@ def mumsnet_export():
 
 
 def main():
-    puzzle_export()
+    #puzzle_export()
+
     mumsnet_export()
 
 

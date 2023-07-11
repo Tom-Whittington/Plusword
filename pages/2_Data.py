@@ -1,10 +1,9 @@
 import streamlit as st
-from plotting_streamlit import data_import, format_for_streamlit, palette_import, add_bg_from_local, user_multi_select_non_mums, date_select
+from plotting_streamlit import data_import, format_for_streamlit, add_bg_from_local, user_multi_select_non_mums, date_select
 
 # Imports data
 df = data_import()
 df = format_for_streamlit(df)
-palette = palette_import()
 
 # Sets background
 add_bg_from_local()

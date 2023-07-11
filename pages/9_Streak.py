@@ -1,5 +1,5 @@
 import streamlit as st
-from plotting_streamlit import data_import, format_for_streamlit, palette_import, settings, longest_streak, current_streak,\
+from plotting_streamlit import data_import, format_for_streamlit, settings, longest_streak, current_streak,\
     add_bg_from_local, user_multi_select_non_mums
 
 # Imports default settings

@@ -11,10 +11,9 @@ import streamlit as st
 import random
 from scipy import interpolate, signal
 
+
 ## TODO: Add sub minute/submissions ratio
 ## TODO: Add outline to mums
-## TODO: Add doc strings
-
 
 def settings():
     # Sets plot style
@@ -127,6 +126,8 @@ def savgol_smooth(df, poly_value):
 
 
 def get_db(write=False):
+    """Decides if you want read or write access and connects to db"""
+
     if write:
         connection_string = "admin_connection_string"
 
@@ -190,7 +191,9 @@ def data_import():
 
     # Makes column to indicate which database times are from
 
-    df['mum'] = np.where(df['user'].isin(['Harvey Williams', 'Sazzle', 'Leah', 'Tom', 'Joe', 'George Sheen', 'Oliver Folkard']), False, True)
+    df['mum'] = np.where(
+        df['user'].isin(['Harvey Williams', 'Sazzle', 'Leah', 'Tom', 'Joe', 'George Sheen', 'Oliver Folkard']), False,
+        True)
 
     return df
 
@@ -262,24 +265,34 @@ def old_data_import(collection_name='Times'):
 
 
 def overall_times(df, agg):
-    """Barplot showing the longest completion time for each person """
-
-    ## TODO: Bring date through with max and min
-
-    more_than_3_entries = df['user'].value_counts() > 3
+    """Barplot showing the min. man and mean completion time for each person """
 
     if agg == 'Mean':
         df = df.groupby(df["user"])["time_delta_as_num"].mean()
 
+        df = df.reset_index()
+
     if agg == 'Min':
-        df = df.groupby(df["user"])["time_delta_as_num"].min()
+        df_agg = df.groupby(df["user"])["time_delta_as_num"].min()
+
+        df_agg = df_agg.reset_index()
+
+        df_agg = df_agg.set_index(['user', 'time_delta_as_num'])
+
+        df = df.join(df_agg, how='inner', on=['user', 'time_delta_as_num'])
+
+        df['date'] = df.index.date
 
     if agg == 'Max':
-        df = df.groupby(df["user"])["time_delta_as_num"].max()
+        df_agg = df.groupby(df["user"])["time_delta_as_num"].max()
 
-    df = df[more_than_3_entries]
+        df_agg = df_agg.reset_index()
 
-    df = df.reset_index()
+        df_agg = df_agg.set_index(['user', 'time_delta_as_num'])
+
+        df = df.join(df_agg, how='inner', on=['user', 'time_delta_as_num'])
+
+        df['date'] = df.index.date
 
     df = df.sort_values(by='time_delta_as_num', ascending=False)
 
@@ -298,7 +311,12 @@ def overall_times(df, agg):
 
     df = time_delta_as_num_to_time(df)
 
-    df = df[['user', 'Time']]
+    if agg == 'Mean':
+
+        df = df[['user', 'Time']]
+
+    else:
+        df = df[['user', 'Time', 'date']]
 
     return df, ax.figure
 
@@ -306,7 +324,7 @@ def overall_times(df, agg):
 def number_of_sub_1_minnies(df):
     """ Barplot of how many sub 1-minute completion times for each person"""
 
-    #Creates df
+    # Creates df
 
     df_sub_minnies = df[df["time_delta"] < timedelta(minutes=1)]
 
@@ -364,13 +382,14 @@ def number_of_submissions(df):
 
 
 def combined_period_mean(df, time_period, smooth, poly_value):
-    """Plots mean times for every player over time on the same lineplot"""
+    """Plots mean times for every player over time on the same line plot"""
 
     # Creates df
 
     df_mean_time = df.reset_index()
 
-    df_mean_time = df_mean_time.groupby(["user", df_mean_time['timestamp'].dt.to_period(time_period)])["time_delta_as_num"].mean()
+    df_mean_time = df_mean_time.groupby(["user", df_mean_time['timestamp'].dt.to_period(time_period)])[
+        "time_delta_as_num"].mean()
 
     df_mean_time = df_mean_time.reset_index()
 
@@ -600,7 +619,7 @@ def sub_time_distplot(df, user):
 
 
 def puzzle_difficulty(df, ascending, number_of_rows):
-    """Returns df and scatterplot of highest or lowest mean times across all users"""
+    """Returns df and scatter plot of highest or lowest mean times across all users"""
 
     ## TODO: Add tool tip
 
@@ -614,7 +633,8 @@ def puzzle_difficulty(df, ascending, number_of_rows):
 
     df_difficulty = df_difficulty.reset_index()
 
-    df_difficulty = df_difficulty.sort_values("time_delta_as_num", ascending=ascending).groupby("mum").head(number_of_rows)
+    df_difficulty = df_difficulty.sort_values("time_delta_as_num", ascending=ascending).groupby("mum").head(
+        number_of_rows)
 
     df_difficulty['time'] = mdates.num2timedelta(df_difficulty['time_delta_as_num'])
 
@@ -637,7 +657,7 @@ def puzzle_difficulty(df, ascending, number_of_rows):
 
     ax.set_ylim(ymin=0)
 
-    #plt.legend(labels=['Mum', 'Non Mum'])
+    # plt.legend(labels=['Mum', 'Non Mum'])
 
     # Formats df
 
@@ -689,11 +709,13 @@ def user_multi_select_non_mums(df):
 
     sorted_unique_user = sorted(df['user'].unique())
 
-    selected_users = st.sidebar.multiselect('User', sorted_unique_user, ['Harvey', 'Sazzle', 'Leah', 'Tom', 'Joe', 'George', 'Oliver'])
+    selected_users = st.sidebar.multiselect('User', sorted_unique_user,
+                                            ['Harvey', 'Sazzle', 'Leah', 'Tom', 'Joe', 'George', 'Oliver'])
 
     df = df[df['user'].isin(selected_users)]
 
     return df
+
 
 def user_multi_select_all_users(df):
     """Creates multiselect box containing unique users names of all users. Filters df to only contain those users"""
@@ -742,6 +764,7 @@ def date_select(df):
 
 
 def today_times(df):
+    """" Plots horizontal bar plot for all submitted times for today"""
 
     df_today = df.loc[(df.index.date == date.today())]
     df_today = df_today.reset_index()
@@ -761,7 +784,7 @@ def today_times(df):
 
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%M:%S"))
 
-    #ax.xaxis.set_tick_params(rotation=90)
+    # ax.xaxis.set_tick_params(rotation=90)
 
     df_today = time_delta_as_num_to_time(df_today)
 
@@ -769,7 +792,9 @@ def today_times(df):
 
     return df_today, ax.figure
 
+
 def calculate_streak(df):
+    """Calculates how many days in a row people have submitted a time. Has to do it per used and then concat each dataframe as merge_asof doesn't allow multiple indices"""
 
     df_streak = df.copy()
 
@@ -807,6 +832,7 @@ def calculate_streak(df):
 
 
 def longest_streak(df):
+    """Plots bar plot of all time longest streak for each player"""
 
     df_longest_streak = calculate_streak(df)
 
@@ -831,13 +857,16 @@ def longest_streak(df):
 
     return df_longest_streak, ax.figure
 
-def current_streak(df):
 
+def current_streak(df):
+    """Calculates each player's current streak. Filters df for only entries from today or yesterday and then finds the max"""
 
     df_current_streak = calculate_streak(df)
 
     df_current_streak = df_current_streak.loc[df_current_streak.index.date >= date.today() - timedelta(days=1)]
+
     df_current_streak = df_current_streak.groupby(df_current_streak['user'])['streak'].max().reset_index()
+
     df_current_streak = df_current_streak.sort_values(by='streak', ascending=False)
 
     # Plot
@@ -854,4 +883,3 @@ def current_streak(df):
     plt.xticks(rotation=0)
 
     return df_current_streak, ax.figure
-
