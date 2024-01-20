@@ -21,7 +21,7 @@ def mumsnet_url_generator():
     thread_list = [
         # 'https://www.mumsnet.com/talk/am_i_being_unreasonable/4676538-if-you-like-wordle-plusword-is-even-better-thread-4?page=',
         # 'https://www.mumsnet.com/talk/_chat/4714295-plusword-new-thread-1?page=',
-        'https://www.mumsnet.com/talk/_chat/4765702-plusword-new-thread-2?page=',
+        #'https://www.mumsnet.com/talk/_chat/4765702-plusword-new-thread-2?page=',
         'https://www.mumsnet.com/talk/_chat/4866377-plusword-thread-3?page='
     ]
 

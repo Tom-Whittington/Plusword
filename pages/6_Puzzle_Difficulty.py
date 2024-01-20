@@ -6,7 +6,8 @@ settings()
 
 
 # Imports data
-df = data_import()
+collection_list = ['Times']
+df = data_import(collection_list)
 df = format_for_streamlit(df)
 
 # Sets background
@@ -37,4 +38,5 @@ st.title(str(number_of_rows) + ' ' + difficulty + ' Puzzles')
 st.pyplot(fig)
 
 # Displays dataframe
+df.columns = df.columns.str.capitalize()
 st.dataframe(df, width=800)

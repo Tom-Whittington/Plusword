@@ -1,11 +1,13 @@
 import streamlit as st
-from plotting_streamlit import data_import, settings, overall_times, add_bg_from_local, format_for_streamlit, user_multi_select_non_mums
+from plotting_streamlit import data_import, settings, overall_times, add_bg_from_local, format_for_streamlit, user_multi_select_non_mums, mum_selector
 
 # Imports default settings
 settings()
 
 # Imports data
-df = data_import()
+collection_list = ['Times']
+mum_selector(collection_list)
+df = data_import(collection_list)
 df = format_for_streamlit(df)
 
 # Sets background

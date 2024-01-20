@@ -14,6 +14,8 @@ from scipy import interpolate, signal
 
 ## TODO: Add sub minute/submissions ratio
 ## TODO: Add outline to mums
+## TODO: Add retro filter
+## TODO: Test mum exporter
 
 def settings():
     # Sets plot style
@@ -191,9 +193,9 @@ def data_import(collection_list):
 
     # Makes column to indicate which database times are from
 
-    df['mum'] = np.where(
-        df['user'].isin(['Harvey Williams', 'Sazzle', 'Leah', 'Tom', 'Joe', 'George Sheen', 'Oliver Folkard']), False,
-        True)
+    df['dataset'] = np.where(
+        df['user'].isin(['Harvey Williams', 'Sazzle', 'Leah', 'Tom', 'Joe', 'George Sheen', 'Oliver Folkard']), 'Non-Mum',
+        'Mum')
 
     return df
 
@@ -201,7 +203,7 @@ def data_import(collection_list):
 def format_for_streamlit(df):
     """Makes df more readable, converts times into plottable numbers and sets index"""
 
-    df = df[['load_ts', 'time', 'user', 'mum']]
+    df = df[['load_ts', 'time', 'user', 'dataset']]
     df['time'] = df['time'].str.replace(r'(^\d\d:\d\d$)', r'00:\1', regex=True)
     df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f')
     df['user'] = df['user'].str.split(' ', 1).str[0]
@@ -629,11 +631,11 @@ def puzzle_difficulty(df, ascending, number_of_rows):
 
     df_difficulty['date'] = df_difficulty.index.date
 
-    df_difficulty = df_difficulty.groupby([df_difficulty['date'], 'mum'])['time_delta_as_num'].mean()
+    df_difficulty = df_difficulty.groupby([df_difficulty['date'], 'dataset'])['time_delta_as_num'].mean()
 
     df_difficulty = df_difficulty.reset_index()
 
-    df_difficulty = df_difficulty.sort_values("time_delta_as_num", ascending=ascending).groupby("mum").head(
+    df_difficulty = df_difficulty.sort_values("time_delta_as_num", ascending=ascending).groupby("dataset").head(
         number_of_rows)
 
     df_difficulty['time'] = mdates.num2timedelta(df_difficulty['time_delta_as_num'])
@@ -643,7 +645,7 @@ def puzzle_difficulty(df, ascending, number_of_rows):
     fig = sns.scatterplot(data=df_difficulty,
                           x='date',
                           y='time_delta_as_num',
-                          hue='mum')
+                          hue='dataset')
 
     ax.yaxis_date()
 
@@ -657,13 +659,15 @@ def puzzle_difficulty(df, ascending, number_of_rows):
 
     ax.set_ylim(ymin=0)
 
+    ax.legend_.set_title(None)
+
     # plt.legend(labels=['Mum', 'Non Mum'])
 
     # Formats df
 
     df_difficulty = time_delta_as_num_to_time(df_difficulty)
 
-    df_difficulty = df_difficulty[['date', 'Time']]
+    df_difficulty = df_difficulty[['date', 'Time', 'dataset']]
 
     df_difficulty = df_difficulty.set_index('date')
 
@@ -755,12 +759,15 @@ def date_select(df):
     return df
 
 
-# def mum_selector():
-#     """ Allows selection of mumsnet data"""
-#
-#     include_mums = st.sidebar.checkbox('Include Mums?', value=False)
-#
-#     return include_mums
+def mum_selector(collection_list):
+    """ Allows selection of mumsnet data"""
+
+    include_mums = st.sidebar.checkbox('Include Mums?', value=False)
+    if include_mums:
+        collection_list.append('Mumsnet_Times')
+
+
+    return collection_list
 
 
 def today_times(df):

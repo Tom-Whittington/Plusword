@@ -1,12 +1,14 @@
 import streamlit as st
 from plotting_streamlit import data_import, settings, user_multi_select_non_mums, date_select,\
-    combined_period_mean, rolling_average, add_bg_from_local, format_for_streamlit
+    combined_period_mean, rolling_average, add_bg_from_local, format_for_streamlit, mum_selector
 
 # Imports default settings
 settings()
 
 # Imports data
-df = data_import()
+collection_list = ['Times']
+mum_selector(collection_list)
+df = data_import(collection_list)
 df = format_for_streamlit(df)
 
 # Selects date range
