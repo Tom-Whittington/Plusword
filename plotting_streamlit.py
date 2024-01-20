@@ -169,11 +169,11 @@ def get_db(write=False):
 #
 #     return df
 
-def data_import():
+def data_import(collection_list):
     """Connects to database and creates dataframe containing all columns. Drops unneeded columns and sets timestamp
      datatype. Correct any incorrect time values, sets data times and sorts"""
 
-    collection_list = ['Times', 'Mumsnet_Times']
+    #collection_list = ['Times', 'Mumsnet_Times']
 
     all_records = []
 

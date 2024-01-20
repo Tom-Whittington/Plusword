@@ -21,7 +21,8 @@ def mumsnet_url_generator():
     thread_list = [
         # 'https://www.mumsnet.com/talk/am_i_being_unreasonable/4676538-if-you-like-wordle-plusword-is-even-better-thread-4?page=',
         # 'https://www.mumsnet.com/talk/_chat/4714295-plusword-new-thread-1?page=',
-        'https://www.mumsnet.com/talk/_chat/4765702-plusword-new-thread-2?page='
+        'https://www.mumsnet.com/talk/_chat/4765702-plusword-new-thread-2?page=',
+        'https://www.mumsnet.com/talk/_chat/4866377-plusword-thread-3?page='
     ]
 
     url_list = []
@@ -40,7 +41,7 @@ def mumsnet_post_to_text_converter(post):
     # converts to list and removes whitespace
     post_text = post.getText().split()
 
-    # separates out meta data and post body
+    # separates out metadata and post body
     meta_data = post_text[:4]
     post_body = post_text[4:]
 
