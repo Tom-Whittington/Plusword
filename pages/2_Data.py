@@ -12,7 +12,7 @@ df = format_for_streamlit(df)
 add_bg_from_local()
 
 # Selects users to display
-#df = user_multi_select_non_mums(df)
+df = user_multi_select_non_mums(df)
 
 df = retro_selector(df)
 
