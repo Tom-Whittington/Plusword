@@ -260,7 +260,7 @@ def mumsnet_export():
     url_list = mumsnet_url_generator()
     df_raw = mumsnet_multithread_wrapper(url_list)
     df_clean = mumsnet_cleaning(df_raw)
-    df = filter_out_old_rows(df_clean, 'Mumsnet_Times', ['load_ts', 'user'])
+    df = filter_out_old_rows(df_clean, ['Mumsnet_Times'], ['load_ts', 'user'])
     data_export(df, 'Mumsnet_Times')
 
 

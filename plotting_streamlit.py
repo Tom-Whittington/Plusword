@@ -190,12 +190,6 @@ def data_import(collection_list):
 
     df = pd.DataFrame(all_records)
 
-    # Makes column to indicate which database times are from
-
-    df['dataset'] = np.where(
-        df['user'].isin(['Harvey Williams', 'Sazzle', 'Leah', 'Tom', 'Joe', 'George Sheen', 'Oliver Folkard']), 'Non-Mum',
-        'Mum')
-
     return df
 
 
@@ -203,6 +197,12 @@ def format_for_streamlit(df):
     """Makes df more readable, converts times into plottable numbers and sets index"""
 
     df = df[['load_ts', 'time', 'user', 'dataset', 'retro']]
+
+    # Makes column to indicate which database times are from
+
+    df['dataset'] = np.where(
+        df['user'].isin(['Harvey Williams', 'Sazzle', 'Leah', 'Tom', 'Joe', 'George Sheen', 'Oliver Folkard']), 'Non-Mum',
+        'Mum')
 
     df['time'] = df['time'].str.replace(r'(^\d\d:\d\d$)', r'00:\1', regex=True)
     df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f')
