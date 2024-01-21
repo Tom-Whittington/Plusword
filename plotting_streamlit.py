@@ -196,7 +196,7 @@ def data_import(collection_list):
 def format_for_streamlit(df):
     """Makes df more readable, converts times into plottable numbers and sets index"""
 
-    df = df[['load_ts', 'time', 'user', 'dataset', 'retro']]
+    df = df[['load_ts', 'time', 'user', 'retro']]
 
     # Makes column to indicate which database times are from
 
