@@ -14,7 +14,6 @@ from scipy import interpolate, signal
 
 ## TODO: Add sub minute/submissions ratio
 ## TODO: Add outline to mums
-## TODO: Add retro filter
 ## TODO: Test mum exporter
 
 def settings():
@@ -203,7 +202,8 @@ def data_import(collection_list):
 def format_for_streamlit(df):
     """Makes df more readable, converts times into plottable numbers and sets index"""
 
-    df = df[['load_ts', 'time', 'user', 'dataset']]
+    df = df[['load_ts', 'time', 'user', 'dataset', 'retro']]
+
     df['time'] = df['time'].str.replace(r'(^\d\d:\d\d$)', r'00:\1', regex=True)
     df['load_ts'] = pd.to_datetime(df['load_ts'], format='%Y-%m-%d %H:%M:%S.%f')
     df['user'] = df['user'].str.split(' ', 1).str[0]
@@ -211,7 +211,11 @@ def format_for_streamlit(df):
     df = df.rename(columns={'load_ts': 'timestamp'})
     df['time_delta'] = pd.to_timedelta(df['time'].astype('timedelta64[ns]'))
     df['time_delta_as_num'] = time_delta_to_num(pd.to_timedelta(df['time'].astype('string')))
+    df['time_delta_as_num'] = time_delta_to_num(pd.to_timedelta(df['time'].astype('string')))
     df['sub_time_delta_as_num'] = time_delta_to_num(pd.to_timedelta(df['timestamp'].dt.time.astype('string')))
+    df['dataset'] = df['dataset'].astype('category')
+    df['retro'] = df['retro'].fillna(False)
+    df['retro'] = df['retro'].astype('bool')
 
     df = df.set_index('timestamp')
     df = df.sort_index(ascending=False)
@@ -768,6 +772,15 @@ def mum_selector(collection_list):
 
 
     return collection_list
+
+def retro_selector(df):
+    """ Allows selection of mumsnet data"""
+
+    include_retro = st.sidebar.checkbox('Include Cheats?', value=False)
+    if not include_retro:
+        df = df[df['retro'] == False]
+
+    return df
 
 
 def today_times(df):

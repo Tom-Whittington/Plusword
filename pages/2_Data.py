@@ -1,9 +1,10 @@
 import streamlit as st
-from plotting_streamlit import data_import, format_for_streamlit, add_bg_from_local, user_multi_select_non_mums, date_select, mum_selector
+from plotting_streamlit import data_import, format_for_streamlit, add_bg_from_local, user_multi_select_non_mums, date_select, mum_selector, retro_selector
 
 # Imports data
 collection_list = ['Times']
 mum_selector(collection_list)
+
 df = data_import(collection_list)
 df = format_for_streamlit(df)
 
@@ -12,6 +13,8 @@ add_bg_from_local()
 
 # Selects users to display
 #df = user_multi_select_non_mums(df)
+
+df = retro_selector(df)
 
 # Selects date range
 df = date_select(df)
